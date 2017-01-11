@@ -32,7 +32,7 @@ public class LargestRectangleinHistogram {
     }
 	
 	public static void main(String[] args) {
-		int[] nums={2,1,5,6,2,3};
+		int[] nums={2,1,3,4,2,3};
 		LargestRectangleinHistogram s = new LargestRectangleinHistogram();
 		int res = s.largestRectangleArea(nums);
 		System.out.println(res);

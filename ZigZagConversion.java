@@ -1,15 +1,6 @@
 package algorithm_java;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.PriorityQueue;
-
-public class Test {
+public class ZigZagConversion {
 	public static String convert(String s, int numRows) {
 		if(numRows==1 || numRows > s.length())
             return s;
