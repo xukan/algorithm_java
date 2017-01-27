@@ -25,42 +25,68 @@ class TreeNode {
 //}
 
 public class Test {
-	public static boolean makesquare(int[] nums) {
-        if(nums == null || nums.length ==0)
-            return false;
-        int sum=0;
-        for(int i: nums)
-            sum += i;
-        if(sum %4 !=0)
-            return false;
-        boolean res = search(nums, new int[4], 0, sum/4);
-        return res;
-    }
-    
-    public static boolean search(int[] nums, int[] sum, int step, int sideLen){
-        if(step == nums.length)
-            return true;
-        int ele = nums[step];
-        for(int i=0;i<4;i++){
-        	if(i>step)
-        		break;
-            if(sum[i]+ele > sideLen)
-                continue;
-            sum[i]+=ele;
-            boolean bar = search(nums, sum, step+1, sideLen);
-            if(bar)
-                return true;
-            sum[i]-=ele;
-        }
-        return false;
-    }
+	private String text;
+	private String pattern;
 	
-    public static void main(String[] args) {
-		int[] input = {1,1,2,2,2};
-//		int[] input = {3,3,3,3,4};
-		//[5,5,5,5,4,4,4,4,3,3,3,3]
-		//int[] input = {5,1,5,5,4,9,4,4,3,3,3,2};
-		boolean res = makesquare(input);
-		//System.out.println(res);
+	public void setText(String text) {
+		this.text = text;
+	}
+	
+	public void setPattern(String pattern) {
+		this.pattern = pattern;
+	}
+			
+	public void KMPMatcher() {
+		int n = text.length();
+		int m = pattern.length();
+		
+		int prefix[] = computePrefix();
+		for(int i: prefix)
+			System.out.print(i+" ");
+		int q=0;
+		for(int i=0;i<n;i++){
+			while(q>0 && text.charAt(i)!=pattern.charAt(q))
+					q = prefix[q-1];
+			if(text.charAt(i) == pattern.charAt(q))
+				q++;
+			if(q==m){
+				System.out.println();
+				q = prefix[q-1];
+			}
+		}
+	}
+	
+	private int[] computePrefix() {
+		int len = pattern.length();
+		int[] prefix = new int[len];
+		int k=0;
+		for(int i=1;i<len;i++){
+			while(k>0 && pattern.charAt(k)!=pattern.charAt(i)){
+				k = prefix[k-1];
+			}
+			if(pattern.charAt(k) == pattern.charAt(i))
+				k++;
+			prefix[i] = k;
+		}
+		return prefix;
+	}
+	
+	public static void main(String[] args) {
+		
+		//String ptrn = "aabaabaaa";    prefix[] = {0,1,0,1,2,3,4,5,2}
+		//另外一个对于理解prefix[]数组比较有帮助的例子：
+		//ptrn = "acacabacacabacacac",  prefic[] = {0,0,1,2,3,0,1,2,3,4,5,6,7,8,9,10,11,4}
+ 	    String ptrn = "abcaby";
+        String text = "abxabcabcaby";  
+		
+
+		Test kmp = new Test();
+		//kmp.setText("ababacabacbababababacabcbabababaca");
+//				kmp.setPattern("ababaca");
+		//kmp.setPattern("ababaca");
+		kmp.setPattern(ptrn);
+		kmp.setText(text);
+		kmp.KMPMatcher();
+		
 	}
 }
