@@ -5,7 +5,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+//Amazon Uber Facebook
+
 public class Subsets {
+	//time complexity O(2^n)
 	public List<List<Integer>> subsets(int[] nums) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
         res.add(new ArrayList<Integer>());
@@ -51,6 +54,12 @@ public class Subsets {
 //		}
 //	}
 	
+	//subsets II
+	//Facebook
+    /*
+     *  Given a collection of integers that might contain duplicates, nums, return all possible subsets.
+     *  Note: The solution set must not contain duplicate subsets.
+     * */
 	public List<List<Integer>> subsetsWithDup(int[] nums) {
 		List<List<Integer>> res = new ArrayList<List<Integer>>();
         res.add(new ArrayList<Integer>());

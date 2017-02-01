@@ -25,68 +25,55 @@ class TreeNode {
 //}
 
 public class Test {
-	private String text;
-	private String pattern;
+	int[] array;
+	int[] temparray;
+	int len;
+	public static void main(String a[]){
+        
+        int[] inputArr = {45,23,11,89,77,98,4,28,65,43,1,7,15};
+        Test mms = new Test();
+        mms.sort(inputArr);
+        for(int i:inputArr){
+            System.out.print(i);
+            System.out.print(" ");
+        }
+    }
 	
-	public void setText(String text) {
-		this.text = text;
+	public void sort(int[] input){
+		this.array = input;
+		this.len = input.length;
+		temparray = new int[len];
+		doMergeSort(0, len-1);
 	}
 	
-	public void setPattern(String pattern) {
-		this.pattern = pattern;
+	public void doMergeSort(int l, int h){
+		if(l<h){
+		int m = l+(h-l)/2;
+		doMergeSort(l, m);
+		doMergeSort(m+1, h);
+		merge(l, m, h);
+		}
 	}
-			
-	public void KMPMatcher() {
-		int n = text.length();
-		int m = pattern.length();
-		
-		int prefix[] = computePrefix();
-		for(int i: prefix)
-			System.out.print(i+" ");
-		int q=0;
-		for(int i=0;i<n;i++){
-			while(q>0 && text.charAt(i)!=pattern.charAt(q))
-					q = prefix[q-1];
-			if(text.charAt(i) == pattern.charAt(q))
-				q++;
-			if(q==m){
-				System.out.println();
-				q = prefix[q-1];
+	public void merge(int l, int m, int h){
+		for(int i=l;i<=h;i++){
+			this.temparray[i] = array[i];
+		}
+		int i=l;
+		int j=m+1;
+		int k=l;
+		while(i<=m && j<=h){
+			if(temparray[i]<temparray[j]){
+				array[k] = temparray[i];
+				i++;
+			}else{
+				array[k] = temparray[j];
+				j++;
 			}
+			k++;
+		}
+		while(i<=m){
+			array[k++] = temparray[i++];
 		}
 	}
 	
-	private int[] computePrefix() {
-		int len = pattern.length();
-		int[] prefix = new int[len];
-		int k=0;
-		for(int i=1;i<len;i++){
-			while(k>0 && pattern.charAt(k)!=pattern.charAt(i)){
-				k = prefix[k-1];
-			}
-			if(pattern.charAt(k) == pattern.charAt(i))
-				k++;
-			prefix[i] = k;
-		}
-		return prefix;
-	}
-	
-	public static void main(String[] args) {
-		
-		//String ptrn = "aabaabaaa";    prefix[] = {0,1,0,1,2,3,4,5,2}
-		//另外一个对于理解prefix[]数组比较有帮助的例子：
-		//ptrn = "acacabacacabacacac",  prefic[] = {0,0,1,2,3,0,1,2,3,4,5,6,7,8,9,10,11,4}
- 	    String ptrn = "abcaby";
-        String text = "abxabcabcaby";  
-		
-
-		Test kmp = new Test();
-		//kmp.setText("ababacabacbababababacabcbabababaca");
-//				kmp.setPattern("ababaca");
-		//kmp.setPattern("ababaca");
-		kmp.setPattern(ptrn);
-		kmp.setText(text);
-		kmp.KMPMatcher();
-		
-	}
 }

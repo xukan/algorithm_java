@@ -10,7 +10,7 @@ public class JumpGame {
 			int curStep = nums[i];
 			int local = i+curStep;
 			reach = Math.max(reach, local);
-			if(reach >= nums.length)
+			if(reach >= nums.length-1)
 				return true;
 		}
 		return false;
