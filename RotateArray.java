@@ -1,5 +1,7 @@
 package algorithm_java;
 
+//Microsoft Bloomberg
+
 public class RotateArray {
 	public static void reverse(int[] nums, int start, int end) {  
         while(start < end) {  
