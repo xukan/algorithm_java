@@ -1,6 +1,6 @@
 package algorithm_java;
 import java.util.*;
-/*
+/* integer n representing the total number of bits in the code
  * n位的格雷码由两部分构成，一部分是n-1位格雷码，再加上 1<<(n-1)和n-1位格雷码的倒序,注意理解这个倒序，
  * 举个例子，n=3时，前四个格雷码，自动继承n=2的，也就是[000,001,011,010],那么后四个格雷码，1<<2=100, 100和前四个格雷码从后往前相加得到110, 111,101,100
  * 
