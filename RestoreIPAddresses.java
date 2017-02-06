@@ -4,29 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RestoreIPAddresses {
-	// public List<String> restoreIpAddresses(String s) {
-	// List<String> res = new ArrayList<String>();
-	//
-	// helper(s, "", 0, 1, 0, res);
-	// return res;
-	// }
-	//
-	// public void helper(String s, String temp, int l, int r, int count,
-	// List<String> res){
-	// if(r==s.length()-1){
-	// res.add(temp);
-	// return;
-	// }
-	// if(count==4 && r<s.length()-1)
-	// return;
-	// for(int i=0;i<s.length();i++){
-	// int section = Integer.valueOf(s.substring(l, r));
-	// if(0<=section && section <=255)
-	// helper(s, temp+section+".", l++, r++, count++, res );
-	// l--;
-	// r--;
-	// }
-	// }
 	public List<String> restoreIpAddresses(String s) {
 		ArrayList<String> res = new ArrayList<String>();
 		String item = new String();
