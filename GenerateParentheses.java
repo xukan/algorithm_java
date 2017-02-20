@@ -5,6 +5,8 @@ package algorithm_java;
 import java.util.ArrayList;
 import java.util.List;
 
+//reference: https://discuss.leetcode.com/topic/65155/java-dfs-solution-beat-99-77
+
 public class GenerateParentheses {
 	
 	public List<String> generateParenthesis(int n) {  

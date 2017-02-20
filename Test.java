@@ -22,47 +22,47 @@ class TreeNode {
 //}
 
 public class Test {
-	public ListNode reverseBetween(ListNode head, int m, int n) {
-        if(head ==null || head.next ==null )
-            return head;
-        ListNode dummy=new ListNode(-1);
-        dummy.next = head;
-        ListNode node = head;
-        ListNode slow = dummy, fast = dummy;
-        for(int i=1;i<m;i++)
-            slow = slow.next;
-        for(int i=0;i<n;i++) 
-            fast = fast.next;
-        /*             1      2      3     4     5
-         * dumy ->1 ->  2 -> 3 -> 4 -> 5
-         *             s      tail           f
-         * */
-        ListNode tail = slow.next;
-        slow.next = fast;
-        slow = tail;
-        tail = tail.next;
-        slow.next= fast.next;
-        for(int i=m;i<n;i++){
-            ListNode next = tail.next;
-            tail.next = slow;
-            slow =tail;
-            tail = next;
+	public List<List<String>> partition(String s) {
+        List<List<String>> res = new ArrayList<List<String>>();
+        List<String> temp = new ArrayList<String>();
+        helper(s, 0, temp, res);
+        return res;
+    }
+    
+    public void helper(String s, int start, List<String> temp, List<List<String>> res){
+        if(start == s.length()){
+            res.add(new ArrayList<String>(temp));
+            return;
         }
-        return dummy.next;
+        for(int i=start;i<s.length();i++){
+            if(isValid(s.substring(0, start))){
+                temp.add(s.substring(0, start));
+                helper(s.substring(start+1), i, temp, res);
+                temp.remove(temp.size()-1);
+            }
+        }
+    }
+    
+    public boolean isValid(String s){
+        int i=0, j=s.length()-1;
+        while(i<j){
+            if(s.charAt(i)==s.charAt(j)){
+            	i++;
+            	j--;
+            }else
+                return false;
+        }
+        return true;
     }
 	
-	public static void main(String[] args){
-		ListNode head = new ListNode(1);
-		head.next = new ListNode(2);
-		head.next.next = new ListNode(3);
-		head.next.next.next = new ListNode(4);
-		head.next.next.next.next = new ListNode(5);
-		//head = reverseList(head);
-		Test s = new Test();
-		head = s.reverseBetween(head, 2,4);
-		while(head!=null){
-			System.out.println(head.val);
-			head = head.next;
-		}
-	}
+    public static void main(String[] args){
+    	String input = "aabaa";
+    	Test s = new Test();
+    	List<List<String>> res=s.partition(input);
+    	for(List<String> l:res){  
+    		for(String ss : l)
+    			System.out.print(ss+" ");
+    		System.out.println();
+    	}
+    }
 }

@@ -2,6 +2,7 @@ package algorithm_java;
 
 import java.util.ArrayList;
 import java.util.List;
+//Bloomberg
 
 public class PalindromePartitioning {
 	public List<List<String>> partition(String s) {
@@ -42,6 +43,44 @@ public class PalindromePartitioning {
     	return true;
     }
     
+    //Palindrome Partitioning II
+    /*这道题需要先明确判断回文需要满足的条件
+     * 1.  s.charAt(i) == s.charAt(j) 而且i-j<=1(i,j两个字符或者相邻或者重合)
+     * 2.  s.charAt(i) == s.charAt(j) && dp[j+1][i-1]==true, 举个例子 ab.......bc
+     *                                                                                               i        j 
+     *数组cut,cut[i]表示从第0位置到第位置的切割数，这个数字初始值就是cut[i]=i,
+     *表示初始时， 最坏情况的切割数                                                                                             
+     * */
+    
+    public int minCut(String s) {
+        int n = s.length();
+        //dp[i][j]表示字符串[i,j]从第i个位置（包含）到第j个位置（包含） 是否是回文。
+    	boolean dp[][] = new boolean[n][n];
+    	int cut[] = new int[n];
+    	for (int i = 0; i < n; i++) 
+    		cut[i] = i; //set maximum # of cut
+    	
+    	for (int i = 0; i < n; i++) {
+    		//cut[i] = i; //set maximum # of cut
+    		for (int j = 0; j <= i; j++) {
+    			//j must be less than i
+    			if (s.charAt(j) == s.charAt(i) && (i - j <= 1 || dp[j+1][i-1])) {
+    				dp[j][i] = true;
+     
+    				// if need to cut, add 1 to the previous cut[i-1]
+    				if (j > 0){
+    					cut[i] = Math.min(cut[i], cut[j-1] + 1);
+    				}else{
+    				// if [0...i] is palindrome, no need to cut    
+    					cut[i] = 0; 
+    				}	
+    			}
+    		}
+    	}
+     
+    	return cut[n-1];
+    }
+    
     public static void main(String[] args){
     	//String input = "aabaa";
     	String input = "aaaba";
@@ -52,5 +91,8 @@ public class PalindromePartitioning {
     			System.out.print(ss+" ");
     		System.out.println();
     	}
+    	
+    	int cut = s.minCut(input);
+    	System.out.println(cut);
     }
 }
