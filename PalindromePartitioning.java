@@ -44,6 +44,9 @@ public class PalindromePartitioning {
     }
     
     //Palindrome Partitioning II
+    //reference:
+    //http://www.programcreek.com/2014/04/leetcode-palindrome-partitioning-ii-java/
+    //http://www.cnblogs.com/springfor/p/3891896.html
     /*这道题需要先明确判断回文需要满足的条件
      * 1.  s.charAt(i) == s.charAt(j) 而且i-j<=1(i,j两个字符或者相邻或者重合)
      * 2.  s.charAt(i) == s.charAt(j) && dp[j+1][i-1]==true, 举个例子 ab.......bc
@@ -91,8 +94,8 @@ public class PalindromePartitioning {
     			System.out.print(ss+" ");
     		System.out.println();
     	}
-    	
-    	int cut = s.minCut(input);
+    	String input2 = "caaaba";
+    	int cut = s.minCut(input2);
     	System.out.println(cut);
     }
 }

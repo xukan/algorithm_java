@@ -3,6 +3,8 @@ package algorithm_java;
 import java.util.HashSet;
 import java.util.Set;
 
+//Amazon Adobe Bloomberg Yelp
+
 public class LongestSubstringWithoutRepeatingCharacters {
 	public int lengthOfLongestSubstring(String s) {
 		int slow=0, fast =0, maxLen = 0;

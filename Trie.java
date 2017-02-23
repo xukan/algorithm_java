@@ -112,6 +112,7 @@ public class Trie {
     
     public static void main(String[] args) {  
         Trie trie = new Trie();  
+        trie.search("a");
         trie.insert("ball");  
         trie.insert("balls");  
         trie.insert("sense");  
