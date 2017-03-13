@@ -10,8 +10,8 @@ public class MergekSortedLists {
     public ListNode mergeSort(int l, int h, ListNode[] lists){
         if(l<h){
             int m=l+ (h-l)/2;
-            ListNode node1=mergeSort(l, m, lists);
-            ListNode node2=mergeSort(m+1, h, lists);
+            ListNode node1=mergeSort(l, m, lists);  // here, we cannot use (l, m-1), since m-1 might equal -1, list[-1] is unreasonable.
+            ListNode node2=mergeSort(m+1, h, lists);  
             return merge(node1, node2);
         }
         return lists[l];

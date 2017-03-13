@@ -85,12 +85,12 @@ public class Subsets {
 		//subsets
 		int[] nums = {1,2,3};
 		Subsets s = new Subsets();
-//		List<List<Integer>> res1 = s.subsets(nums);
-//    	for(List<Integer> i:res1){
-//			for(int j:i)
-//				System.out.print(j+" ");
-//			System.out.println();
-//    	}
+		List<List<Integer>> res1 = s.subsets(nums);
+    	for(List<Integer> i:res1){
+			for(int j:i)
+				System.out.print(j+" ");
+			System.out.println();
+    	}
     	
 		//subsetsII, with duplicated data
     	int[] nums1 = {1,2,2};

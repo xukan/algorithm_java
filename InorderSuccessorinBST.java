@@ -15,7 +15,27 @@ package algorithm_java;
  * }
  */
 public class InorderSuccessorinBST {
+	
+	//Time is O(log(n)) and space is O(1).
 	public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
-        
+        if(root == null || p == null)
+        	return null;
+        TreeNode cur = root;
+        TreeNode next = null;
+        while(p.val !=cur.val){
+        	if(p.val < cur.val){
+        		next = cur;
+        		cur = cur.left;
+        	}else
+        		cur = cur.right;
+        }
+        if(cur==null )
+        	return null;
+        if(cur.right == null)
+        	return next;
+        cur = cur.right;
+        while(cur.left!=null)
+        	cur = cur.left;
+        return cur;
     }
 }

@@ -1,5 +1,7 @@
 package algorithm_java;
 
+//Amazon Microsoft Bloomberg
+
 public class LongestPalindromicSubstring {
 	public String longestPalindrome(String s) {
 		int l = 0, r = s.length()-1;

@@ -1,5 +1,7 @@
 package algorithm_java;
 
+//Facebook Twitter
+
 public class MultiplyStrings {
 	public String multiply(String num1, String num2) {
         num1 = reverse(num1);

@@ -3,6 +3,8 @@ package algorithm_java;
 import java.util.HashMap;
 import java.util.Map;
 
+//Google Facebook
+
 public class LongestConsecutiveSequence {
 	public int longestConsecutive(int[] nums) {
 		int len = nums.length;

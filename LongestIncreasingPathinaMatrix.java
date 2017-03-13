@@ -1,5 +1,16 @@
 package algorithm_java;
 
+//Google
+
+/*reference: https://discuss.leetcode.com/topic/34835/15ms-concise-java-solution/17
+ * 
+ * The DFS here is basically like DP with memorization. Every cell that has been computed will not be computed again, 
+ * only a value look-up is performed. So this is O(mn), m and n being the width and height of the matrix.
+ * To be exact, each cell can be accessed 5 times at most: 4 times from the top, bottom, left and right and one time from the outermost double for loop. 
+ * 4 of these 5 visits will be look-ups except for the first one. So the running time should be lowercase o(5mn), which is of course O(mn).
+ * 
+ * */
+
 public class LongestIncreasingPathinaMatrix {
 //	public int longestIncreasingPath(int[][] matrix) {
 //        if( matrix == null || matrix.length == 0)

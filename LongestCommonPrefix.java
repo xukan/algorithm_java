@@ -1,5 +1,7 @@
 package algorithm_java;
 
+//yelp
+
 public class LongestCommonPrefix {
 	//my solution
 	//first, we get the length of shortest string

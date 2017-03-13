@@ -36,9 +36,8 @@ public class PartitionEqualSubsetSum {
 	    
 	    for (int i = 1; i < n+1; i++) {
 	        for (int j = 1; j <= sum/2; j++) {
-	            dp[i][j] = dp[i-1][j];
-	            if (j >= nums[i-1]) {
-	                dp[i][j] = (dp[i][j] || dp[i-1][j-nums[i-1]]);
+	            if (nums[i-1] <= j) {
+	                dp[i][j] = (dp[i-1][j] || dp[i-1][j-nums[i-1]]);
 	            }
 	        }
 	    }
