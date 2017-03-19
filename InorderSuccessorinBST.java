@@ -1,5 +1,7 @@
 package algorithm_java;
 
+import java.util.Stack;
+
 /*
  * Pocket Gems Microsoft Facebook
  * Given a binary search tree and a node in it, find the in-order successor of that node in the BST.
@@ -38,4 +40,39 @@ public class InorderSuccessorinBST {
         	cur = cur.left;
         return cur;
     }
+	
+	//similar question is Binary Search Tree Iterator
+	public class BSTIterator {
+	    Stack<TreeNode> stack;
+	    public BSTIterator(TreeNode root) {
+	        stack = new Stack<TreeNode>();
+	        TreeNode cur = root;
+	        while(cur!=null){
+	            stack.push(cur);
+	            cur = cur.left;
+	        }
+	    }
+
+	    /** @return whether we have a next smallest number */
+	    public boolean hasNext() {
+	        return !stack.isEmpty();
+	    }
+
+	    /** @return the next smallest number */
+	    public int next() {
+	        if(!stack.isEmpty()){
+	        TreeNode node = stack.pop();
+	        int res = node.val;
+	        if(node.right!=null){
+	            node = node.right;
+	            while(node!=null){
+	                stack.push(node);
+	                node= node.left;
+	            }
+	        }
+	        return res;
+	        }
+	        return 0;
+	    }
+	}
 }
