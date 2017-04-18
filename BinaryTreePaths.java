@@ -15,6 +15,8 @@ import java.util.List;
  *     7     2            1 
  * */
 
+//similar questions: PathSumI, II, III, 
+
 public class BinaryTreePaths {
 	
 	List<String> res = new ArrayList<String>();

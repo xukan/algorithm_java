@@ -1,13 +1,17 @@
 package algorithm_java;
 
 
-/*      1
-	  /     \
-	2       3
-   /  \     / 
-  4   5  6
-      / \
-     7  8     */
+
+/*
+ *              5
+ *           /      \
+ *          4       8
+ *         /       /    \
+ *       11     13    4
+ *      /    \             \
+ *     7     2            1 
+ * */
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -19,95 +23,45 @@ import java.util.PriorityQueue;
 import java.util.Stack;
 
 public class Test {
-	HashMap<Integer, Node> map;
-    Node head;
-    Node end;
-    int size;
-    
-    class Node{
-        int key;
-        int val;
-        Node pre;
-        Node next;
-        Node(int k, int v){
-            this.key= k;
-            this.val = v;
-        }
-    }
-    
-    public Test(int capacity) {
-        this.map = new HashMap<Integer, Node>();
-        this.size = capacity;
-        head = null;
-        end = null;
-    }
-    
-    public int get(int key) {
-        if(map.containsKey(key)){
-            Node n = map.get(key);
-            if(map.size()>1){
-	            remove(n);
-	            setHead(n);
+	public static int lengthOfLIS(int[] nums) {
+        if(nums.length==0)
+            return 0;
+        int len = nums.length;
+        int[] tails = new int[len];
+        tails[0] = nums[0];
+        int i=0;
+        for(int j=1;j<len;j++){
+            if(nums[j]<tails[0])
+                tails[0] = nums[j];
+            else if(nums[j]>=tails[i])
+                tails[++i] = nums[j];
+            else{
+                int pos = binarySearch(nums, 0, i, nums[j]);
+                tails[pos] = nums[j];
             }
-            return n.val;
         }
-        return -1;
+        for(int k: tails)
+        	System.out.print(k+" ");
+        System.out.println();
+        return i+1;
     }
     
-    public void setHead(Node node){
-        node.next = head;
-        node.pre = null;
-        if(head!=null)
-            head.pre = node;
-        head = node;
-        if(end == null)
-            end = head;
-    }
-    
-    public void remove(Node node){
-        if(node.pre!=null)
-            node.pre.next = node.next;
-        else
-            head = node.next;
-        if(node.next != null)
-            node.next.pre = node.pre;
-        else
-            end = node.pre;
-    }
-    
-    public void put(int key, int value) {
-        Node node = new Node(key, value);
-        if(!map.containsKey(key)){
-            if(map.size()>=size){
-                map.remove(end.key);
-                remove(end);
-            }
-            setHead(node);
-        }else{
-            Node old = map.get(key);
-            remove(old);
-            setHead(node);
+    public static int binarySearch(int[] nums, int l, int r, int target){
+        while(l<r){
+            int m = l+ (r-l)/2;
+            if(nums[m]<target){
+                l = m + 1;
+            }else
+                r = m ;
         }
-        map.put(key, node);
-//        Node h = head;
-//        System.out.println( "dnode: ");
-//        while(h!=null){
-//        	System.out.print(h.val+" ");
-//        	h = h.next;
-//        }
-//        System.out.println();
+        return r;
     }
-    
-    public static void main(String[] args) {
-    	Test cache= new Test(2);
-    	cache.put(2, 1);
-    	cache.put(2, 2);
-    	System.out.println(cache.get(2));       // returns 1
-    	cache.put(1, 1);    // evicts key 2
-    	
-    	cache.put(4, 1);    // evicts key 1
-    	System.out.println(cache.get(2));       // returns -1 (not found)
-
-
+	
+	public static void main(String[] args) {
+		int[] input = {1,3,6,7,9,4,10,5,6};
+		//int[] input = {11,12,13,14,15,6,7,8,101,18};
+		//int[] input ={3,5,6,2,5,4,19,5,6,7,12};
+		int res = lengthOfLIS(input);
+		System.out.println(res);
 	}
 }

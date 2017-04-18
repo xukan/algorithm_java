@@ -26,6 +26,7 @@ public class ImplementstrStr {
     }
     
     public static int[] computePrefix(String pattern){
+    	//the array helps keep track of if suffix is prefix
         int len = pattern.length();
         int[] prefix = new int[len];
         int i=0;
@@ -41,8 +42,10 @@ public class ImplementstrStr {
     }
     
     public static void main(String[] args) {
-		String text = "mississippi";
-		String pattern = "issip";
+//		String text = "mississippi";
+//		String pattern = "issip";
+		String text = "abxabcabcaby";
+		String pattern = "abcaby";
 		int res = strStr(text, pattern);
 		System.out.println(res);
 	}

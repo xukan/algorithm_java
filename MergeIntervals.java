@@ -6,6 +6,9 @@ import java.util.Collections;
 import java.util.List;
 
 //LinkedIn Google Facebook Twitter Microsoft Bloomberg Yelp
+
+//similar : meeting rooms II
+
 //class Interval {
 //	int start;
 //	int end;

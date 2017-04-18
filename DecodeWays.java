@@ -3,7 +3,6 @@ package algorithm_java;
 //Microsoft Uber Facebook
 //It is similar to the problem of counting ways of climbing stairs. The relation is dp[n]=dp[n-1]+dp[n-2].
 
-
 //建立一个长度为input.length()的一维dp[]，依次考察（这里不能说每一位，因为每一次也要看两位）,分两种情况：
 //1:考察第i位，如果字符c满足1<=c<=26,dp[i]=dp[i-1](与dp[i]+=dp[i-1]效果相同);
 //2:考察第i-1到第i位(也就是看两位数)，如果满足编码条件，dp[i] += dp[i-2];
