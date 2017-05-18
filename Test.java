@@ -23,45 +23,101 @@ import java.util.PriorityQueue;
 import java.util.Stack;
 
 public class Test {
-	public static int lengthOfLIS(int[] nums) {
-        if(nums.length==0)
-            return 0;
-        int len = nums.length;
-        int[] tails = new int[len];
-        tails[0] = nums[0];
-        int i=0;
-        for(int j=1;j<len;j++){
-            if(nums[j]<tails[0])
-                tails[0] = nums[j];
-            else if(nums[j]>=tails[i])
-                tails[++i] = nums[j];
-            else{
-                int pos = binarySearch(nums, 0, i, nums[j]);
-                tails[pos] = nums[j];
-            }
-        }
-        for(int k: tails)
-        	System.out.print(k+" ");
-        System.out.println();
-        return i+1;
+	void preorderMorrisTraversal(TreeNode root) {
+		if(root.left ==null){
+			System.out.println(root.val);
+			root = root.right;
+		}else{
+			TreeNode temp = root.left;
+			while(temp.right!=null && temp.right != root){
+				temp = temp.right;
+			}
+			if(temp.right ==null){
+				System.out.println(root.val);
+				temp.right = root;
+				root = root.left;
+			}else{
+				temp.right = null;
+				root = root.right;
+			}
+		}
     }
     
-    public static int binarySearch(int[] nums, int l, int r, int target){
-        while(l<r){
-            int m = l+ (r-l)/2;
-            if(nums[m]<target){
-                l = m + 1;
-            }else
-                r = m ;
-        }
-        return r;
+	public List<List<Integer>> fourSum(int[] nums, int target) {
+		List<List<Integer>> res = new ArrayList<List<Integer>>();
+		Arrays.sort(nums);
+		int len=nums.length-1;
+		if(nums[0]*4>target || nums[len]*4<target)
+			return res;
+		for(int i=0;i+3<len;i++){
+			if(i>0 && nums[i] == nums[i-1])
+				continue;
+			if(nums[i]+3*nums[len]<target)
+				continue;
+			if(4*nums[i] == target && nums[i+3]==nums[i])
+				res.add(Arrays.asList(nums[i], nums[i],nums[i],nums[i] ));
+			threeSum(nums, target-nums[i], i+1, len, nums[i], res);
+		}
+		return res;
     }
 	
-	public static void main(String[] args) {
-		int[] input = {1,3,6,7,9,4,10,5,6};
-		//int[] input = {11,12,13,14,15,6,7,8,101,18};
-		//int[] input ={3,5,6,2,5,4,19,5,6,7,12};
-		int res = lengthOfLIS(input);
-		System.out.println(res);
+	public void threeSum(int[] nums, int target, int l, int r, int z1, List<List<Integer>> res){
+		if(nums[l]*3>target || nums[r]*3<target)
+			return;
+		int i, z;
+		for(i=l;i+2<=r;i++){
+			z=nums[i];
+			if(i>0 && nums[i] == nums[i-1])
+				continue;
+			if(z+2*nums[r]<target)
+				continue;
+			if(3*nums[i] == target && nums[i+2] == nums[i])
+				res.add(Arrays.asList(nums[i], nums[i],nums[i] ));
+			twoSum(nums, target-z, i+1, r, z1, z, res);
+		}
+	}
+	
+	public void twoSum(int[] nums, int target, int l, int r, int z1,int z2, List<List<Integer>> res){
+		if(nums[l]*2>target || nums[r]*2<target)
+			return;
+		int x;
+		int sum=0;
+		while(l<r){
+			sum = nums[l]+nums[r];
+			if(sum==target)
+				res.add(Arrays.asList(z1,z2, nums[l], nums[r]));
+			else{
+				x = nums[l];
+				while (++l< r && x == nums[l]) // avoid duplicate
+					;
+				x = nums[r];
+				while (l < --r && x == nums[r]) // avoid duplicate
+					;
+			}
+			if (sum < target)
+				l++;
+			if (sum > target)
+				r--;
+		}
+	}
+	
+    public static void main(String[] args){
+		TreeNode node1 = new TreeNode(1);
+		TreeNode node2 = new TreeNode(2);
+		TreeNode node3 = new TreeNode(4);
+		TreeNode node4 = new TreeNode(3);
+//		TreeNode node5 = new TreeNode(5);
+//		TreeNode node6 = new TreeNode(6);
+//		TreeNode node7 = new TreeNode(7);
+		node1.left =node2;
+		node1.right = node3;
+		node2.left = node4;
+//		node2.right = node5;
+//		node3.left = node6;
+//		node3.right = node7;
+		Test s = new Test();
+		int[] nums = {1,2,3};
+		List<List<Integer>>res = s.permute(nums);
+		
 	}
 }

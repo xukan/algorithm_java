@@ -17,75 +17,61 @@ import java.util.LinkedList;
 
 public class SerializeandDeserializeBinaryTree {
 	//Solution 1 : level order
-	// Encodes a tree to a single string.
-	public String serialize(TreeNode root) {
-	    if(root==null){
-	        return "";
-	    }
-	 
-	    StringBuilder sb = new StringBuilder();
-	 
-	    LinkedList<TreeNode> queue = new LinkedList<TreeNode>();
-	 
-	    queue.add(root);
-	    while(!queue.isEmpty()){
-	        TreeNode t = queue.poll();
-	        if(t!=null){
-	            sb.append(String.valueOf(t.val) + ",");
-	            queue.add(t.left);
-	            queue.add(t.right);
-	        }else{
-	            sb.append("#,");
-	        }
-	    }
-	 
-	    sb.deleteCharAt(sb.length()-1);
-	    System.out.println(sb.toString());
-	    return sb.toString();
-	}
-	 
-	// Decodes your encoded data to tree.
-	public TreeNode deserialize(String data) {
-	    if(data==null || data.length()==0)
+	
+	LinkedList<TreeNode> queue = new LinkedList<TreeNode>();
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        if(root == null)
+            return "";
+        queue.clear();
+        queue.offer(root);
+        StringBuilder sb = new StringBuilder();
+        while(!queue.isEmpty()){
+            TreeNode node = queue.poll();
+            if(node!=null){
+                sb.append(node.val).append(",");
+                queue.offer(node.left);
+                queue.offer(node.right);
+            }else
+                sb.append("#,");
+        }
+        sb.deleteCharAt(sb.length()-1);
+        System.out.println(sb.toString());
+        return sb.toString();
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        if(data==null || data.length()==0)
 	        return null;
-	 
-	    String[] arr = data.split(",");
-	    TreeNode root = new TreeNode(Integer.parseInt(arr[0]));
-	 
-	 
-	    LinkedList<TreeNode> queue = new LinkedList<TreeNode>();
-	    queue.add(root);
-	 
-	    int i=1;
-	    while(!queue.isEmpty()){
-	        TreeNode t = queue.poll();
-	 
-	        if(t==null)
-	            continue;
-	 
-	        if(!arr[i].equals("#")){
-	            t.left = new TreeNode(Integer.parseInt(arr[i]));    
-	            queue.offer(t.left);
-	 
-	        }else{
-	            t.left = null;
-	            queue.offer(null);
-	        }
-	        i++;
-	 
-	        if(!arr[i].equals("#")){
-	            t.right = new TreeNode(Integer.parseInt(arr[i]));    
-	            queue.offer(t.right);
-	 
-	        }else{
-	            t.right = null;
-	            queue.offer(null);
-	        }
-	        i++;
-	    }
-	 
-	    return root;
-	}
+        queue.clear();
+        String[] array = data.split(",");
+        TreeNode root = new TreeNode(Integer.parseInt(array[0]));
+        int i=1;
+        queue.offer(root);
+        while(!queue.isEmpty()){
+            TreeNode node = queue.poll();
+            // if(node==null)
+            //     continue;
+            if(!array[i].equals("#")){
+                TreeNode left = new TreeNode(Integer.parseInt(array[i]));
+                node.left= left;
+                queue.offer(left);
+            }else{
+                node.left = null;
+            }
+            i++;
+            if(!array[i].equals("#")){
+                TreeNode right = new TreeNode(Integer.parseInt(array[i]));
+                node.right =right;
+                queue.offer(right);
+            }else{
+                node.right = null;
+            }
+            i++;
+        }
+        return root;
+    }
 
     
     public static void main(String[] args) {
@@ -109,6 +95,6 @@ public class SerializeandDeserializeBinaryTree {
 		 node3.right = node7;
 		 node5.left = node8;
 		 node5.right = node9;
-    	s.deserialize(s.serialize(root));
+    	s.deserialize(s.serialize(root)); 
 	}
 }

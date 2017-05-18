@@ -27,26 +27,27 @@ b) 如果前驱节点的右孩子为当前节点，表明左子树已经访问�
 
 
 public class BinaryTreeInorderTraversal {
+	//Recover Binary Search Tree is also based on inorder traversal
 	public static List<Integer> inorderTraversal(TreeNode root) {
 		//Morris  Traversal Algorithm
 		//Time Complexity: O(n)
 		//Space Complexity: O(1)
         List<Integer> res = new ArrayList<Integer>();
-        TreeNode cur = root, prev = null;
+        TreeNode cur = root, temp = null;
         while(cur!=null){
             if(cur.left == null){
                 res.add(cur.val);
                 cur = cur.right;
             }else{
-                prev = cur.left;
-                while(prev.right!=null && prev.right !=cur){
-                    prev = prev.right;
+                temp = cur.left;
+                while(temp.right!=null && temp.right !=cur){
+                    temp = temp.right;
                 }
-                if(prev.right==null){
-                    prev.right = cur;
+                if(temp.right==null){
+                    temp.right = cur;
                     cur = cur.left;
                 }else{
-                    prev.right = null;
+                    temp.right = null;
                     res.add(cur.val);
                     cur = cur.right;
                 }
@@ -79,5 +80,4 @@ public class BinaryTreeInorderTraversal {
 			 System.out.print(i+" ");
 		 System.out.println();
 	} 
-	
 }
