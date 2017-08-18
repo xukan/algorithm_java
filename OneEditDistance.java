@@ -40,20 +40,18 @@ public class OneEditDistance {
 	            }
 	        }
 	    }
-	 
 	    if(i<m||j<n){
 	        count++;
 	    }
-	 
 	    if(count==1)
 	        return true;
-	 
 	    return false;
     }
+
 	
 	public static void main(String[] args) {
-		String s="a";
-		String t="";
+		String s="ac";
+		String t="b";
 		boolean res = isOneEditDistance(s, t);
 		System.out.println(res);
 	}

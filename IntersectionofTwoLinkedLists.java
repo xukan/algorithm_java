@@ -1,5 +1,7 @@
 package algorithm_java;
 
+//Amazon Microsoft Bloomberg Airbnb 
+
 public class IntersectionofTwoLinkedLists {
 	public static ListNode getIntersectionNode(ListNode headA, ListNode headB) {
         if(headA==null || headB==null)

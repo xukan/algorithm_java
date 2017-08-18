@@ -6,6 +6,7 @@ import java.util.Map;
 //Google Facebook
 
 public class LongestConsecutiveSequence {
+	//solutionI, union find, tc: n+mO(logn)
 	public int longestConsecutive(int[] nums) {
 		int len = nums.length;
 		Map<Integer, Integer> map = new HashMap();
@@ -66,70 +67,34 @@ public class LongestConsecutiveSequence {
 			return highestRank;
 		}
 	}
-//	public int longestConsecutive(int[] nums) {
-//        final int length = nums.length;
-//        if (length <= 1) return length;
-//        
-//        final Map<Integer, Integer> elementIndexMap = new HashMap();
-//        final UnionFind uf = new UnionFind(length);
-//        for (int p = 0; p < length; p++) {
-//            final int i = nums[p];
-//            if (elementIndexMap.containsKey(i)) continue;
-//            if (elementIndexMap.containsKey(i+1)) uf.union(p, elementIndexMap.get(i+1));
-//            if (elementIndexMap.containsKey(i-1)) uf.union(p, elementIndexMap.get(i-1));
-//            elementIndexMap.put(i, p);
-//        }
-//        return uf.getHighestRank();
-//    }
-//    
-//    private final class UnionFind {
-//        final private int[] sequenceTree;
-//        final private int[] rank;
-//        private int highestRank;
-//        
-//        UnionFind(int length) {
-//            sequenceTree = new int[length];
-//            rank = new int[length];
-//            highestRank = 1;
-//            for (int i = 0; i < length; i++) {
-//                sequenceTree[i] = i;
-//                rank[i] = 1;
-//            }
-//        }
-//        
-//        void union(int p, int q) {
-//            final int pId = find(p); final int qId = find(q);
-//            
-//            if (pId == qId) return;
-//            
-//            int localHighestRank = 1;
-//            if (rank[pId] < rank[qId]) {
-//                sequenceTree[pId] = qId;
-//                rank[qId] += rank[pId];
-//                localHighestRank = rank[qId];
-//            } else {
-//                sequenceTree[qId] = pId;
-//                rank[pId] += rank[qId];
-//                localHighestRank = rank[pId];
-//            }
-//            highestRank = Math.max(highestRank, localHighestRank);
-//        }
-//        
-//        int find(int p) {
-//            while (p != sequenceTree[p]) {
-//                sequenceTree[p] = sequenceTree[sequenceTree[p]];
-//                p = sequenceTree[p];
-//            }
-//            return p;
-//        }
-//        
-//        int getHighestRank() { return highestRank; }
-//    }
+
+	
+	//solutionII, tc: O(n)
+	public int longestConsecutive_better(int[] nums) {
+        Map<Integer,Integer> ranges = new HashMap<>();
+        int max = 0;
+        for (int num : nums) {
+            if (ranges.containsKey(num)) continue;
+            
+            // 1.Find left and right num
+            int left = ranges.getOrDefault(num - 1, 0);
+            int right = ranges.getOrDefault(num + 1, 0);
+            int sum = left + right + 1;
+            max = Math.max(max, sum);
+            
+            // 2.Union by only updating boundary
+            // Leave middle k-v dirty to avoid cascading update
+            if (left > 0) ranges.put(num - left, sum);
+            if (right > 0) ranges.put(num + right, sum);
+            ranges.put(num, sum); // Keep each number in Map to de-duplicate
+        }
+        return max;
+    }
 	
 	public static void main(String[] args) {
 		LongestConsecutiveSequence s = new LongestConsecutiveSequence();
-		int[] nums = {0,0};
-		int res = s.longestConsecutive(nums);
+		int[] nums = {100, 4, 200, 1, 3, 2};
+		int res = s.longestConsecutive_better(nums);
 		System.out.println( res);
 	}
 }

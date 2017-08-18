@@ -1,33 +1,34 @@
 package algorithm_java;
-//这道题必须声明p1和p2, p1=l1, p2=l2, 否则会超时的
+
+//Amazon Microsoft Bloomberg Airbnb Adobe 
+
+//similar question
+//Add Two Numbers II
 public class AddTwoNumbers {	
 	public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-		int carry =0;
-		 
-        ListNode newHead = new ListNode(0);
-        ListNode p1 = l1, p2 = l2, p3=newHead;
- 
-        while(p1 != null || p2 != null){
-            if(p1 != null){
-                carry += p1.val;
-                p1 = p1.next;
+        ListNode n= new ListNode(0);
+        ListNode newHead = n;
+        int carry = 0;
+        while(l1!=null || l2 != null){
+            if(l1!=null){
+                carry += l1.val;
+                l1 = l1.next;
             }
- 
-            if(p2 != null){
-                carry += p2.val;
-                p2 = p2.next;
+            if(l2!=null){
+                carry += l2.val;
+                l2 = l2.next;
             }
- 
-            p3.next = new ListNode(carry%10);
-            p3 = p3.next;
-            carry /= 10;
+            ListNode node = new ListNode(carry % 10);
+            n.next = node;
+            n = n.next;
         }
- 
-        if(carry==1) 
-            p3.next=new ListNode(1);
- 
+        if(carry!=0){
+            ListNode node = new ListNode(carry);
+            n.next = node;
+        }
         return newHead.next;
     }
+	
 	
 	public static void main(String[] args) {
 		ListNode node1 = new ListNode( 9 );

@@ -2,7 +2,7 @@ package algorithm_java;
 
 //Bloomberg
 //similar to Symmetric Tree
-//similar to 
+//similar to Subtree of Another Tree
 
 public class SameTree {
 	public boolean isSameTree(TreeNode p, TreeNode q) {

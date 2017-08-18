@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 //BFS to find the shortest path
-//From each word, we can change its letter one by one, thus a bread first search tree is constructed. 
+//From each word, we can change its letter one by one, thus a breadth first search tree is constructed. 
 //The problem becomes to find the shortest path from the start word to the end word. 
 //A bread first search (BFS) algorithm can be used as it guarantees the path is the shortest.
 
@@ -62,7 +62,5 @@ public class WordLadder {
 		int res = ladderLength(start, end, dict);
 		
 		System.out.println(res);
-
 	} 
-	
 }

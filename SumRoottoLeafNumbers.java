@@ -20,27 +20,49 @@ public class SumRoottoLeafNumbers {
 //        return lsum + rsum;
 //    }
     
+//	int sum = 0;
+//    public int sumNumbers(TreeNode root) {
+//        if(root==null)
+//            return 0;
+//        helper(root, 0);
+//        return sum;
+//    }
+//    
+//    public void helper(TreeNode node, int v){
+//        if(node.left==null &&node.right == null){
+//            sum = sum + v+node.val;
+//            return;
+//        }
+//        v+=node.val;
+//        if(node.left!=null){
+//            helper(node.left, 10*v);
+//        }
+//        if(node.right!=null){
+//            helper(node.right, 10*v);
+//        }
+//    }
+	
 	int sum = 0;
     public int sumNumbers(TreeNode root) {
-        if(root==null)
+        if(root == null)
             return 0;
         helper(root, 0);
         return sum;
     }
     
-    public void helper(TreeNode node, int v){
-        if(node.left==null &&node.right == null){
-            sum = sum + v+node.val;
+    public void helper(TreeNode node, int val){
+        if(node.left == null && node.right == null){
+            sum += 10*val + node.val;
             return;
         }
-        v+=node.val;
         if(node.left!=null){
-            helper(node.left, 10*v);
+            helper(node.left, 10*val + node.val);
         }
         if(node.right!=null){
-            helper(node.right, 10*v);
+            helper(node.right, 10*val +node.val);
         }
     }
+	
 	
     public static void main(String[] args) {
     	TreeNode root = new TreeNode(1);

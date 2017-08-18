@@ -5,6 +5,9 @@ import java.util.Stack;
 
 //Facebook
 
+//see Largest Rectangular Area in a Histogram
+// in above question, since every bar is pushed and popped only once, the time complexity of this method is O(n).
+//tc: O(mn)
 public class MaximalRectangle {
 	public static int maximalRectangle(char[][] matrix) {
         if(matrix==null || matrix.length == 0)

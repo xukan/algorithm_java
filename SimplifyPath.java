@@ -50,22 +50,18 @@ public class SimplifyPath  {
             }  
         }  
         //这个循环是应对输入为"/"这种情况的  
-        if(stack.isEmpty()){  
-            stack.push("");  
-        }  
-        StringBuilder sb = new StringBuilder("");  
-        while(!stack.isEmpty()){  
-            sb.append("/").append(stack.removeLast());  //removeLast()函数就可以解决顺序问题
-        }
-        return sb.toString(); 
+        String res = "";
+        for (String dir : stack) res = "/" + dir + res;
+        return res.isEmpty() ? "/" : res;
     }
 	
 	public static void main(String[] args) {
-		String initialPath = "/a/./b/../c//d";
+		String path = "/a/./b/../c//d";
 		//String initialPath = "/";
 		//String initialPath = "/.";  这个例子说明循环中的比较要用.equals();
 		//String initialPath = "/..";
-		String res = simplifyPath(initialPath);
+//		String path = "/home/../../..";
+		String res = simplifyPath(path);
 		System.out.println(res);
 	}
 }

@@ -40,18 +40,17 @@ public class MinimumSizeSubarraySum {
 		//two pointers, 
 		//tc: O(n)
 		//sc: O(1)
+		//注意这道题与Maximum Size Subarray Sum Equals k的区别，这道题输入数组都是正数，而Maximum Size Subarray Sum Equals k的input有正有负，
+		//所以这道题可以用two pointers来解
 		if(nums == null || nums.length ==0)
 			return 0;
-		int j=0, sum=0, min=Integer.MAX_VALUE;
-		for(int i=0;i<nums.length;i++){
-			while(j<nums.length && sum < s){
-				sum += nums[j];
-				j++;
+		int i=0, sum=0, min=Integer.MAX_VALUE;
+		for(int j=0;j<nums.length;j++){
+			sum += nums[j];
+			while(sum>=s){
+				min = Math.min(min, j+1-i);
+				sum -= nums[i++];
 			}
-			if(sum>=s){
-				min = Math.min(min, j-i);
-			}
-			sum -= nums[i];	
 		}
 		return min==Integer.MAX_VALUE?0:min;
     }

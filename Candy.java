@@ -43,12 +43,12 @@ public class Candy {
 	        if(ratings[i]>ratings[i+1]){  
 	            cur = nums[i+1]+1;  
 	        } 
-	        nums[i] = Math.max(nums[i], cur);
+	        nums[i] = Math.max(nums[i], cur); //i.e. [1,2,2], expected res: 4
             res += nums[i];
 	    }  
 	    return res;  
 	}  
-	
+
 	public static void main(String[] args){
 		int[] input = {3, 2, 3, 2, 3, 1};
 		int maxVol = candy(input);

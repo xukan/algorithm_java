@@ -11,6 +11,9 @@ import java.util.List;
 
 public class FindAllDuplicatesinanArray {
 	public List<Integer> findDuplicates(int[] nums) {
+		//Pocket Gems
+		// when find a number i, flip the number at position i-1 to negative. 
+	    // if the number at position i-1 is already negative, i is the number that occurs twice.
 		List<Integer> res = new ArrayList<>();
         for (int i = 0; i < nums.length; ++i) {
             int index = Math.abs(nums[i])-1;
@@ -23,6 +26,7 @@ public class FindAllDuplicatesinanArray {
 
 	//Find All Numbers Disappeared in an Array
 	public List<Integer> findDisappearedNumbers(int[] nums) {
+//		Google 
         List<Integer> res = new ArrayList();
         //boolean[] visit = new boolean[nums.length];
         for(int i=0;i<nums.length;i++){
@@ -46,8 +50,8 @@ public class FindAllDuplicatesinanArray {
 	public static void main(String[] args) {
 		int[] input2 = {4,3,2,7,8,2,3,1};
 		//int[] input = {5,4,6,7,9,3,10,9,5,6};
-		int[] input= {3,11,8,16,4,15,4,17,14,14,6,6,2,8,3,12,15,20,20,5};
-		int[] input1 = {3,11,8,16,4,15,4,17,14,14,6,6,2,8,3,20,20,20,20,5};
+//		int[] input= {3,11,8,16,4,15,4,17,14,14,6,6,2,8,3,12,15,20,20,5};
+//		int[] input1 = {3,11,8,16,4,15,4,17,14,14,6,6,2,8,3,20,20,20,20,5};
 //		Arrays.sort(input1);
 //		for( int i: input1 )
 //			System.out.print( i + " " );
@@ -56,7 +60,7 @@ public class FindAllDuplicatesinanArray {
 //			System.out.print( i + " " );
 //		System.out.println();
 		FindAllDuplicatesinanArray solution = new FindAllDuplicatesinanArray();
-//		List<Integer> res = solution.findDuplicates(input);
+//		List<Integer> res = solution.findDuplicates(input2);
 		
 		List<Integer> res = solution.findDisappearedNumbers(input2);
 		for( int i: res )

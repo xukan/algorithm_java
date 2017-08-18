@@ -1,5 +1,10 @@
 package algorithm_java;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 //Google Facebook
 
 //variation of 0-1 knapsack problem
@@ -99,10 +104,63 @@ public class TargetSum {
         return dp[sum+s];
     }
 	
+	public int findTargetSumWays_recursion(int[] nums, int S) {
+		StringBuilder sb = new StringBuilder();
+		List<String> res = new ArrayList<String>();
+        for(int i: nums)
+        	sb.append(i).append("#");
+        String num = sb.toString();
+        helper(num,  "", 0, S, res);
+        //res.forEach(str->System.out.println(str));
+        return res.size();
+    }
+    
+    public void helper(String num, String cur, long curVal, int target, List<String> res){
+        if(num.length() == 0){
+            if(curVal == target)
+                res.add(cur);
+            return;
+        }
+        int index = num.indexOf("#");
+        if(index == -1)
+            index = num.length();
+        long v1 = Long.valueOf("+"+num.substring(0, index));
+        long v2 = Long.valueOf("-"+num.substring(0, index));
+        helper(num.substring(index+1), cur+ "+" + v1, curVal + v1, target, res);
+        helper(num.substring(index+1), cur+ "-" + v1, curVal + v2, target, res);
+    }
+	
+    public int findTargetSumWays_mem(int[] nums, int S) {
+        if (nums == null || nums.length == 0){
+            return 0;
+        }
+        return helper_mem(nums, 0, 0, S, new HashMap<>());
+    }
+    private int helper_mem(int[] nums, int index, int sum, int S, Map<String, Integer> map){
+        String encodeString = index + "->" + sum;
+        if (map.containsKey(encodeString)){
+            return map.get(encodeString);
+        }
+        if (index == nums.length){
+            if (sum == S){
+                return 1;
+            }else {
+                return 0;
+            }
+        }
+        int curNum = nums[index];
+        int minus = helper_mem(nums, index + 1, sum - curNum, S, map);
+        int add = helper_mem(nums, index + 1, sum + curNum, S, map);
+        map.put(encodeString, add + minus);
+        return add + minus;
+    }
+    
 	public static void main(String[] args) {
 		TargetSum s = new TargetSum();
-		int[] nums = {1,1,1,1,1};
-		int res = s.findTargetSumWays(nums, 3);
+//		int[] nums = {1,0,0,0};
+		int[] nums = {1,0,0,0,1};
+		int res = s.findTargetSumWays_mem(nums, 2);
+//		int res = s.findTargetSumWays(nums, 3);
 		System.out.println(res);
 	}
 }

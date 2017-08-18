@@ -4,29 +4,33 @@ package algorithm_java;
 
 public class ReverseStringII {
 	public static String reverseStr(String s, int k) {
-		int len = s.length();
-        if(k>len)
-            k%=len;
-        int start = 0;
-        StringBuilder ss = new StringBuilder();
-        while(start<len){
-            int end = Math.min( start + 2*k,  len );
-            String str = s.substring(start, end);
-            if(k>str.length())
-            	k=str.length();
-            String r = str.substring(0, k);
-            StringBuilder sb = new StringBuilder( r );
-            sb.reverse();
-            ss.append(sb.toString());
-            String remain = str.substring(k, str.length());
-            ss.append(remain);
-            start += 2*k;
+        char[] array = s.toCharArray();
+        int len = array.length;
+        int i=0;
+        for(;i<len;i+=2*k){
+            int l=i, r=i+k-1;
+            if(r>=len)
+            	break;
+            swap(array, l, r);
         }
-        return ss.toString();
+        int l = i, r= Math.min(len-1, i+k-1);
+        if(i<len)
+            swap(array, l, r);
+        return new String(array);
+    }
+    
+    public static void swap(char[] array, int l, int r){
+        while(l<r){
+            char tmp = array[l];
+            array[l] = array[r];
+            array[r] = tmp;
+            l++;
+            r--;
+        }
     }
 	
 	public static void main(String[] args) {
-		String input = "abcdefg";
+		String input = "abcdefgh";
 		String s = reverseStr(input, 3);
 		System.out.println( s );
 	}

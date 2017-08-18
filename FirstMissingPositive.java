@@ -1,17 +1,16 @@
 package algorithm_java;
+//similar question
+//Find All Duplicates in an Array
+//Find All Numbers Disappeared in an Array
+//Missing number
 
 public class FirstMissingPositive {
 	public static int firstMissingPositive(int[] A) {  
-	    if(A==null || A.length==0)  
-	    {  
+	    if(A==null || A.length==0)   
 	        return 1;  
-	    }  
-	    for(int i=0;i<A.length;i++)  
-	    {  
+	    for(int i=0;i<A.length;i++){  
 	    	int cur = A[i];
-	        if(cur<=A.length && cur>0 && A[cur-1]!=cur)  
-	        {  
-	        	
+	        if(cur<=A.length && cur>0 && A[cur-1]!=cur){
 	            int temp = A[cur-1];  
 	            A[cur-1] = cur;  
 	            A[i] = temp;  

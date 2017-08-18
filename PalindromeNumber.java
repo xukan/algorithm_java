@@ -26,7 +26,7 @@ public class PalindromeNumber {
 	
 	public static void main(String[] args) {
 		//int input = 10;
-		int input = 12321;
+		int input = 1000021;
 		PalindromeNumber solution = new PalindromeNumber();
 		boolean result = solution.isPalindrome(input);
 		System.out.println(result);

@@ -1,6 +1,6 @@
 package algorithm_java;
 
-//Amazon Uber
+//Amazon Uber, Linkedin, PayPal, Rivigo
 
 //reference:
 //http://www.geeksforgeeks.org/dynamic-programming-set-12-longest-palindromic-subsequence/
@@ -49,6 +49,12 @@ public class LongestPalindromicSubsequence {
 		int[][] dp = new int[len][len];
 		for(int i=0;i<len;i++)
 			dp[i][i]=1;
+		/*
+		 * // Build the table. Note that the lower diagonal values of table are
+		 * useless and not filled in the process. The values are filled in a
+		 * manner similar to Matrix Chain Multiplication DP solution (See
+		 * http://www.geeksforgeeks.org/archives/15553). k is length ofsubstring
+		 * */
 		for(int k=2;k<=len;k++){
 			for(int i=0;i<len-k+1;i++){
 				int j=i+k-1;

@@ -33,7 +33,8 @@ public class NextGreaterElement {
         return res;
     }
 	
-	//II my solution 
+	//II Google
+	//my solution 
 	public static int[] nextGreaterElementsII(int[] nums) {
 		if(nums==null || nums.length==0)
             return new int[0];
@@ -80,7 +81,6 @@ public class NextGreaterElement {
         return next;
     }
 	
-	
 	//III
 	//http://www.geeksforgeeks.org/find-next-greater-number-set-digits/
 	/*
@@ -126,7 +126,8 @@ public class NextGreaterElement {
 		for(int i: res)
 			System.out.print(i + " ");
 		System.out.println();
-		int num = nextGreaterElementIII(12443322 );  //534976
+		//12443322  Expected:13222344
+		int num = nextGreaterElementIII(12443322 );  //534976    
 		System.out.println(num);
 	}
 }

@@ -51,6 +51,25 @@ public class RotateImage {
 //	        matrix[c][d] = temp;
 //	    }
 		
+		//counter clockwise
+		public void rotate_counterclockwise(int[][] matrix) {
+	        int n = matrix.length;
+	        for(int i=0;i<n/2;i++){
+	            for(int j=0;j<n;j++){
+	                int temp = matrix[i][j];
+	                matrix[i][j] = matrix[n-i-1][j];
+	                matrix[n-1-i][j] = temp;
+	             }
+	        }
+	        for(int i=0;i<n;i++){
+	            for(int j=0;j<n-i;j++){
+	                int temp = matrix[i][j];
+	                matrix[i][j] = matrix[n-1-i][n-1-j];
+	                matrix[n-1-i][n-1-j] = temp;
+	            }
+	        }
+	    }
+		
 		public static void main(String[] args){
 //			int[][] input = {{1,2,3},
 //							 {4,5,6},

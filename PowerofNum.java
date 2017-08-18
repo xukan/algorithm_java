@@ -2,12 +2,14 @@ package algorithm_java;
 
 public class PowerofNum {
 	//Power of two
+//	Google 
 	public boolean isPowerOfTwo(int n) {
         return (n>0) && ((n&(n-1))==0);
     }
 	
 	//Power of Three
 	//iteration
+	//Google 
 	public boolean isPowerOfThree(int n) {
 		while(n>0 && n%3==0)
 			n/=3;
@@ -21,6 +23,7 @@ public class PowerofNum {
 	}
 	
 	//我们在确定其是2的次方数了之后，发现只要是4的次方数，减1之后可以被3整除
+	//Two Sigma 
 	public boolean isPowerOfFour(int n) {
         return n>0 && ((n & (n-1)) == 0) &&( (n-1)%3 ==0);
     }

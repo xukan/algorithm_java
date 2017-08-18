@@ -1,5 +1,7 @@
 package algorithm_java;
 
+//Pocket Gems Microsoft Apple Facebook
+
 public class ImplementstrStr {
 	public static int strStr(String haystack, String needle) {
         if(needle.equals(""))
@@ -39,6 +41,22 @@ public class ImplementstrStr {
             prefix[j] = i;
         }
         return prefix;
+    }
+    
+    //brute force
+    public int strStr_bf(String haystack, String needle) {
+        if(needle.length() ==0)
+            return 0;
+        int len1 = haystack.length();
+        int len2 = needle.length();
+        char c = needle.charAt(0);
+        for(int i=0;i<=len1-len2;i++){
+            if(haystack.charAt(i) == c){
+                if(haystack.substring(i, i+len2).equals(needle))
+                    return i;
+            }
+        }
+        return -1;
     }
     
     public static void main(String[] args) {

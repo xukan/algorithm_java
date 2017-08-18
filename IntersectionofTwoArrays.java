@@ -47,19 +47,17 @@ public class IntersectionofTwoArrays {
     public int[] intersectionI(int[] nums1, int[] nums2) {
         if(nums1.length == 0 || nums2.length == 0)
             return new int[0];
-        HashSet<Integer> set1 = new HashSet<Integer>();
-        HashSet<Integer> set2 = new HashSet<Integer>();
+        HashSet<Integer> set = new HashSet<Integer>();
+        List<Integer> list = new ArrayList<Integer>();
         for(int i: nums1)
-            set1.add(i);
+            set.add(i);
         for(int i: nums2){
-            if(set1.contains(i))
-                set2.add(i);
+            if(set.contains(i)){
+            	list.add(i);
+            	set.remove(i);
+            }
         }
-        int[] res = new int[set2.size()];
-        int i=0;
-        for(int n: set2)
-            res[i++] = n;
-        return res;
+        return list.stream().mapToInt(i->i).toArray();
     }
     
     //II: two pointers
@@ -87,6 +85,32 @@ public class IntersectionofTwoArrays {
             res[k++] = n;
         return res;
     }
+    
+    //II: hashMap
+    public int[] intersectII_solution2(int[] nums1, int[] nums2) {
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+        List<Integer> list = new ArrayList<Integer>();
+        for(int i: nums1)
+            map.put(i, map.getOrDefault(i, 0)+1);
+        for(int j: nums2){
+            if(map.containsKey(j) && map.get(j)>0){
+                list.add(j);
+                map.put(j, map.get(j)-1);
+            }
+        }
+        //The line below runs very slow
+        return list.stream().mapToInt(i->i).toArray();
+    }
+    
+    /*
+     * What if elements of nums2 are stored on disk, and the memory is
+     * limited such that you cannot load all elements into the memory at once?
+     * 
+     * If only nums2 cannot fit in memory, put all elements of nums1 into a HashMap, read chunks of array that fit into the memory, 
+     * and record the intersections.
+     * If both nums1 and nums2 are so huge that neither fit into the memory, sort them individually (external sort), 
+     * then read 2 elements from each array at a time in memory, record intersections.
+     * */
     
 	public static void main(String[] args) {
 		int[] nums1 = { 1, 2, 2, 5 };

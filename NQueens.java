@@ -1,9 +1,12 @@
 package algorithm_java;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 //yahoo, zenefit
+
+//a solution requires that no TWO queens share the same row, column, or diagonal.
 
 /*
  * 这道题是NP问题, tc大于O(2^n)
@@ -50,14 +53,12 @@ public class NQueens {
 	public void printBoard(List<List<String>> res, int[] columnVal, int n){
 		List<String> tmp = new ArrayList<String>();
 		for(int i=0;i<n;i++){
-			StringBuilder sb = new StringBuilder();
-			for(int j=0;j<n;j++){
-				if(j == columnVal[i])
-					sb.append("Q");
-				else
-					sb.append(".");
-			}
-			tmp.add(sb.toString());
+			String[] row = new String[n];
+			Arrays.fill(row, ".");
+			//columnVal[i] represents y-axis of queen in each row
+			row[columnVal[i]] = "Q";
+			String str = String.join("", row);
+			tmp.add(str);
 		}
 		res.add(new ArrayList<String>(tmp));
 	}
@@ -67,7 +68,7 @@ public class NQueens {
 		List<List<String>> res = s.solveNQueens(4);
 		for(List<String> l : res){
 			for(String str: l)
-				System.out.println(str);
+				System.out.print(str);
 			System.out.println();
 		}
 	}

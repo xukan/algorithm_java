@@ -1,6 +1,8 @@
 package algorithm_java;
 //Pocket Gems Google
 
+//https://segmentfault.com/a/1190000003797346
+
 public class ShortestPalindrome {
 //	public static String shortestPalindrome(String s) {
 //        String p = s + "#" + new StringBuilder(s).reverse().toString();
@@ -25,8 +27,6 @@ public class ShortestPalindrome {
 //        }
 //        return dfa;
 //    }
-	
-	
 	
 	public static String shortestPalindrome(String s) {
         if(s.equals(""))
@@ -66,10 +66,10 @@ public class ShortestPalindrome {
     }
 	
 	public static void main(String[] args) {
-//		String input ="aacecaaa";
+		String input ="aacecaaa";
 //		String input ="abbacd";
 //		String input = "aabba";
-		String input="abcd";
+//		String input="abcd";
 		String res = shortestPalindrome(input);
 		System.out.println(res);
 	}

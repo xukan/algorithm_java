@@ -40,8 +40,8 @@ public class LongestPalindrome {
 		//122-65+1 = 58
         int[] count = new int[58];
         int odd =0;
-        for(int i=0;i<s.length();i++){
-            odd+=(++count[s.charAt(i)-'A'] & 1)==1?1:-1;
+        for(char c: s.toCharArray()){
+            odd+=(++count[c-'A'] & 1)==1?1:-1;
         }
         return s.length()-odd+(odd>0?1:0);
     }

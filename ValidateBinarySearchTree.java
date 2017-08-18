@@ -49,23 +49,19 @@ public class ValidateBinarySearchTree {
 	}
 
 	// solution 2:
-	// Use inorder traverse to check a binary search tree, awesome!
-	public boolean IsValidBST(TreeNode root) {
-		ArrayList<Integer> pre = new ArrayList<Integer>();
-		pre.add(null);
-		return helper(root, pre);
-	}
-
-	public boolean helper(TreeNode root, ArrayList<Integer> pre) {
-		if (root == null)
-			return true;
-		boolean left = helper(root.left, pre);
-		if (pre.get(0) != null && root.val <= pre.get(0))
-			return false;
-		pre.set(0, root.val);
-		return left && helper(root.right, pre);
-	}
-
+	 //Use inorder traverse to check a binary search tree, awesome!
+	//similar question: (E) Find Mode in Binary Search Tree
+	TreeNode prev = null;
+    public boolean isValidBST_recursion(TreeNode root) {
+        if(root == null)
+            return true;
+        boolean l = isValidBST(root.left);
+        if(prev != null && root.val <= prev.val)
+            return false;
+        prev = root;
+        return l && isValidBST(root.right);
+    }
+	
 	public static void main(String[] args) {
 		TreeNode node1 = new TreeNode(5);
 		TreeNode node2 = new TreeNode(2);
@@ -80,6 +76,7 @@ public class ValidateBinarySearchTree {
 		node2.right = node5;
 		node3.left = node6;
 		node3.right = node7;
+		//boolean res = isValidBST(node1);
 		boolean res = isValidBST(node1);
 		System.out.println(res);
 	}

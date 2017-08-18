@@ -4,27 +4,31 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+
+//Amazon 
+
+//similar question
+//Find Largest Value in Each Tree Row from LinkedIn
 
 public class BinaryTreeRightSideView {
 	//BFS solution
-	public static List<Integer> rightSideView(TreeNode root) {
-        List<Integer> res = new ArrayList();
+	public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> res = new ArrayList<Integer>();
         if(root == null)
             return res;
-        LinkedList<TreeNode> queue = new LinkedList();
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
         queue.offer(root);
         while(!queue.isEmpty()){
             int size = queue.size();
             for(int i=0;i<size;i++){
-               TreeNode node = queue.poll();
-               if(i==0)
-                res.add(node.val);
-               if(node.right!=null){
-                   queue.offer(node.right);
-               }
-               if(node.left!=null){
-                   queue.offer(node.left);
-               }
+                TreeNode node = queue.poll();
+                if(i == size-1)
+                    res.add(node.val);
+                if(node.left!=null)
+                    queue.offer(node.left);
+                if(node.right!=null)
+                    queue.offer(node.right);
             }
         }
         return res;

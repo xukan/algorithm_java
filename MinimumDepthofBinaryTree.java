@@ -27,7 +27,7 @@ public class MinimumDepthofBinaryTree {
         //if return Math.min(l, r)+1; result would be 1 which is wrong, since the correct answer is 2
         if(l==0 || r == 0)
             return l >=r ? l+1: r+1;
-            
+            //return l == 0? r+1:l+1;
         return Math.min(l, r)+1;
     }
 	

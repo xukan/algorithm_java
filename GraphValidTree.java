@@ -17,6 +17,61 @@ package algorithm_java;
  * 
  * */
 
+//similar question
+//
 public class GraphValidTree {
+	class UnionFind{
+        int[] id;
+        int[] size;
+        int count;
+        public UnionFind(int n){
+            count = n;
+            id = new int[n];
+            size = new int[n];
+            for(int i=0;i<n;i++){
+                id[i] = i;
+                size[i] = 1;
+            }
+        }
+        
+        public int find(int i){
+            while(id[i]!=i){
+                id[i] = id[id[i]];
+                i = id[i];
+            }
+            return i;
+        }
+        
+        public boolean union(int i, int j){
+            int p = find(i);
+            int q = find(j);
+            if(p==q)
+                return false;
+            if(size[p]<size[q]){
+                id[p] = q;
+                size[q]+=size[p];
+            }else{
+                id[q] = p;
+                size[p]+=size[q];
+            }
+            count--;
+            return true;
+        }
+    }
 	
+	public boolean validTree(int n, int[][] edges) {
+        UnionFind uf = new UnionFind(n);
+        for(int[] edge: edges){
+            if(!uf.union(edge[0], edge[1]))
+                return false;
+        }
+        return uf.count == 1;
+    }
+    
+    public static void main(String[] args) {
+    	GraphValidTree  gt = new GraphValidTree ();
+    	int[][] edges = {{0,1},{0,2},{1,2},{2,3},{2,4}};
+    	boolean res = gt.validTree(5, edges);
+    	System.out.println(res);
+	}
 }

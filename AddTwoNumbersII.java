@@ -2,65 +2,49 @@ package algorithm_java;
 
 import java.util.Stack;
 
+//Microsoft Bloomberg 
+
 public class AddTwoNumbersII {
-	public void addNumber( Stack<Integer>stack, ListNode l1 ){
-		while( l1 != null ){
-			stack.push(l1.val);
-			l1 = l1.next;
-		}
-	}
-	
-	public ListNode addMoreNode( Stack<Integer> stack, ListNode node, int carry ){
-		while( !stack.isEmpty() ){
-        	ListNode dummy = new ListNode( 0 );
-        	int num = stack.pop();
-        	int sum = num + carry;
-        	node.val = sum % 10 ;
-        	carry = sum/10;
-        	dummy.next = node;
-        	node = dummy;
-        }
-		if( carry!=0)
-			node.val = carry;
-		return node;
-	}
-	
 	public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        Stack<Integer> stack1  = new Stack<Integer>();
-        Stack<Integer> stack2  = new Stack<Integer>();
-        addNumber( stack1, l1 );
-        addNumber( stack2, l2 );
-        ListNode dummy = null;
-        ListNode node = new ListNode(0);
+        ListNode ln1 = reverse(l1);
+        ListNode ln2 = reverse(l2);
         int carry = 0;
-        while( !stack1.isEmpty() && !stack2.isEmpty() ){
-        	dummy = new ListNode( 0 );
-        	int n1 = stack1.pop();
-        	int n2 = stack2.pop();
-        	int sum = n1 + n2 + carry;
-        	int remainder = sum % 10;
-        	carry = sum/10;
-        	node.val =  remainder;
-        	dummy.next = node;
-        	node = dummy;
+        ListNode node = new ListNode(0);
+        ListNode head = node;
+        while(ln1!=null || ln2 != null){
+            if(ln1!=null){
+                carry += ln1.val;
+                ln1 = ln1.next;
+            }
+            if(ln2!=null){
+                carry += ln2.val;
+                ln2 = ln2.next;
+            }
+            ListNode n = new ListNode(carry%10);
+            carry /= 10;
+            node.next = n;
+            node = node.next;
         }
-        
-        //test case 899 + 2 = 901, 
-        if( stack1.empty() && stack2.empty() && carry!=0)
-        	node.val = carry;
-        
-        while( !stack1.isEmpty() ){
-        	node = addMoreNode( stack1, node, carry );
+        if(carry!=0){
+            ListNode n = new ListNode(carry);
+            node.next = n;
         }
-        
-        while( !stack2.isEmpty() ){
-        	node = addMoreNode( stack2, node, carry );
+        ListNode newHead = reverse(head.next);
+        return newHead;
+    }
+    
+    public ListNode reverse(ListNode ln){
+        ListNode dummy = new ListNode(-1);
+        dummy.next = ln;
+        ListNode prev = dummy, temp = ln;
+        while(temp!=null){
+            ListNode next = temp.next;
+            temp.next = prev;
+            prev = temp;
+            temp = next;
         }
-        
-        if( node.val != 0){
-        	return node;
-        }else
-        	return node.next;
+        ln.next = null;
+        return prev;
     }
 	
 	public static void main(String[] args) {

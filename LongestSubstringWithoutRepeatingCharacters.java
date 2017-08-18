@@ -5,34 +5,26 @@ import java.util.Set;
 
 //Amazon Adobe Bloomberg Yelp
 
+//two pointers, tc: O(n)
 public class LongestSubstringWithoutRepeatingCharacters {
-	public int lengthOfLongestSubstring(String s) {
-		int slow=0, fast =0, maxLen = 0;
-        HashSet<Character> hashset = new HashSet<Character>();
-        while( fast < s.length() ){
-            char c = s.charAt( fast );
-            if( hashset.contains( c ) ){
-                maxLen = Math.max( maxLen, fast-slow );
-                while( s.charAt(slow) != c ){
-                    hashset.remove( s.charAt(slow) );
-                    slow++;
-                }
-                slow++;
-                fast++;
-            }else{
-                fast++;
-                hashset.add(c);
-            }
+	public static int lengthOfLongestSubstring(String s) {
+        int i=0, j=0, max = 0;
+        HashSet<Character> set = new HashSet();
+        while(j<s.length()){
+            char c = s.charAt(j);
+            if(set.add(c)){
+                j++;
+                max = Math.max(max, set.size());
+            }else
+                set.remove(s.charAt(i++));
         }
-        return Math.max( maxLen, fast-slow );
+        return max;
     }
 	
 	public static void main(String[] args) {
 		//String input = "pwwkew";
 		String input = "au";
-		LongestSubstringWithoutRepeatingCharacters solution = new 
-				LongestSubstringWithoutRepeatingCharacters();
-		int len = solution.lengthOfLongestSubstring( input );
+		int len = lengthOfLongestSubstring( input );
 		System.out.println( len );
 	}
 }

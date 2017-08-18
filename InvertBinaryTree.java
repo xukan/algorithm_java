@@ -12,6 +12,32 @@ public class InvertBinaryTree {
         return root;
     }
 	
+	//my solution
+	public TreeNode invertTree_mysolution(TreeNode root) {
+        if(root == null)
+            return root;
+        helper(root, root.left, root.right);
+        return root;
+    }
+    
+    public void helper(TreeNode n, TreeNode n1, TreeNode n2){
+        if(n1 == null && n2 == null)
+            return;
+        else if(n1 != null && n2 ==null){
+            n.right = n1;
+            n.left = null;
+        }else if(n1 == null && n2 != null){
+            n.left = n2;
+            n.right = null;
+        }else{
+            n.right = n1;
+            n.left = n2;
+        }
+        if(n1!=null)
+            helper(n1, n1.left, n1.right);
+        if(n2!=null)
+            helper(n2, n2.left, n2.right);
+    }
 	
 	
 	public void inorder(TreeNode node){

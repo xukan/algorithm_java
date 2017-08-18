@@ -7,7 +7,7 @@ import java.util.LinkedList;
 class TrieNode{
 	char content ;
 	LinkedList<TrieNode> child;
-	int count;
+	int count; // the number of words sharing this character
 	boolean isEnd;
 	
 	TrieNode(){
@@ -54,8 +54,11 @@ public class Trie {
                 node.count++;
                 cur=node;
             }else{
-                cur.child.add(new TrieNode(c));
-                cur = cur.subNode(c);
+//                cur.child.add(new TrieNode(c));
+//                cur = cur.subNode(c);
+            	TrieNode newNode = new TrieNode(c);
+                cur.child.add(newNode);
+                cur = newNode;
             }
         }
         cur.isEnd=true;

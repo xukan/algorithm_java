@@ -86,7 +86,8 @@ public class PalindromePartitioning {
     
     public static void main(String[] args){
     	//String input = "aabaa";
-    	String input = "aaaba";
+//    	String input = "aaaba";
+    	String input = "aabb";
     	PalindromePartitioning s = new PalindromePartitioning();
     	List<List<String>> res=s.partition(input);
     	for(List<String> l:res){  

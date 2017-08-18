@@ -27,25 +27,26 @@ public class ExpressionAddOperators {
 
 	    for (int i = 1; i <= num.length(); i++) {
 	        String left = num.substring(0, i);
+	        long leftVal = Long.parseLong(left);
 	        if (left.length() > 1 && left.charAt(0) == '0') {
 	            return; ///invalid case: 01,000...
 	        }
 	        String right = num.substring(i);
 	        if (cur.length() > 0) {
 	        	//                  result, num, cur, last, curVal, target
-	            helper(result, right, cur + "+" + left, Long.valueOf(left), curVal + Long.valueOf(left), target);
-	            helper(result, right, cur + "-" + left, -Long.valueOf(left), curVal - Long.valueOf(left), target);
-	            helper(result, right, cur + "*" + left, last * Long.valueOf(left), (curVal - last) + (last * Long.valueOf(left)), target);
+	            helper(result, right, cur + "+" + left, leftVal, curVal + leftVal, target);
+	            helper(result, right, cur + "-" + left, -leftVal, curVal - leftVal, target);
+	            helper(result, right, cur + "*" + left, last * leftVal, (curVal - last) + (last * leftVal), target);
 	        } else {
-	            helper(result, right, left, Long.valueOf(left), Long.valueOf(left), target);
+	            helper(result, right, left, leftVal, leftVal, target);
 	        }
 	    }
 	}
 	
 	public static void main(String[] args) {
-		//String input ="123456789";   target ==100 from facebook
-		String input="232";
-		List<String> res = addOperators(input, 8);
+		String input ="123456789";  int target =100; //from facebook
+		//String input="232";int target =8;
+		List<String> res = addOperators(input, target);
 		System.out.println("size:"+res.size());
 		for(String s: res)
 			System.out.println(s+" ");

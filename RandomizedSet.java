@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+//Google Uber Twitter Amazon Yelp Pocket Gems Facebook
+
 /*
  * 要求实现上述的三个操作，且操作时间为O(1)的操作时间。使用HashMap保存输入的数字的index，用ArrayList保存数组。
  * 一个值得注意的问题是，有一个getRandom的操作，计划是根据Random类的nextInt方法来获得下标，然后从ArrayList中返回数据，

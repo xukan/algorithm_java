@@ -67,13 +67,13 @@ public class DecodeWays {
 //		int code = Integer.parseInt(s);
 //		return code >= 1 && code <= 26;
 //	}
-
+	
 	public static void main(String[] args) {
 		DecodeWays s = new DecodeWays();
-		String str = "110";
+		String str = "301";
 		String str1="505";   // res =0
 		String str2 ="5021"; //  res=0
-		int res = s.numDecodings(str1);
+		int res = s.numDecodings(str);
 		System.out.println(res);
 	}
 }

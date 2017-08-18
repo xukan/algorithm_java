@@ -6,6 +6,9 @@ import java.util.List;
 //Morris Algorithm
 //http://www.cnblogs.com/AnnieKim/archive/2013/06/15/MorrisTraversal.html
 /*
+ * 通常，实现二叉树的前序（preorder）、中序（inorder）、后序（postorder）遍历有两个常用的方法：
+ * 一是递归(recursive)，二是使用栈实现的迭代版本(stack+iterative)。这两种方法都是O(n)的空间
+ * Morris Traversal方法可以做到这两点，与前两种方法的不同在于该方法只需要O(1)空间，而且同样可以在O(n)时间内完成。
 * 算法具体分情况如下：
 1. 如果当前结点的左孩子为空，则输出当前结点并将其当前节点赋值为右孩子。
 2. 如果当前节点的左孩子不为空，则寻找当前节点在中序遍历下的前驱节点（也就是当前结点左子树的最右孩子）。接下来分两种情况：

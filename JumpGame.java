@@ -43,16 +43,16 @@ public class JumpGame {
 		//2,3,1,1,4
 		//3,2,1,0,4
 		//int[] input = {2,3,1,1,4};
-		//int[] input = {3,2,1,0,4};
+		int[] input = {3,2,1,0,4};
 //		int[] input = {3,1,0,1,1};
-//		boolean res = canJump(input);
-//		System.out.println(res);
+		boolean res = canJump(input);
+		System.out.println(res);
 		/************Jump Game I************/
 		
 		/************Jump Game II************/
-		int[] A = {2,3,3,2,0,4};
-		int min = jump(A);
-		System.out.println(min);
+//		int[] A = {2,3,3,2,0,4};
+//		int min = jump(A);
+//		System.out.println(min);
 		/************Jump Game II************/
 	}
 }

@@ -9,6 +9,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+//Facebook
+
 public class RemoveInvalidParentheses {
 	public List<String> removeInvalidParentheses(String s) {
         List<String> res = new ArrayList<String>();
@@ -19,7 +21,7 @@ public class RemoveInvalidParentheses {
         boolean reached = false;
         while (!queue.isEmpty()) {
             int size = queue.size();
-            for (int i = 0; i < size; i++) {
+            for (int i = 0; i < size; i++) { 
                 String cur = queue.poll();
                 // Valid
                 if (isValid(cur)) {
@@ -66,7 +68,7 @@ public class RemoveInvalidParentheses {
 		//"(a)())()" -> ["(a)()()", "(a())()"]
 		//		")(" -> [""]
 		RemoveInvalidParentheses s = new RemoveInvalidParentheses();
-		String input = "()())()";
+		String input = "(a)())()";
 		List<String> res = s.removeInvalidParentheses(input);
 		res.forEach(item -> System.out.println(item));
 	}

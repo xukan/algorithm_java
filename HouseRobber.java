@@ -12,7 +12,7 @@ import java.util.List;
 //}
 
 public class HouseRobber {
-	
+	//The key is to find the relation dp[i] = Math.max(dp[i-1], dp[i-2]+nums[i])
 	public static int rob(int[] nums) {
 		int[] dp=new int[nums.length];
 		dp[0]=nums[0];
@@ -23,6 +23,21 @@ public class HouseRobber {
 //		for(int i:dp)
 //			System.out.print(i+" ");
 		return dp[nums.length-1];
+    }
+	
+	//https://segmentfault.com/a/1190000003811581
+	public int robI_better(int[] nums) {
+        if(nums.length <= 1){
+            return nums.length == 0 ? 0 : nums[0];
+        }
+        int prev = nums[0];
+        int cur = Math.max(nums[0], nums[1]);
+        for(int i=2;i<nums.length;i++){
+            int tmp = cur;
+            cur = Math.max(prev+nums[i], cur);
+            prev = tmp;
+        }
+        return cur;
     }
 	
 	public static int robII(int[] nums) {
@@ -64,52 +79,28 @@ public class HouseRobber {
 		return Math.max(root.val+val, rob(root.left)+rob(root.right));
     }
 	
+	//https://discuss.leetcode.com/topic/39834/step-by-step-tackling-of-the-problem/5
+	//we can see that post-order traverse is bottom-up method
 	public static int robIII(TreeNode root) {
-        if(root == null)
-            return 0;
-        if(root.left == null && root.right == null)
-            return root.val;
-        int[] nums = levelTraversal(root);
-        int[] dp = new int[nums.length];
-        dp[0] = nums[0];
-        dp[1] = Math.max(nums[1], nums[0]);
-        for(int i=2;i<nums.length;i++){
-            dp[i] = Math.max(dp[i-1], dp[i-2]+nums[i]);
-        }
-        return dp[nums.length-1];
-    }
-    
-    public static int[] levelTraversal(TreeNode root){
-        List<Integer> list = new ArrayList<Integer>();
-        LinkedList<TreeNode> queue = new LinkedList<TreeNode>();
-        queue.offer(root);
-        while(!queue.isEmpty()){
-            int sum = 0;
-            int count=queue.size();
-            for(int i=0;i<count;i++){
-                TreeNode cur = queue.poll();
-                sum += cur.val;
-                if(cur.left!=null)
-                    queue.offer(cur.left);
-                if(cur.right!=null)
-                    queue.offer(cur.right);
-            }
-            list.add(sum);
-        }
-        int[] res = new int[list.size()];
-        for(int i=0;i<res.length;i++){
-            res[i]= list.get(i);
-        }
-        System.out.println("input array");
-        for(int i:res)
-        	System.out.print(i+ " ");
-        System.out.println();
-        return res;
-    }
-	
+	    int[] res = robSub(root);
+	    return Math.max(res[0], res[1]);
+	}
+
+	//dfs all the nodes of the tree, each node return two number, int[] num
+	//num[0] is max value while NOT rob this node. 
+	//num[1] is the max value while rob this node,
+	private static  int[] robSub(TreeNode root) {
+	    if (root == null) return new int[2];
+	    int[] left = robSub(root.left);
+	    int[] right = robSub(root.right);
+	    int[] res = new int[2];
+	    //since node value is NOT robbed, res[0] is sum of max(left[0], left[1]) and max(right[0], right[1]);
+	    res[0] = Math.max(left[0], left[1]) + Math.max(right[0], right[1]);
+	    res[1] = root.val + left[0] + right[0];
+	    return res;
+	}
 	
 	public static void main(String[] args){
-		
 		/**********Hourse Robber I *************/
 		int[] input1 = {3,7,10,5,2,6};
 		//int res1 = rob(input1);

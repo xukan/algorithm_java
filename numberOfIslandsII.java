@@ -4,33 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/*
- * Union and find
- *  public int find(int p, int q){
-        while( id[p] != p ){
-            id[p] = id[id[p]]; //path compression
-            p = id[p];
-        }
-        return p;
-    }
-    
-    public void union(int p, int q){
-        int pRoot = find(p);
-        int qRoot = find(q);
-        if( pRoot == qRoot )
-            return;
-        if( size[pRoot] < size[qRoot ] ){
-            id[pRoot] = qRoot;
-            size[qRoot] += size[pRoot];
-        }else{
-            id[qRoot] = pRoot;
-            size[pRoot] += size[qRoot];
-        }
-        count--;
-    }
- * 
- * */
-
 //reference: https://segmentfault.com/a/1190000004197552
 /*
  * 很典型的union-find题。因为这里是动态的增加land，要能随时求出有多少个island，最简单的方法就是union-find。
@@ -56,40 +29,66 @@ import java.util.List;
  * 
  * */
 public class numberOfIslandsII {
-	public List<Integer> numIslands2(int m, int n, int[][] positions) {
-		List<Integer> res = new ArrayList<Integer>();
-		int[] id = new int[m*n]; //serialization
-		Arrays.fill(id, -1);
-		int count =0;
-		int[][] dirs = {{-1,0},{1,0},{0,-1},{0,1}}; // neighbors
-		for(int i=0;i<positions.length;i++){
-			count++;
-			int index = positions[i][0]*n+positions[i][1];
-			id[index]=index;  //initialization
-			
-			for(int j=0;j<dirs.length;j++){
-				int x = positions[i][0]+dirs[j][0];
-				int y = positions[i][1]+dirs[j][1];
-				if(x>=0&&x<m && y>=0&&y<n&&id[x*n+y]!=-1){
-					int root = getRoot(id, x*n+y);
-					if(root!=index){
-						id[root] = index;
-						count--;
-					}
-				}
-			}
-			res.add(count);
-		}
-		return res;
+	class UnionFind{
+	    int[] id;
+	    int[] size;
+	    int count;
+	    public UnionFind(int total, int c){
+	        count = c;
+	        id = new int[total];
+	        size = new int[total];
+	        for(int i=0;i<total;i++){
+	            id[i] = i;
+	            size[i] = 1;
+	        }
+	    }
+	    
+	    public int find(int i){
+	        while(id[i] != i){
+	            id[i] = id[id[i]];
+	            i = id[i];
+	        }
+	        return i;
+	    }
+	    
+	    public void union(int x, int y){
+	        int p = find(x);
+	        int q = find(y);
+	        if( p == q)
+	            return;
+	        if(size[p]<size[q]){
+	            id[p] = q;
+	            size[q]+= size[p];
+	        }else{
+	            id[q] = p;
+	            size[p]+= size[q];
+	        }
+	        count--;
+	    }
 	}
 	
-	public int getRoot(int[] id, int pos){
-		while(id[pos]!=pos){
-			id[pos]= id[id[pos]]; //path compression
-			pos=id[pos];
-		}
-		return pos;
-	}
+public List<Integer> numIslands2(int m, int n, int[][] positions) {
+        
+		int[][] grid = new int[m][n];
+        List<Integer> res = new ArrayList<Integer>();
+        UnionFind uf = new UnionFind(m*n, 0);
+        int[][] dirs = {{-1,0},{1,0},{0,-1},{0,1}};
+        for(int[] pos : positions){
+        	grid[pos[0]][pos[1]] = 1;
+        	uf.count++;
+            for(int[] dir : dirs){
+                int x = pos[0]+ dir[0];
+                int y = pos[1]+ dir[1];
+                if(x<0 || x>=m || y<0 || y>=n || grid[x][y] == 0)
+                    continue;
+                uf.union(pos[0]*n+pos[1], x*n+y);
+                //count--;
+                //break;
+            }
+            res.add(uf.count);
+        }
+        return res;
+    }
 	
 	public static void main(String[] args) {
 		int[][] positions = {{0,0}, {0,1}, {1,2}, {2,1}};

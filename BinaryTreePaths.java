@@ -19,22 +19,25 @@ import java.util.List;
 
 public class BinaryTreePaths {
 	
-	List<String> res = new ArrayList<String>();
-  
 	public List<String> binaryTreePaths(TreeNode root) {
-		if(root != null) 
-			findPaths(root,String.valueOf(root.val));
-		return res;
-	}
-  
-	private void findPaths(TreeNode n, String path){
-		if(n.left == null && n.right == null) 
-			res.add(path);
-		if(n.left != null)
-			findPaths(n.left, path+"->"+n.left.val);
-		if(n.right != null)
-			findPaths(n.right, path+"->"+n.right.val);
-	}
+        List<String> res = new ArrayList<String>();
+        if(root == null)
+            return res;
+        bthelper(root, root.val+"", res);
+        return res;
+    }
+    
+    public void bthelper(TreeNode node, String str, List<String> res){
+        if(node.left == null && node.right == null){
+            res.add(str);
+        }
+        if(node.left!=null){
+            bthelper(node.left, str+"->"+node.left.val, res);
+        }
+        if(node.right!=null){
+            bthelper(node.right, str+"->"+node.right.val, res);
+        }  
+    }
 	
 	public static void main(String[] args) {
 		TreeNode root = new TreeNode(5);

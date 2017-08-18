@@ -4,10 +4,10 @@ package algorithm_java;
  *            1
  *          /   \
  *         2     2
- *        /       \
- *       3         3
- *      /           \
- *     4             4
+ *        /  \     \
+ *       3   5     3
+ *      /             \
+ *     4              4
  *   In this example£¬for tree node 2 whose height of left subtree is 2£¬and height of right subtree is 0£¬
  *   difference between them is 2>1. Thus the result should be false
  *   In the program, return value for left of treenode 1 is -1, same for right, return value is also -1
@@ -42,15 +42,17 @@ public class BalancedBinaryTree {
 		 TreeNode node1 = new TreeNode(2);
 		 TreeNode node2 = new TreeNode(2);
 		 TreeNode node3 = new TreeNode(3);
-		 TreeNode node4 = new TreeNode(3);
-		 TreeNode node5 = new TreeNode(4);
+		 TreeNode node4 = new TreeNode(5);
+		 TreeNode node5 = new TreeNode(3);
 		 TreeNode node6 = new TreeNode(4);
+		 TreeNode node7 = new TreeNode(4);
 		 root.left = node1;
 		 root.right = node2;
 		 node1.left = node3;
-		 node2.right = node4;
-		 node3.left = node5;
-		 node4.right = node6;
+		 node1.right = node4;
+		 node2.right = node5;
+		 node3.left = node6;
+		 node5.right = node7;
 		 boolean res = isBalanced(root);
 		 System.out.println(res);
 	}

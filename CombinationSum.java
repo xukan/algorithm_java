@@ -74,10 +74,28 @@ public class CombinationSum {
 		}
 	}
 	
-	public int combinationSum4(int[] nums, int target) {
-        
+	//IV, Google Snapchat Facebook
+	/*
+	 * http://blog.csdn.net/qq508618087/article/details/52064134
+	 * 用动态规划来做, 也是一个背包问题, 求出[1, target]之间每个位置有多少种排列方式, 这样将问题分化为子问题. 
+	 * 状态转移方程可以得到为: 
+	 * dp[i] = sum(dp[i - nums[j]]),  (i-nums[j] > 0);
+	 * So we know that target is the sum of numbers in the array. Imagine we only need one more number to reach target, 
+	 * this number can be any one in the array, right? So the # of combinations of target
+	 * comb[target] = sum(comb[target - nums[i]]), where 0 <= i < nums.length, and target >= nums[i].
+	 * 如果允许有负数的话就必须要限制每个数能用的次数了, 不然的话就会得到无限大的排列方式, 比如1, -1, target = 1;
+	 * */
+	public static int combinationSum4(int[] nums, int target) {
+		int[] dp= new int[target+1];
+        dp[0] = 1;
+        for(int i = 1; i <= target;i++){
+            for(int num:nums){
+                if(i >= num)
+                	dp[i] += dp[i - num];
+            }
+        }
+        return dp[target];
     }
-	
 	
 	public static void main(String[] args) {
 		int[] candidates ={2,3,2,6,7};
@@ -98,10 +116,14 @@ public class CombinationSum {
 //    	}
     	
     	List<List<Integer>> res3 = s.combinationSum3(3,9);
-    	for(List<Integer> i:res3){
-    		for(int j:i)
-    			System.out.print(j+" ");
-    		System.out.println();
-    	}
+//    	for(List<Integer> i:res3){
+//    		for(int j:i)
+//    			System.out.print(j+" ");
+//    		System.out.println();
+//    	}
+    	
+    	int[] nums ={4,2,1};
+    	int total = combinationSum4(nums, 32);
+    	System.out.println(total);
 	}
 }

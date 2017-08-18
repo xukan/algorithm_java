@@ -16,15 +16,15 @@ public class LongestAbsoluteFilePath {
 			if( path.contains(".")){
 				res = Math.max(res, map.get(level)+len);
 			}else{
-				map.put( level+1, map.get(level)+len );
+				map.put( level+1, map.get(level)+len+1 ); //"dir/"
 			}
 		}
 		return res;
     }
 	
 	public static void main(String[] args) {
-		String input = "dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext";
-		//String input = "dir\n\tsubdir1\n\tsubdir2\n\t\tfile.ext";
+//		String input = "dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext";
+		String input = "dir\n\tsubdir1\n\tsubdir2\n\t\tfile.ext";
 		//String input = "a.txt";
 		LongestAbsoluteFilePath solution = new LongestAbsoluteFilePath();
 		int res = solution.lengthLongestPath(input);

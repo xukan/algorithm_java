@@ -1,5 +1,8 @@
 package algorithm_java;
 
+//similar questions:
+//Delete Operation for Two Strings, One edit distance
+
 public class EditDistance {
 	public static int minDistance(String word1, String word2) {
         int m = word1.length();

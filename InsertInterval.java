@@ -1,5 +1,7 @@
 package algorithm_java;
 
+//LinkedIn Google Facebook 
+
 import java.util.ArrayList;
 
 //LinkedIn Google Facebook
@@ -24,25 +26,29 @@ import java.util.List;
 public class InsertInterval {
 	
 	public static List<Interval> insert(List<Interval> intervals, Interval newInterval) {
-		if(intervals==null || intervals.size()==0)  
-            return intervals;  
-		List<Interval> res = new ArrayList<Interval>();
-        int i=0, len= intervals.size();
-        while(i<len && intervals.get(i).end < newInterval.start){
-        	res.add(intervals.get(i++));
+		int size = intervals.size();
+        if(size ==0 || newInterval.start>=intervals.get(size-1).start){
+            intervals.add(newInterval);
+        }else if(newInterval.start<=intervals.get(0).start)
+        	intervals.add(0, newInterval);
+        else{
+	        for( int k=0;k<size-1;k++){
+	            if(intervals.get(k).start<=newInterval.start && newInterval.start <=intervals.get(k+1).start){
+	                intervals.add(k+1, newInterval);
+	                break;
+	            }
+	        }
         }
-        if(i<len)
-        	newInterval.start = Math.min(newInterval.start, intervals.get(i).start );
-        res.add(newInterval);
-        while(i<len && intervals.get(i).start <= newInterval.end){
-        	newInterval.end = Math.max(newInterval.end, intervals.get(i).end );
-        	i++;
+        
+        //size will change since we remove interval from intervals
+        //need to use intervals.size()
+        for(int i=1;i<intervals.size();i++){
+            while(i<intervals.size() && intervals.get(i).start<=intervals.get(i-1).end){
+                intervals.get(i-1).end = Math.max(intervals.get(i).end, intervals.get(i-1).end);
+                intervals.remove(i);
+            }
         }
-     	
-        while(i<len){
-        	res.add(intervals.get(i++));
-        }
-        return res;
+        return intervals;
     }
 	
 	public static void main(String[] args) {
@@ -53,18 +59,17 @@ public class InsertInterval {
         Interval i4= new Interval(8,10);
         Interval i5= new Interval(12,16);
 		
-        Interval addi6= new Interval(4,9);
+        Interval newInter = new Interval(4,9);
 		
-		Interval newInter = new Interval(4,9);
 		List<Interval> intervals =  new ArrayList();
 		intervals.add(i1);
         intervals.add(i2);
         intervals.add(i3);
         intervals.add(i4);
         intervals.add(i5);
-//        intervals.add(i1);
+        intervals.add(i1);
 		
-		List<Interval> res = insert(intervals, addi6);
+		List<Interval> res = insert(intervals, newInter);
         for(Interval i:res)
             System.out.print("["+i.start+","+i.end+"]"+" ");
 	}

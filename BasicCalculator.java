@@ -85,7 +85,7 @@ public class BasicCalculator {
 		String input = "5-(1-(3-10))+2";
 		//String input = "2-1+2";
 		//String input = "   30";
-		//String input = "1-(5)";
+//		String input = "1-(5)";
 		BasicCalculator s = new BasicCalculator();
         int res = s.calculate(input);
         System.out.println(res);

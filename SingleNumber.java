@@ -35,6 +35,34 @@ public class SingleNumber {
 		return res;
 	}
 	
+	//http://www.1point3acres.com/bbs/thread-282105-1-1.html
+	//Q2: 问题升级：在Q1基础上面，如果所有出现两次的数都挨着，比如3，3，2，2，4，5，5. 如何降低时间复杂度？ 用二分。.
+	public int singleNonDuplicate(int[] nums) {
+        int left = 0;
+        int right = nums.length - 1;
+        int len = right;
+        if (right == 1) {
+            return nums[0];
+        } 
+        while (left <= right) {
+            int middle = (left + right) >>>1;
+            // update middle.
+            if (middle > 0 && nums[middle] == nums[middle - 1]) {
+                
+            } else if (middle < len && nums[middle] == nums[middle + 1]) {
+                middle++;
+            } else {
+                return nums[middle];
+            }
+            if ((len - middle) %2 == 0) {
+                right = middle-1;
+            } else {
+                left = middle + 1;
+            }
+        }
+        return -1;
+    }
+	
 	public static void main(String[] args) {
 		int[] nums1 = { 3, 3, 2, 3};
 		int[] nums2 = { 1, 2, 1, 3, 2, 5};

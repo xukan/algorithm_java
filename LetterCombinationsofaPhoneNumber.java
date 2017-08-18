@@ -6,36 +6,36 @@ import java.util.List;
 
 //Amazon Dropbox Google Uber Facebook
 
-//similar question: combination
+//similar question: combination, permutation
 
 public class LetterCombinationsofaPhoneNumber {
-	public static ArrayList<String> letterCombinations(String digits) {
-	      ArrayList<String> result=new ArrayList<String>();
-	      if (digits==null)
-	          return result;
-
-	      String[] keyboard={"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
-	      StringBuilder current=new StringBuilder();
-	      
-	      int index=0;
-	      helper(digits, index, current, keyboard, result);
-	      return result;
-	  }
-	  
-	  private static void helper(String digits, int index, StringBuilder current, String[] keyboard, ArrayList<String> result){
-	      if (index==digits.length()){
-	        result.add(current.toString());
-	        return;
-	        }
-	        
-	      int num=digits.charAt(index)-'0';//get integer number
-	      String str = keyboard[num];
-	      for (int i=0; i<str.length(); i++){
-	        current.append(str.charAt(i));
-	        helper(digits, index+1, current, keyboard, result);
-	        current.deleteCharAt(current.length()-1);
-	        }
-	    }
+//	public static ArrayList<String> letterCombinations(String digits) {
+//	      ArrayList<String> result=new ArrayList<String>();
+//	      if (digits==null)
+//	          return result;
+//
+//	      String[] keyboard={"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+//	      StringBuilder current=new StringBuilder();
+//	      
+//	      int index=0;
+//	      helper(digits, index, current, keyboard, result);
+//	      return result;
+//	  }
+//	  
+//	  private static void helper(String digits, int index, StringBuilder current, String[] keyboard, ArrayList<String> result){
+//	      if (index==digits.length()){
+//	        result.add(current.toString());
+//	        return;
+//	        }
+//	        
+//	      int num=digits.charAt(index)-'0';//get integer number
+//	      String str = keyboard[num];
+//	      for (int i=0; i<str.length(); i++){
+//	        current.append(str.charAt(i));
+//	        helper(digits, index+1, current, keyboard, result);
+//	        current.deleteCharAt(current.length()-1);
+//	        }
+//	    }
 	
 //	public static List<String> letterCombinations(String digits) {
 //		HashMap<Integer, String> map = new HashMap<Integer, String>();
@@ -67,6 +67,25 @@ public class LetterCombinationsofaPhoneNumber {
 //    }
 	
 	
+	public static List<String> letterCombinations(String digits) {
+        List<String> res = new ArrayList<String>();
+        String[] phone = {"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+        helper(0,digits, new StringBuilder(), phone, res);
+        return res;
+    }
+    
+    public static void helper(int index, String digits, StringBuilder sb, String[] phone, List<String> res){
+        if(sb.length() == digits.length()){
+            res.add(sb.toString());
+            return;
+        }
+        String str = phone[digits.charAt(index)-'0'];
+        for(int j=0;j<str.length();j++){
+            sb.append( str.charAt(j));
+            helper(index+1, digits, sb, phone, res);
+            sb.deleteCharAt(sb.length()-1);
+        }
+    }
 	
 	public static void main(String[] args) {
 		String input = "23";

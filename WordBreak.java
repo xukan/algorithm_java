@@ -2,6 +2,8 @@ package algorithm_java;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 //Google Uber Facebook Amazon Yahoo Bloomberg Pocket Gems
@@ -21,60 +23,47 @@ public class WordBreak {
 		int len = s.length();
         boolean[] pos = new boolean[len+1];
         pos[0] = true;
-        for(int i=0;i<len;i++){
-            if(pos[i]){
-                for(int j=i+1;j<=len;j++){
-                    String sub = s.substring(i, j);
-                    if(wordDict.contains(sub))
-                        pos[j]=true;
-                }
-            }
-        }
+        for (int i = 1; i <= len; i++) {
+			for (int j = 0; j < i; j++) {
+				if (!pos[j])
+					continue;
+				String sub = s.substring(j, i);
+				if (wordDict.contains(sub)) {
+					pos[i] = true;
+					break;//important
+				}
+			}
+		}
         return pos[len];
     }
 	
-	public static List<String> wordBreakII(String s, List<String> wordDict) {
-	    ArrayList<String> [] pos = new ArrayList[s.length()+1];
-	    pos[0]=new ArrayList<String>();
-	 
-	    for(int i=0; i<s.length(); i++){
-	        if(pos[i]!=null){
-	            for(int j=i+1; j<=s.length(); j++){
-	                String sub = s.substring(i,j);
-	                if(wordDict.contains(sub)){
-	                    if(pos[j]==null){
-	                        ArrayList<String> list = new ArrayList<String>();
-	                        list.add(sub);
-	                        pos[j]=list;
-	                    }else{
-	                        pos[j].add(sub);
-	                    }
-	                }
-	            }
-	        }
-	    }
-	 
-	    if(pos[s.length()]==null){
-	        return new ArrayList<String>();
-	    }else{
-	        ArrayList<String> result = new ArrayList<String>();
-	        dfs(pos, result, "", s.length());
-	        return result;
-	    }
-	}
-	 
-	public static void dfs(ArrayList<String> [] pos, ArrayList<String> result, String curr, int i){
-	    if(i==0){
-	        result.add(curr.trim());
-	        return;
-	    }
-	 
-	    for(String s: pos[i]){
-	        String combined = s + " "+ curr;
-	        dfs(pos, result, combined, i-s.length());
-	    }
-	}
-	
+	//backtracking memorization
+	//tc: tc for backtracking is O(2^n), since we use memorization, it decreases to O(n^2)
+	HashMap<String,List<String>> map = new HashMap<String,List<String>>();
+    public List<String> wordBreakII(String s, List<String> wordDict) {
+        List<String> res = new ArrayList<String>();
+        if(s.length() == 0) {
+            return res;
+        }
+        if(map.containsKey(s)) {
+            return map.get(s);
+        }
+        if(wordDict.contains(s)) {
+            res.add(s);
+        }
+        for(int i = 1 ; i < s.length() ; i++) {
+            String t = s.substring(0,i);
+            if(wordDict.contains(t)) {
+            	String str = s.substring(i);
+                List<String> temp = wordBreakII( str, wordDict);
+                for(String sub: temp) {
+                	res.add(t+ " "+ sub );
+                }
+            }
+        }
+        map.put(s , res);
+        return res;
+    }
 	
 	public static void main(String[] args) {
 		//word break I

@@ -1,4 +1,7 @@
 package algorithm_java;
+
+//Microsoft Bloomberg Facebook
+
 //two pointers, like move zeros
 //follow up: remove duplicates
 public class RemoveDuplicatesfromSortedArray {
@@ -20,7 +23,7 @@ public class RemoveDuplicatesfromSortedArray {
         return pre+1;
     }
 	
-	/*
+	/*Facebook
 	 * Follow up for "Remove Duplicates": 
 	 * What if duplicates are allowed at most twice?
 	 * */
@@ -48,9 +51,9 @@ public class RemoveDuplicatesfromSortedArray {
 	
 	public static void main(String[] args) {
 		RemoveDuplicatesfromSortedArray solution = new RemoveDuplicatesfromSortedArray();
-		int[] input = { 1, 1, 1, 2, 4, 4, 5, 7};
-		//int len = solution.removeDuplicatesI(nums);
-		//int[] input = { 1,1,1,2,2,3 };
+		//int[] input = { 1, 1, 1, 2, 4, 4, 5, 7};
+		int[] input = { 1,1,1,2,2,5,7 };
+		//int len = solution.removeDuplicatesI(input);
 		//int[] input = { 1, 2, 2};
 		int len = solution.removeDuplicatesII(input);
 		System.out.println( len );

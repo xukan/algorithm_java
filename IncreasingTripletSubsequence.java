@@ -2,6 +2,9 @@ package algorithm_java;
 
 //Facebook
 
+//similar question
+//Maximum Product of Three Numbers
+
 public class IncreasingTripletSubsequence {
 	public static boolean increasingTriplet(int[] nums) {
         int x = Integer.MAX_VALUE;

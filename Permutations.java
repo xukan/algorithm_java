@@ -10,20 +10,26 @@ public class Permutations {
 
 	public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
-        List<Integer> sol = new ArrayList<Integer>();
-        helper(0, nums ,sol, res);
+        List<Integer> sol = new ArrayList();
+        boolean[] visited = new boolean[nums.length];
+        helper(nums, visited, sol, res);
         return res;
     }
     
-    public void helper(int start, int[] nums, List<Integer> sol, List<List<Integer>> res){
-        if(sol.size() == nums.length)
+    public void helper(int[] nums, boolean[] visited, List<Integer> sol, List<List<Integer>> res){
+        if(sol.size() == nums.length){
             res.add(new ArrayList<Integer>(sol));
+            return;
+        }
+        
         for(int i=0;i<nums.length;i++){
-        	if(sol.contains(nums[i]))
-        		continue;
-            sol.add(nums[i]);
-            helper(i, nums, sol, res);
-            sol.remove(sol.size()-1);
+            if(!visited[i]){
+                sol.add(nums[i]);
+                visited[i] = true;
+                helper(nums, visited, sol, res);
+                sol.remove(sol.size()-1);
+                visited[i] = false;
+            }   
         }
     }
     
@@ -45,7 +51,7 @@ public class Permutations {
         }
         for(int i=0;i<nums.length;i++){
         	if(!used[i]){
-        		if(i>0 && nums[i]==nums[i-1] && used[i-1])
+        		if(i>0 && nums[i]==nums[i-1] && !used[i-1])
 	                continue;
 	            sol.add(nums[i]);
 	            used[i]= true;

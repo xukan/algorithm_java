@@ -23,6 +23,8 @@ package algorithm_java;
  * 
  * */
 
+//Microsoft
+
 //Definition for binary tree with next pointer.
 class TreeLinkNode {
 	int val;

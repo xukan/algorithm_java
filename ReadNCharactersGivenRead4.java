@@ -12,6 +12,9 @@ package algorithm_java;
 
 public class ReadNCharactersGivenRead4 {
 	//buffer means read from a file into buffer
+	//I agree this is confusing. But after trial and error, and looking at the expected outputs for given inputs -- the problem is following
+    //Your objective is to return the number of characters actually read
+    //if you return that, the expected output is displaying what those characters are and checks if it is matching your output
 	public int read(char[] buf, int n) {
 		int count = 0;
         char[] buf4 = new char[4];

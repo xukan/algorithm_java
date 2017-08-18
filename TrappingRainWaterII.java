@@ -1,7 +1,7 @@
 package algorithm_java;
 
 //reference:  http://www.cnblogs.com/grandyang/p/5928987.html
-//
+
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -21,8 +21,10 @@ public class TrappingRainWaterII {
 
         public int compareTo(Cell o) {
             return this.height - o.height;
-        }
+        } 
     }
+	
+	public static final int[][] directions = {{-1,0},{1,0},{0,-1},{0,1}};
 	
     public int trapRainWater(int[][] heightMap) {
         if (heightMap==null || heightMap.length<=2 || heightMap[0].length<=2) return 0;
@@ -34,6 +36,8 @@ public class TrappingRainWaterII {
         
         HashSet<Integer> visited = new HashSet<Integer>();
 
+        //这道题的解法就好像海平面在上涨,由于四周围的高度一定是要用来存水的,
+        //于是首先把四个边上的点加入到队列中,队列顺序由小到大
         for(int i=0;i<m;i++){
         	for(int j=0;j<n;j++){
         		if(i==0|| i==m-1 || j==0 || j==n-1){
@@ -49,8 +53,7 @@ public class TrappingRainWaterII {
 //        	Cell cur= queue.poll();
 //        	System.out.println( cur.row+" "+ cur.col + " " + cur.height );
 //        }
-        
-        int[][] directions = new int[][]{{-1, 0}, {1, 0}, {0, 1}, {0, -1}};
+
         while (!queue.isEmpty()) {
             Cell cur = queue.poll();
             //System.out.println(cur.row+" "+ cur.col + " " + cur.height);
@@ -64,6 +67,8 @@ public class TrappingRainWaterII {
                     continue;
                 else{
 	                visited.add(row*n+col);
+	                //这里注意在检测过一个地之后,在加入队列的时候,高度要存最大高度,这样就有可能不是这个点自己的高度,
+	                //这样就可以算出这个点四周的点的存水量了
 	                int height = Math.max(cur.height, heightMap[row][col]);
 	                queue.offer(new Cell(row,col, height));
 	                if(heightMap[row][col] < cur.height)

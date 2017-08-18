@@ -1,5 +1,7 @@
 package algorithm_java;
 
+//LinkedIn Google Uber Airbnb Facebook Twitter Amazon Microsoft
+
 public class MergekSortedLists {
 	public ListNode mergeKLists(ListNode[] lists) {
         //int[] pos = new int[lists.length];
@@ -23,8 +25,7 @@ public class MergekSortedLists {
         while( l1!=null && l2!=null){
             if( l1.val < l2.val ){
                 pre.next = l1;
-                l1=l1.next;
-                
+                l1=l1.next;  
             }else{
                 pre.next=l2;
                 l2=l2.next;
@@ -38,7 +39,8 @@ public class MergekSortedLists {
         	pre.next=l2;
         return dummy.next;
     }
-    
+    //solution2, PriorityQueue 
+    //http://www.programcreek.com/2013/02/leetcode-merge-k-sorted-lists-java/
     
     public static void main(String[] args){
 		ListNode node1 = new ListNode(5);
