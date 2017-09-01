@@ -5,37 +5,7 @@ package algorithm_java;
 //also do : (M) Maximum Size Subarray Sum Equals k
 
 public class MinimumSizeSubarraySum {
-	public static int minSubArrayLen(int s, int[] nums) {
-		//my solution
-//		if(nums == null || nums.length ==0)
-//            return 0;
-//        int slow=0, fast=1;
-//        int sum=nums[0], count=1, min=nums.length;
-//        boolean find = false;
-//        while(slow<nums.length){
-//            if(sum < s ){
-//            	if(fast >=nums.length)
-//            		break;
-//                sum+=nums[fast];
-//                fast++;
-//                count++;
-//            }else{
-//            	find = true;
-//                min = Math.min(min, count);
-//                slow++;
-//                fast = slow+1;
-//                if(fast>nums.length-1)
-//                	break;
-//                sum = nums[slow];
-//                count=1;
-//            }
-//        }
-//        if(find)
-//        	return min;
-//        else
-//        	return 0;
-		
-		
+	public static int minSubArrayLen(int s, int[] nums) {		
 		//solution 1
 		//two pointers, 
 		//tc: O(n)

@@ -44,11 +44,11 @@ public class LongestConsecutiveSequence {
 				return;
 			int rank=1;
 			if( size[pRoot ]<size[qRoot]){
-				id[p] = q;
+				id[p] = id[q];
 				size[qRoot] += size[pRoot];
 				rank = size[qRoot];
 			}else{
-				id[q] = p;
+				id[q] = id[p];
 				size[pRoot ]+=size[qRoot];
 				rank = size[pRoot];
 			}
@@ -94,7 +94,8 @@ public class LongestConsecutiveSequence {
 	public static void main(String[] args) {
 		LongestConsecutiveSequence s = new LongestConsecutiveSequence();
 		int[] nums = {100, 4, 200, 1, 3, 2};
-		int res = s.longestConsecutive_better(nums);
+//		int res = s.longestConsecutive_better(nums);
+		int res = s.longestConsecutive(nums);
 		System.out.println( res);
 	}
 }

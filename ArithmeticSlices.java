@@ -24,8 +24,10 @@ public class ArithmeticSlices {
 //        }
 //        return res;
 //    }
-	
+
+//		Aetion Baidu 
 		//http://blog.csdn.net/mebiuw/article/details/52876206
+		//http://www.cnblogs.com/grandyang/p/5968340.html
 		//实质上是在找等差数列个数(arithmetic sequence)
 		int curr = 0, sum = 0;
 	    for (int i=2; i<A.length; i++)
@@ -39,6 +41,7 @@ public class ArithmeticSlices {
 	    return sum;
 	}
 	
+	//Baidu 
 	//II Arithmetic Slices II - Subsequence
 	public static int numberOfArithmeticSlicesII(int[] A) {
         int re = 0;

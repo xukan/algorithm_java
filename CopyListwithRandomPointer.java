@@ -28,11 +28,10 @@ public class CopyListwithRandomPointer {
         p = head;
         q = newHead;
         while(p!=null){
-            if(p.random!=null){
-                if(map.containsKey(p.random))
-                    q.random = map.get(p.random);
+        	if(p.random!=null && map.containsKey(p.random)){
+                q.random = map.get(p.random);
             }else
-                q.random = null;
+                q.random = null;    
             p = p.next;
             q = q.next;
         }

@@ -3,6 +3,7 @@ package algorithm_java;
 //Pocket Gems Microsoft Apple Facebook
 
 public class ImplementstrStr {
+	//KMP, tc: O(n + k)
 	public static int strStr(String haystack, String needle) {
         if(needle.equals(""))
             return 0;
@@ -43,7 +44,7 @@ public class ImplementstrStr {
         return prefix;
     }
     
-    //brute force
+    //brute force, tc: O(nk)
     public int strStr_bf(String haystack, String needle) {
         if(needle.length() ==0)
             return 0;

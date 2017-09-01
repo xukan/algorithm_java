@@ -7,6 +7,17 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
+//Google Airbnb Facebook Twitter Snapchat Pocket Gems 
+
+//similar question
+//Course Schedule II
+
+/*
+ * To solve this question, we need to get topological sort from directed graph
+ * To construct the graph, we need to build adjacency list
+ * To get topological sort, we need to know indegree of each vertex
+ * */
+
 public class AlienDictionary {
 	public static String alienOrder(String[] words) {
         HashMap<Character, Set<Character>> map = new HashMap();
@@ -57,9 +68,11 @@ public class AlienDictionary {
         return res;
     }
 	
+	
 	public static void main(String[] args) {
-		//String[] words = {"wrt", "wrf", "er","ett", "rftt"};
-		String[] words ={"za","zb","ca","cb"};
+//		String[] words = {"wrt", "wrf", "er","ett", "rftt"};
+//		String[] words ={"za","zb","ca","cb"};
+		String[] words = {"wrt","wrf","er","ett","rftt","te"};
 		String order = alienOrder(words);
 		System.out.println(order);
 	}

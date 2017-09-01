@@ -1,5 +1,15 @@
 package algorithm_java;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
+
 //Google Facebook Zenefits
 
 /*
@@ -18,7 +28,8 @@ package algorithm_java;
  * */
 
 //similar question
-//
+//这道题考察的是无向图检测环,有两种方法,一种是UnionFind,一种是DFS
+//如果是有向图检测环,可以用拓扑排序,题目是course scheduleI&&II
 public class GraphValidTree {
 	class UnionFind{
         int[] id;

@@ -69,7 +69,8 @@ public class WordDictionary {
 	        return search(word, node.subNode(c), depth + 1);
 	    } else {
 	        for (TrieNode nextNode : node.child) {
-	            if (search(word, nextNode, depth + 1)) return true;
+	            if (search(word, nextNode, depth + 1))
+	            	return true;
 	        }
 	        return false;
 	    }

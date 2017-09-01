@@ -40,7 +40,7 @@ public class OneEditDistance {
 	            }
 	        }
 	    }
-	    if(i<m||j<n){
+	    if(i<m||j<n){ //example s="a", b = "";
 	        count++;
 	    }
 	    if(count==1)

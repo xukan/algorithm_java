@@ -11,6 +11,9 @@ import java.util.TreeMap;
 
 //Pocket Gems Yelp
 
+//https://stackoverflow.com/questions/20398799/find-k-nearest-points-to-point-p-in-2-dimensional-plane
+//http://www.1point3acres.com/bbs/forum.php?mod=viewthread&tid=283358&extra=page%3D1%26filter%3Dsortid%26sortid%3D311%26searchoption%5B3046%5D%5Bvalue%5D%3D2%26searchoption%5B3046%5D%5Btype%5D%3Dradio%26sortid%3D311
+
 //comparison between PriorityQueue and TreeMap
 //Generally speaking, it is less work to track only the minimum element, using a heap.
 //A tree is more organized, and it requires more computation to maintain that organization

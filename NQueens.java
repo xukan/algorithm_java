@@ -9,7 +9,7 @@ import java.util.List;
 //a solution requires that no TWO queens share the same row, column, or diagonal.
 
 /*
- * 这道题是NP问题, tc大于O(2^n)
+ * 这道题是NP问题, tc大于O(2^n) , it is O(N!)
  * 因为棋盘是n*n的，we use an array named with columnVal to keep track of queen's position, 
  * queen's x-axis is the index of the array, columnVal[index ] = y-axis
  * Let's look at an example here.

@@ -51,14 +51,12 @@ public class RemoveInvalidParentheses {
     }
 	//  method returns true if string contains valid parenthesis
     private boolean isValid(String str) {
-        char[] s = str.toCharArray();
         int left = 0;
-        for (int i = 0; i < s.length; i++) {
-            if (s[i] == '(') left++;
-            else if (s[i] == ')') {
-                if (left == 0) return false;
-                left--;
-            }
+        for(char c: str.toCharArray()){
+        	if(c == '(')
+        		left++;
+        	if(c== ')' && left-- == 0)
+        		return false;
         }
         return left == 0;
     }

@@ -4,6 +4,11 @@ package algorithm_java;
 //similar problem : add and search word(WordDictionary)
 import java.util.LinkedList;
 
+/*
+ * Insert and search costs O(key_length), however the memory requirements of trie is O(ALPHABET_SIZE * key_length * N) where key_length is average length of the key and N is number of keys in trie. 
+ * There are efficient representation of trie nodes (e.g. compressed trie, ternary search tree, etc.) to minimize memory requirements of trie.
+ * */
+
 class TrieNode{
 	char content ;
 	LinkedList<TrieNode> child;

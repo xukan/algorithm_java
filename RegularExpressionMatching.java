@@ -26,52 +26,61 @@ package algorithm_java;
  * a f f t
  * a f f ?
  * 看上面这个例子，在判断?这个值的时候，如果是dp[i-1][j-1]，就是false, aa无法匹配a，因为*可以代表前一个字符的0到多次重复(a*), 因此考虑dp[i-1][j]，就把*的作用考虑在内了
- * 这样aa是和a*匹配的,并且aaa中的第三个是a，a*中的第一个也是a，所以aaa匹配a*
+ * 这样aa是和a*匹配的,并且aaa中的第三个是a，a*中的第一个也是a，所以aaa匹配a*。对比情况2和情况3,这里是让*表示多个(>=1)前面的字符
  * 情况二：当dp[i][j-1]为true时，dp[i][j]为true，此时我们让*表示只有一个前面的字符。
  * 情况三：当dp[i][j-2]为true时，dp[i][j]为true，此时我们让*表示0个前面的字符。注意c*可以匹配成空，题目最后一个例子就出现这种情况，*可以和前面一个字符一起解释，让前面一个字符消失。
  * 其他情况 dp[i][j] 为false.
  * 把递推的规则想清楚了，实现就很容易了，只需要注意dp数组的index和s p的index的含义区别即可。
- * 
+ * 再看一个例子
+ *                c       *       a       *       b  
+ *      true | false | true | false| true | false 
+ * a | false | false | false| true | true | false 
+ * a | false | false | false| false| true | false 
+ * b | false | false | false| false| false| true 
  * 
  * 同类型的题还有wildcard matching, edit distance, Interleaving String, Regular Expression Matching
  * */
 
 public class RegularExpressionMatching {
 	public static boolean isMatch(String s, String p) {
-		int m = s.length();
-		int n = p.length();
-		boolean[][] dp = new boolean[m+1][n+1];
-		dp[0][0]=true;
-		for(int i=1;i<m+1;i++){
-			dp[i][0] = false;
-		}
-		for(int j=1;j<n+1;j++){
-			if(p.charAt(j-1)!='*')
-				dp[0][j] = false;
-			else{
-				if(j>=2)
-					dp[0][j] = dp[0][j-2];
-			}
-		}
-		
-		for(int i=1;i<m+1;i++){
-			for(int j=1;j<n+1;j++){
-				if(p.charAt(j-1)!='*'){
-					if(dp[i-1][j-1] && ( s.charAt(i-1) == p.charAt(j-1) || p.charAt(j-1) == '.'))
-						dp[i][j] = true;
-				}else{
-					if(dp[i-1][j] && (s.charAt(i-1) == p.charAt(j-2) || p.charAt(j-2) == '.'))
-						dp[i][j] = true;
-					if(dp[i][j-1] || dp[i][j-2])
-						dp[i][j] = true;
-				}
-			}
-		}
-		return dp[m][n];
-	}
+        int len1 = s.length(), len2 = p.length();
+        boolean[][] dp = new boolean[len1+1][len2+1];
+        dp[0][0] = true;
+//        for(int i=1;i<=len1;i++){
+//			dp[i][0] = false;
+//		}
+        for(int j=1;j<=len2;j++){
+            if(j>=2 && p.charAt(j-1) == '*')
+                dp[0][j] = dp[0][j-2];
+        }
+        for(int i=1;i<=len1;i++){
+            for(int j=1;j<=len2;j++){
+                if(p.charAt(j-1)!='*'){
+                    if(dp[i-1][j-1] && (s.charAt(i-1) == p.charAt(j-1) || p.charAt(j-1) == '.'))
+                        dp[i][j] = true;
+                }else{
+                    if(dp[i-1][j] && (s.charAt(i-1) == p.charAt(j-2) || p.charAt(j-2) == '.'))
+                       dp[i][j] = true;
+                 // dp[i][j-1] = true means '*' mataches 1 preceding element,  i.e  ba*  just left b
+                 // dp[i][j-2] = true means '*' mataches 0 preceding element,  i.e. a* just has a single a
+                    if(dp[i][j-1] || dp[i][j-2])  
+                       dp[i][j] = true;
+                }
+            }
+        }
+        for(int i=0;i<=len1;i++){
+            for(int j=0;j<=len2;j++)
+            	System.out.print( dp[i][j] + " ");
+            System.out.println();
+       }
+        
+        return dp[len1][len2];
+    }
+	
 	 public static void main(String[] args){
 //	    boolean res = isMatch("aaaab", "a.*ab*");
-    	boolean res = isMatch("aaa", ".*");
+//    	boolean res = isMatch("aaa", ".*");
+		 boolean res = isMatch("aab", "c*a*b");
     	System.out.println(res);
 	 }
 }

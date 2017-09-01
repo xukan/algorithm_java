@@ -104,10 +104,10 @@ public class MedianofTwoSortedArrays {
     }
 
 	public static void main(String[] args) {
-//		int[] nums1 = { 3, 6, 7, 8, 9, 10 };
-//		int[] nums2 = { 1, 2, 4, 5 };
-		int[] nums1 = { 1,3 };
-		int[] nums2 = { 2 };
+		int[] nums1 = { 3, 6, 7, 8, 9, 10 };
+		int[] nums2 = { 1, 2, 4, 5 };
+//		int[] nums1 = { 1,3 };
+//		int[] nums2 = { 2 };
 		
 		double res = findMedianSortedArrays(nums1, nums2);
 		System.out.println(res);

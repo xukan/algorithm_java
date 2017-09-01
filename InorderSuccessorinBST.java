@@ -16,8 +16,17 @@ import java.util.Stack;
  *     TreeNode(int x) { val = x; }
  * }
  */
+/* *                10
+ *                /       \ 
+ *              6        12
+ *            /    \         \ 
+ *          3       8       18
+ *        /   \     /
+ *      1    5   7
+ *       
+ * */
+
 public class InorderSuccessorinBST {
-	
 	//Time is O(log(n)) and space is O(1).
 	public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
         if(root == null || p == null)
@@ -40,6 +49,29 @@ public class InorderSuccessorinBST {
         	cur = cur.left;
         return cur;
     }
+	
+	public TreeNode successor(TreeNode root, TreeNode p) {
+		  if (root == null)
+		    return null;
+
+		  if (root.val <= p.val) {
+		    return successor(root.right, p);
+		  } else {
+		    TreeNode left = successor(root.left, p);
+		    return (left != null) ? left : root;
+		  }
+	}
+	
+	public TreeNode predecessor(TreeNode root, TreeNode p) {
+		if (root == null)
+			return null;
+		if (root.val >= p.val) {
+			return predecessor(root.left, p);
+		} else {
+			TreeNode right = predecessor(root.right, p);
+			return (right != null) ? right : root;
+		}
+	}
 	
 	//similar question is Binary Search Tree Iterator
 	public class BSTIterator {
@@ -74,5 +106,29 @@ public class InorderSuccessorinBST {
 	        }
 	        return 0;
 	    }
+	}
+	
+	public static void main(String[] args) {
+		InorderSuccessorinBST s = new InorderSuccessorinBST();
+		TreeNode root = new TreeNode(10);
+		TreeNode node1 = new TreeNode(6);
+		TreeNode node2 = new TreeNode(12);
+		TreeNode node3 = new TreeNode(3);
+		TreeNode node4 = new TreeNode(8);
+		TreeNode node5 = new TreeNode(18);
+		TreeNode node6 = new TreeNode(1);
+		TreeNode node7 = new TreeNode(5);
+		TreeNode node8 = new TreeNode(7);
+		root.left = node1;
+		root.right = node2;
+		node1.left = node3;
+		node1.right = node4;
+		node2.right = node5;
+		node3.left =node6;
+		node3.right=node7;
+		node4.left = node8;
+		
+		TreeNode node = s.successor(root, node8);
+		System.out.println(node.val);
 	}
 }

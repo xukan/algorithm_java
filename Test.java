@@ -244,59 +244,161 @@ public class Test {
         return res;
     }
     
-    public String simplifyPath(String path) {
-        if(path.length() == 0)
-            return "";
-        String[] parts = path.split("/");
-        List<String> list = new ArrayList<String>();
-        int len = parts.length;
-        for(int i=0;i<len;i++){
-            if(parts[i].equals(".") || (parts[i].equals("") && i!=0 && i!=len-1))
-                continue;
-            list.add(parts[i]);
-        }
-        int i=list.size()-1;
-        while(i>=0){
-            String str = list.get(i);
-            if(str.equals("..")){
-                int count = 1;
-                int pos = i;
-                while(i>0 && list.get(--i).equals("..")){
-                    count++;
-                }
-                while(count>0 && list.size()>0){
-                	list.remove(i+1);
-                    list.remove(i--);
-                    count--;
-                }
-            }else
-            	i--;
-        }
-        String res = "";
-        for(String str: list){
-            if(str.equals(""))
-            	continue;
-        	res = res + "/" + str;
-        }
-        return res.equals("")?"/": res;
+    public int calculate(String s) {
+        if(s==null || s.length()==0)
+            return 0;
+        String postfix = convertToPostfix(s);
+        System.out.println(postfix);
+        return 0;
     }
     
+    public String convertToPostfix(String s){
+        Stack<Character> stack = new Stack<Character>();
+        StringBuilder sb = new StringBuilder();
+        for(int i=0;i<s.length();i++){
+            char c = s.charAt(i);
+            if(Character.isDigit(c)){
+                int num = 0;
+                while(i<s.length() && Character.isDigit(s.charAt(i))){
+                    num = num*10 + s.charAt(i++) - '0';
+                }
+                i--;
+                sb.append(num).append("#");
+            }else{
+                switch(c){
+                    case '(': case '^':
+                        stack.push(c);
+                        break;
+                    case '+': case '-': case '*': case '/':
+                        while(!stack.empty() && getPrecedence(c) <= getPrecedence(stack.peek()))
+                            sb.append(stack.pop()).append("#");
+                        stack.push(c);
+                        break;
+                    case ')':
+                        if(!stack.empty()){
+                            char top = stack.pop();
+                            while(top!='('){
+                                sb.append(top).append("#");
+                                top = stack.pop();
+                            }
+                        }
+                        break;
+                }
+            }
+        }
+        while(!stack.empty())
+            sb.append(stack.pop()).append("#");
+        sb.deleteCharAt(sb.length()-1);
+        return sb.toString();
+    }
+    
+    public int getPrecedence(char c){
+        int p = 0;
+        switch(c){
+            case '(': case ')':
+                return 0;
+            case '+': case '-':
+                return 1;
+            case '*': case '/':
+                return 2;
+            case '^':
+                return 3;
+        }
+        return -1;
+    }
+    
+    public int hIndex(int[] citations) {
+        if(citations.length == 1)
+            return 0;
+        Arrays.sort(citations);
+        int len = citations.length;
+        int hindex = 0;
+        for(int i=0;i<len;i++){
+            if((len - i>= citations[i]) && i<=citations[i])
+                hindex = Math.max(hindex, citations[i]);
+        }
+        return hindex;
+    }
+    
+    /***************************************************/
+    class TrieNode{
+        char c;
+        boolean isWord;
+        List<TrieNode> children;
+        public TrieNode(){
+            this.c = ' ';
+            isWord = false;
+            children = new ArrayList<TrieNode>();
+        }
+        public TrieNode(char c){
+            this.c = c;
+            isWord = false;
+            children = new ArrayList<TrieNode>();
+        }
+        public TrieNode subNode(char c){
+            for(TrieNode node: children)
+                if(node.c == c)
+                    return node;
+            return null;
+        }
+    }
+    TrieNode root;
+    /** Initialize your data structure here. */
+    public Test() {
+        root = new TrieNode();        
+    }
+    
+    /** Adds a word into the data structure. */
+    public void addWord(String word) {
+//        if(search(word))
+//            return;
+        TrieNode cur = root;
+        for(char c : word.toCharArray()){
+            TrieNode node = cur.subNode(c);
+            if(node == null){
+                TrieNode n = new TrieNode(c);
+                cur.children.add(n);
+                cur = n;
+            }else{
+                cur = node;
+            }
+        }
+        cur.isWord = true;
+    }
+    
+    /** Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter. */
+    public boolean search(String word) {
+        if(word.length() == 0)
+            return false;
+        TrieNode cur = root;
+        return helper(cur, 0, word);
+    }
+    
+    public boolean helper(TrieNode node, int index, String word){
+        if(node == null)
+            return false;
+        if(index == word.length())
+            return node.isWord;
+        char c = word.charAt(index);
+        if(c!='.'){
+            TrieNode n = node.subNode(c);
+            return helper(n, index+1, word);
+        }else{
+            for(TrieNode n: node.children)
+                if( helper(n, index+1, word))
+                	return true;
+        }
+        return false;
+    }
+    
+    
 	public static void main(String[] args) {
+//		"addWord","addWord","addWord","addWord","search","search","addWord","search","search","search","search","search","search"]
+//		["at"]          ,["and"],       ["an"],      ["add"],     ["a"],      [".at"],    ["bat"],   [".at"],    ["an."],  ["a.d."],  ["b."],   ["a.d"],  ["."]]
+//		false,false,null,true,true,false,false,true,false]
 		Test t = new Test();
-//        int[] a4 = {3,2,1,5,6,4};
-//        int[] a5 = {1};
-//        int res = t.findKthLargest(a4, 2);
-//        System.out.print(res);
-//        List<String> res1 = t.restoreIpAddresses("1111");
-//        res1.forEach(str->System.out.print(str));
-		
-//		String path = "/home/";
-//		String path = "/../";
-//		String path = "/a/./b/../../c/";
-//		String path = "/home//foo/";
-		String path = "/home/../../..";
-//		String path = "/a/./b/../c//d";
-		String res = t.simplifyPath(path);
+		List<String> dict = Arrays.asList("aaaa","aaa");
+		boolean res = t.wordBreak("aaaaaaa", dict);	
 		System.out.println(res);
 	}
 }

@@ -8,7 +8,15 @@ import java.util.List;
 //target sum
 
 //reference:  http://www.cnblogs.com/grandyang/p/4814506.html
-
+/*
+ * tc: O(4^N)
+ * there are 4 cases:
+ * plus, minus, multiply and the next digit
+ * The process moving to N length of string gives us from 3T(n-1) to 3T(1) :
+ * T(n) = 3 * T(n-1) + 3 * T(n-2) + 3 * T(n-3) + ... + 3 *T(1);
+ * T(n-1) = 3 * T(n-2) + 3 * T(n-3) + ... 3 * T(1);
+ * Thus T(n) = 4T(n-1);
+ * */
 public class ExpressionAddOperators {
 	public static List<String> addOperators(String num, int target) {
 		List<String> res = new ArrayList<String>();

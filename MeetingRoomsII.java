@@ -87,8 +87,11 @@ public class MeetingRoomsII {
         for(int k=0;k<len;k++){
             if(starts[k]<ends[endIter])
                 room++;
-            else
+            else{
+            	//what happens here can be thought of as we move newly added meeting to a room that previously ends
+            	//thus we don’t need to increment rooms at this time and move both of the pointers forward.
                 endIter++;
+            }
         }
         return room;
     }

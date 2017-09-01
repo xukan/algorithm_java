@@ -30,7 +30,6 @@ public class WordBreak {
 				String sub = s.substring(j, i);
 				if (wordDict.contains(sub)) {
 					pos[i] = true;
-					break;//important
 				}
 			}
 		}
@@ -67,10 +66,15 @@ public class WordBreak {
 	
 	public static void main(String[] args) {
 		//word break I
-		String str1 = "leetcode";
+//		String str1 = "leetcode";
+//		List<String> dict1 = new ArrayList<String>();
+//		dict1.add("leet");
+//		dict1.add("code");
+		String str1 = "aaaaaaa";
 		List<String> dict1 = new ArrayList<String>();
-		dict1.add("leet");
-		dict1.add("code");
+		dict1.add("aaaa");
+		dict1.add("aaa");
+		
 		WordBreak s = new WordBreak();
 		boolean flag = s.wordBreak(str1, dict1);
 		System.out.println(flag);

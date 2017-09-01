@@ -32,35 +32,32 @@ import java.util.*;
  * */
 public class SimplifyPath  {
 	public static String simplifyPath(String path) {  
-        if(path.length() == 0){  
-            return path;  
-        }  
-        // /a/./b/../c//d
-        String[] splits = path.split("/");  
-        LinkedList<String> stack = new LinkedList<String>();  
-        for (String s : splits) {  
-            if(s.length()==0 || s.equals(".")){  
-                continue;  
-            }else if(s.equals("..")){  
-                if(!stack.isEmpty()){  
-                    stack.pop();  
-                }  
-            }else{  
-                stack.push(s);  
-            }  
-        }  
-        //这个循环是应对输入为"/"这种情况的  
-        String res = "";
-        for (String dir : stack) res = "/" + dir + res;
-        return res.isEmpty() ? "/" : res;
+		if(path.length() == 0)
+            return "";
+        Stack<String> stack = new Stack<String>();
+        String[] tokens = path.split("/");
+        for(String token : tokens){
+            if(token.equals(".") || token.equals(""))
+                continue;
+            else if(token.equals("..")){
+                if( !stack.isEmpty() )
+                    stack.pop();
+            }else
+                stack.push(token);
+        }
+        StringBuilder sb = new StringBuilder();
+        while(!stack.empty())
+            sb.insert(0, stack.pop()).insert(0, "/");
+        return sb.length() == 0? "/": sb.toString();
     }
 	
 	public static void main(String[] args) {
-		String path = "/a/./b/../c//d";
+		//String path = "/a/./b/../c//d";
 		//String initialPath = "/";
 		//String initialPath = "/.";  这个例子说明循环中的比较要用.equals();
 		//String initialPath = "/..";
 //		String path = "/home/../../..";
+		String path = "/abc/...";
 		String res = simplifyPath(path);
 		System.out.println(res);
 	}

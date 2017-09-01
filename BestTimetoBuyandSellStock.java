@@ -8,13 +8,15 @@ public class BestTimetoBuyandSellStock {
 	public int maxProfitI(int[] prices) {
 		//至多允许一次交易
 		//其实就是一个扫描数组，求数组中数字相差最大值的过程，但是这个最大值，永远都是后者减去前者。
-        if(prices == null)
+		if(prices.length == 0)
             return 0;
+        int min = prices[0], max = 0;
         int profit = 0;
-        int minElement = prices[0];
-        for(int i=0; i<prices.length; i++){
-            minElement = Math.min(minElement, prices[i]);
-            profit = Math.max(profit, prices[i]-minElement);
+        for(int i=1;i<prices.length;i++){
+            min = Math.min(min, prices[i]);
+            if(min != prices[i]){
+                profit = Math.max(profit, prices[i] - min);
+            }
         }
         return profit;
 	}
@@ -24,15 +26,12 @@ public class BestTimetoBuyandSellStock {
 		if(prices == null || prices.length == 0){  
             return 0;  
         }  
-        int len = prices.length;  
-        int maxProfit = 0;  
-        for(int i = 1; i < len; i++){  
-            int tempProfit = prices[i] - prices[i-1];  
-            if(tempProfit > 0){  
-                maxProfit += tempProfit;  
-            }  
-        }  
-        return maxProfit;
+		int profit = 0;
+        for(int i=0,j=1;j<prices.length;j++, i++){
+            if(prices[j] > prices[i])
+                profit += (prices[j] - prices[i]);
+        }
+        return profit;
 	}
 	
 	//III

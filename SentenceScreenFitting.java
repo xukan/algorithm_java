@@ -82,10 +82,10 @@ public class SentenceScreenFitting {
 	}
 	
 	public static void main(String[] args) {
-//		int rows = 4, cols = 5;
-//		String[] sentence = {"I", "had", "apple", "pie"};
-		int rows = 5, cols = 11;
-		String[] sentence = {"I", "am", "fun"};
+		int rows = 4, cols = 5;
+		String[] sentence = {"I", "had", "apple", "pie"};
+//		int rows = 5, cols = 11;
+//		String[] sentence = {"I", "am", "fun"};
 		int res = wordsTyping_another(sentence, rows, cols);
 		int res1 = wordsTyping_memory(sentence, rows, cols);
 		System.out.println(res);

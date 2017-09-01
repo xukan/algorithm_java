@@ -43,24 +43,34 @@ public class FindtheClosestPalindrome {
     
     public String helper(String str, boolean dir){
         int len = str.length();
-        int l = len/2, r = len-l;
-        int n = Integer.valueOf(str.substring(0, r));
+        int l = len/2;
+        //这里就是分长度为奇数和偶数情况讨论一下
+//        int r = len-l;
+//        int n = Integer.valueOf(str.substring(0, r));
+        int n = 0;
+        if(len%2==1)
+            n = Integer.valueOf(str.substring(0, l+1));
+        else
+            n = Integer.valueOf(str.substring(0, l));
         n += (dir?1: -1);
         if(n==0)
-            return l==0?"0":"9";
+            return l==0?"0":"9";  //example, input = "14", 这个是处理输入是[0，20)的情况
         String left = String.valueOf(n);
         StringBuilder sb = new StringBuilder(left).reverse();
-        if(left.length()<r)
-            sb.append("9");
-        String right = sb.substring(sb.length() - l);  //example: input = "2", res = "1"
+        if(left.length()<len/2)
+            sb.append("9");          //example, input = "1000";
+        String right = sb.substring(sb.length() - l);  //note: here is L not one //example: input = "2", res = "1"
         return left+right;
     }
-	
 	
 	public static void main(String[] args) {
 		FindtheClosestPalindrome s = new FindtheClosestPalindrome();
 //		String input = "1000";
+//		String input = "99985";
 		String input = "23456";
+//		String input = "234567";
+//		String input = "14";
+//		String input = "10000";
 		String res = s.nearestPalindromic(input);
 		System.out.println(res);
 	}

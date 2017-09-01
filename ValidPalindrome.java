@@ -43,6 +43,24 @@ public class ValidPalindrome {
     		return false;
     }
 	
+    //an easier solution
+    public boolean isPalindrome_easy(String str) {
+        String s = str.toLowerCase();
+        int l=0, r=s.length()-1;
+        while(l<r){
+            while(l<r && !Character.isDigit(s.charAt(l)) && !Character.isLetter(s.charAt(l)))
+                l++;
+            while(l<r && !Character.isDigit(s.charAt(r)) && !Character.isLetter(s.charAt(r)))
+                r--;
+            if(s.charAt(l) == s.charAt(r)){
+                l++;
+                r--;
+            }else
+                return false;
+        }
+        return true;
+    }
+    
 	public static void main(String[] args){
 		String input = "0aA,.";
 		boolean res = isPalindrome(input);

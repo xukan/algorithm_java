@@ -54,6 +54,7 @@ public class CombinationSum {
 	/*
 	 * Find all possible combinations of k numbers that add up to a number n, given that only numbers from 1 to 9 can be used 
 	 * and each combination should be a unique set of numbers.
+	 * O(9 * 8 * ... (9-k+1)), which is factorial time, because we would try 9-i+1 possible numbers in ith step.
 	 * */
 	public List<List<Integer>> combinationSum3(int k, int n) {
 		List<List<Integer>> res = new ArrayList<List<Integer>>();

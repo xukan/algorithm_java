@@ -1,6 +1,7 @@
 package algorithm_java;
 
 import java.util.HashMap;
+import java.util.Map;
 
 //LinkedIn Snapchat Uber Facebook
 /*
@@ -13,80 +14,52 @@ import java.util.HashMap;
 
 public class MinimumWindowSubstring {
 	public static String minWindow(String s, String t) {
-		if(s.length()==0|| t.length()==0 || s.length()<t.length())
+        if(s.length()==0|| t.length()==0 || s.length()<t.length())
             return "";
-        HashMap<Character, Integer> map = new HashMap<Character, Integer>();
-        int l=0, minStart=0, minLen=Integer.MAX_VALUE, count=0;
-        int len = t.length();
-        for(char c: t.toCharArray()){ 
-            map.put(c, map.getOrDefault(c, 0)+1);
+        Map<Character, Integer> map = new HashMap<>();
+        for(char c: t.toCharArray()){
+            map.put(c, map.getOrDefault(c, 0)-1);
         }
-        for(int r=0;r<s.length();r++){
-            char c = s.charAt(r);
+        int i=0, j=0;
+        int minStart = 0, minLen = Integer.MAX_VALUE;
+        int count = 0;
+        while(j<s.length()){
+            char c = s.charAt(j);
             if(map.containsKey(c)){
-                map.put(c, map.get(c)-1);
-                if(map.get(c)>=0)//注意如果map.get(c)<0说明s中对应的key的频率超过了t中的key,比如s="aa", t="a", map=[a, -1],这时count++是不对的,只有在map.get(c)>=0时,count++
+                map.put(c, map.get(c)+1);
+                if(map.get(c)<=0)
+                	//这里只有map中对应字符c的频率小于0才能说明出现的是有效字符,比如s="BBB", t= "BC",连续出现B
+                	//那么字符B的频率会>0,但是并不是t中的字符
                     count++;
-            }
-            while(count==len){
-                if(r-l+1<minLen){//minStart只有在r-l+1<minLen时才更新
-                    minStart = l;
-                    minLen = r-l+1;
+                while(count == t.length()){
+                    if(j-i+1<minLen){
+                        minStart = i;
+                        minLen = j-i+1;
+                    }
+                    char c1 = s.charAt(i++);
+                    if(map.containsKey(c1)){
+                        map.put(c1, map.get(c1)-1);
+                        if(map.get(c1)<0)
+                            count--;
+                    }
                 }
-                char c1 = s.charAt(l);
-                if(map.containsKey(c1)){
-                    map.put(c1, map.get(c1)+1);
-                    if(map.get(c1)>0)
-                        count--;
-                }
-                l++;
             }
+            j++;
         }
         if(minLen>s.length())
             return "";
         return s.substring(minStart, minStart+minLen);
     }
 	
-	/*
-	public static String minWindow(String s, String t) {
-	    String result = "";
-	    if(s==""||t.length()>s.length())
-	        return result;
-	    int[] map = new int[128];
-	    int start = 0;
-	    int minStart = 0;
-	    int end = 0;
-	    int count = t.length();
-	    int minLength = Integer.MAX_VALUE;
-	    for(char c:t.toCharArray()){
-	        map[c]++;
-	    }
-	    while(end<s.length()){
-	        if(map[s.charAt(end)]>0)
-	            count--;
-	        map[s.charAt(end)]--;
-	        end++;
-	        while(count==0){
-				if (end - start < minLength) {
-					minStart = start;
-					minLength = end - start;
-				}
-				map[s.charAt(start)]++;
-				if (map[s.charAt(start)] > 0)
-					count++;
-				start++;
-	        }
-	    }
-	    return (minLength==Integer.MAX_VALUE)?"":s.substring(minStart, minStart+minLength);
-	}
-	*/
 	public static void main(String[] args) {
+		String s = "a";
+		String t	=	"b";
 //		String s="ADOBECODEBANBC";
 //		String t="ABBC";
 //		String s="bba";
 //		String t="ab";
-		String s = "cabwefgewcwaefgcf";
-		String t = "cae";
+//		String s = "cabwefgewcwaefgcf";
+//		String t = "cae";
 		String res = minWindow(s,t);
 		System.out.println(res);
 	}

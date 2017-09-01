@@ -1,19 +1,24 @@
 package algorithm_java;
 
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
 //LinkedIn Google Uber Airbnb Facebook Twitter Amazon Microsoft
 
+//tc it is O(nlogk), where k is the number of lists and n is total number of nodes.
+//merge takes O(n) time and partition takes O(logk) time
 public class MergekSortedLists {
 	public ListNode mergeKLists(ListNode[] lists) {
-        //int[] pos = new int[lists.length];
-        ListNode head = mergeSort(0, lists.length-1, lists);
+        ListNode head = partition(0, lists.length-1, lists);
         return head;
     }
     
-    public ListNode mergeSort(int l, int h, ListNode[] lists){
+    public ListNode partition(int l, int h, ListNode[] lists){
         if(l<h){
             int m=l+ (h-l)/2;
-            ListNode node1=mergeSort(l, m, lists);  // here, we cannot use (l, m-1), since m-1 might equal -1, list[-1] is unreasonable.
-            ListNode node2=mergeSort(m+1, h, lists);  
+            ListNode node1=partition(l, m, lists);  // here, we cannot use (l, m-1), since m-1 might equal -1, list[-1] is unreasonable.
+            ListNode node2=partition(m+1, h, lists);  
             return merge(node1, node2);
         }
         return lists[l];
@@ -39,9 +44,34 @@ public class MergekSortedLists {
         	pre.next=l2;
         return dummy.next;
     }
+    
     //solution2, PriorityQueue 
     //http://www.programcreek.com/2013/02/leetcode-merge-k-sorted-lists-java/
+    //tc,   The total time complexity O(nlogk). For a priority queue, insertion takes logK time
+    public ListNode mergeKLists_queue(ListNode[] lists) {
+        if(lists.length == 0)
+            return null;
+        ListNode dummy = new ListNode(-1);
+        ListNode tail = dummy;
+        PriorityQueue<ListNode> queue = new PriorityQueue<ListNode>(lists.length, new Comparator<ListNode>(){
+            public int compare(ListNode l1, ListNode l2){
+                return l1.val - l2.val;
+            }
+        });
+        for(ListNode node: lists)
+            if(node!=null)
+                queue.offer(node);
+        while(!queue.isEmpty()){
+            ListNode node = queue.poll();
+            tail.next = node;
+            tail = tail.next;
+            if(node.next!=null)
+                queue.offer(node.next);
+        }
+        return dummy.next;
+    }
     
+	
     public static void main(String[] args){
 		ListNode node1 = new ListNode(5);
     	ListNode node2 = new ListNode(15);
@@ -67,7 +97,11 @@ public class MergekSortedLists {
     	node33.next = node44;
     	node44.next = node55;
     	node55.next = node66; 
-    	ListNode[] lists={node1, node10, node33};
+//    	ListNode[] lists={node1, node10, node33};
+    	
+    	ListNode node111 = new ListNode(5);
+    	ListNode[] lists={null, node111};
+    	
     	MergekSortedLists s = new MergekSortedLists();
     	ListNode head = s.mergeKLists(lists);
     	while(head!=null){

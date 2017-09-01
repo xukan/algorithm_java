@@ -40,7 +40,6 @@ public class HIndex {
         return n - min;
     }
 
-	
 	public static void main(String[] args) {
 		int[] citations = {3, 0, 6, 1, 5};
 		int res = hIndex(citations);
