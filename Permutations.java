@@ -7,7 +7,8 @@ import java.util.List;
 public class Permutations {
 	//permutation
 	//LinkedIn Microsoft
-
+	//tc: O(n!)
+	//sc: O(n)
 	public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
         List<Integer> sol = new ArrayList();

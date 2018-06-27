@@ -4,56 +4,57 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+//O(n^3) tc, O(1) extra sc
+
 public class FourSum {
 	public List<List<Integer>> fourSum(int[] nums, int target) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
-        int len = nums.length;
-        if (nums == null || len < 4)
-			return res;
-        Arrays.sort(nums);
-        if(nums[0]*4>target || nums[len-1]*4<target)
+        if(nums.length <= 3)
             return res;
-        for(int i=0;i+3<len;i++){
-            int z = nums[i];
-            if(i>0 && z == nums[i-1])
+        Arrays.sort(nums);
+        if(4*nums[0]>target || 4*nums[nums.length-1]<target)
+            return res;
+        for(int i=0;i+3<nums.length;i++){
+            if(i>0 && nums[i] == nums[i-1])
                 continue;
-            threeSum(nums, target-z, i+1, len, z, res );
+            threeSum(nums, i+1, target-nums[i], nums[i], res);
         }
         return res;
     }
     
-    public void threeSum(int[] nums, int target, int l, int len, int z, List<List<Integer>> res){
-        if(nums[l]*3>target || nums[len-1]*3<target)
+    public void threeSum(int[] nums, int start, int target, int a, List<List<Integer>> res){
+        if(3*nums[start]>target || 3*nums[nums.length-1]<target)
             return;
-        int z1; 
-        for(int i=l;i+2<len;i++){
-            z1 = nums[i];
-            if(i>l && nums[i-1] == z1)
+        for(int i=start;i+2<nums.length;i++){
+            if(i>start && nums[i] == nums[i-1])
                 continue;
-            twoSum(nums, target-z1, i+1, len-1, z, z1, res );
+            twoSum(nums, i+1, target - nums[i], a, nums[i], res);
         }
     }
     
-    public void twoSum(int[] nums, int target, int l, int len, int z, int z1, List<List<Integer>> res){
-        if(nums[l]*2>target || nums[len]*2<target)
+    public void twoSum(int[] nums, int start, int target, int a, int b, List<List<Integer>> res){
+        if(2*nums[0]>target || 2*nums[nums.length-1] < target)
             return;
-        int sum;
-        int r = len;
+        int l = start, r = nums.length-1;
+        List<Integer> list = new ArrayList<Integer>();
         while(l<r){
-            sum = nums[l]+nums[r];
-            if(sum == target){
-                res.add(Arrays.asList(z,z1,nums[l],nums[r]));
-                int x = nums[l];
-                while(l<r && nums[l]==x)
-                    l++;
-                x=nums[r];
-                while(l<r && nums[r] ==x)
-                    r--;
-            }
-            if(sum > target)
-                r--;
-            if(sum < target)
+            if(nums[l] + nums[r] == target){
+                list.clear();
+                list.add(a);
+                list.add(b);
+                list.add(nums[l]);
+                list.add(nums[r]);
+                res.add(new ArrayList<Integer>(list));
                 l++;
+                r--;
+                while(l<r && nums[l] == nums[l-1])
+                    l++;
+                while(l<r && nums[r] == nums[r+1])
+                    r--;
+            }else if(nums[l] + nums[r] < target)
+                l++;
+            else
+                r--;
         }
     }
 	

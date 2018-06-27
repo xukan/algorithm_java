@@ -12,7 +12,7 @@ public class SortColors {
             if(nums[i] == 0){
                 swap(nums, i, left);
                 left++;
-                // 因为左边必定有序，所以可以直接i++
+                // 因为左边必定有序，所以可以直接i++  //i.e, {0,1}
                 i++;
             // 遇到2交换到后面
             } else if(nums[i] == 2){

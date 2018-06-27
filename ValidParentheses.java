@@ -7,32 +7,23 @@ import java.util.Stack;
 public class ValidParentheses {
 	//my solution with stack
 	public boolean isValid(String s) {
-		if( s.length() <=1 )
-            return false;
-        Stack<Character> stack = new Stack<Character>();
-        for( int i=0;i<s.length(); i++){
-        	char c = s.charAt(i);
-        	if( c =='(' || c=='{' || c=='[' ){
-        		stack.push( c );
-        	}else if( c == ')'){
-        		if( !stack.isEmpty() && stack.peek() == '('){
-        			stack.pop();
-        		}else
-        		    return false;
-        	}else if( c == ']'){
-        		if( !stack.isEmpty() && stack.peek() == '['){
-        			stack.pop();
-        		}else
-        		    return false;
-        	}else if( c == '}'){
-        		if( !stack.isEmpty() && stack.peek() == '{'){
-        			stack.pop();
-        		}else
-        		    return false;
-        	}else
-        		return false;
+		if(s.length() == 0)
+            return true;
+        Stack<Character> stack = new Stack<>();
+        for(char c: s.toCharArray()){
+            if(c == '(' || c == '[' || c == '{')
+                stack.push(c);
+            else{
+                if(stack.empty())
+                    return false;
+                if(c == ')' && stack.peek() == '(' || c == ']' && stack.peek() == '[' || c == '}' && stack.peek() == '{'){
+                    stack.pop();
+                }else
+                    return false;
+            }
         }
-        return stack.isEmpty();
+        //finally, we need to check if stack is empty for input like "((["
+        return stack.empty();
     }
 	
 	public static void main(String[] args) {

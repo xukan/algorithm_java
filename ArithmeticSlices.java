@@ -43,6 +43,18 @@ public class ArithmeticSlices {
 	
 	//Baidu 
 	//II Arithmetic Slices II - Subsequence
+	//we need to understand <key, value> pair in map.
+    //key is diff,
+    //value is the number of times this diff appears till current number.
+	/*   for example, if input array = {2,4,6,8,10}
+	 *    2      4         6        8       10
+	 *   {}  {2=1} {2=2} {2=3} {2=4}
+	 *                   {4=1} {4=1} {4=2}
+	 *                             {6=1} {6=1} 
+	 *   so when current iterator arrives 10, we have 2=4, which mean diff=2 appear 4 times,
+	 *   then the arithmetic sequence is C43 = 3
+	 * */
+	
 	public static int numberOfArithmeticSlicesII(int[] A) {
         int re = 0;
         HashMap<Integer, Integer>[] maps = new HashMap[A.length];
@@ -60,6 +72,7 @@ public class ArithmeticSlices {
         }
         return re;
     }
+	
 	public static void main(String[] args) {
 		int[] nums1 = {1,2,3,4,7,8,9,10};
 		int res1 = numberOfArithmeticSlices(nums1);

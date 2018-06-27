@@ -7,24 +7,23 @@ import java.util.List;
 import java.util.Map;
 
 public class GroupAnagrams {
+//	solutionI, sorting
 //	public List<List<String>> groupAnagrams(String[] strs) {
-//		List<List<String>> result = new ArrayList<List<String>>();
-//		HashMap<String,Integer> map = new HashMap<String, Integer>();
-//		for(int i=0;i<strs.length;i++){
-//			char[] str = strs[i].toCharArray();
-//			Arrays.sort(str);
-//			String s = new String(str);
-//			if(map.containsKey(s)){
-//				result.get(map.get(s)).add(strs[i]);
-//			}else{
-//				List<String> list = new ArrayList<String>();
-//				list.add(strs[i]);
-//				result.add(list);
-//				map.put(s, result.size()-1);
-//			}
-//		}
-//		return result;
-//	}
+//        List<List<String>> res = new ArrayList<List<String>>();
+//        if(strs.length == 0)
+//            return res;
+//        Map<String, List<String>> map = new HashMap<>();
+//        for(String str: strs){
+//            char[] arr = str.toCharArray();
+//            Arrays.sort(arr);
+//            String key = new String(arr);
+//            if(!map.containsKey(key))
+//                map.put(key, new ArrayList<String>());
+//            map.get(key).add(str);
+//        }
+//        res.addAll(map.values());
+//        return res;
+//    }
 	
 	public int getID(String s){
         int[] counter   =   new int[26];

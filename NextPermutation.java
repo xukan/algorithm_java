@@ -17,42 +17,79 @@ import java.util.List;
  * */
 
 public class NextPermutation {
-	public void nextPermutation(int[] nums) {
-		if(nums.length <=1)
-			return;
-		int i=nums.length-2;
-		while(i>=0 && nums[i-1]>=nums[i]){
-			i--;
-		}
-		if(i>=0){
-			int j=i+1;
-			while( j+1 < nums.length && nums[j] > nums[i])
-				j++;
-			j--;//j--, need to find last element that is greater than nums[i]
-			swap(nums, i, j);
-		}
-		reverse(nums, i+1);
-		for(int k: nums)
-			System.out.print(k+" ");
-	}
-	
-	public void swap(int[] nums, int a, int b){
-		int temp = nums[a];
-		nums[a]=nums[b];
-		nums[b]= temp;
-	}
-	
-	public void reverse(int[] nums, int start){
-		int end= nums.length-1;
-		while(start < end){
-			swap(nums, start, end);
-			start++;
-			end--;
-		}
-	}
+//	public void nextPermutation(int[] nums) {
+//		if(nums.length <=1)
+//			return;
+//		int i=nums.length-2;
+//		while(i>=0 && nums[i-1]>=nums[i]){
+//			i--;
+//		}
+//		if(i>=0){
+//			int j=i+1;
+//			while( j+1 < nums.length && nums[j] > nums[i])
+//				j++;
+//			j--;//j--, need to find last element that is greater than nums[i]
+//			swap(nums, i, j);
+//		}
+//		reverse(nums, i+1);
+//		for(int k: nums)
+//			System.out.print(k+" ");
+//	}
+//	
+//	public void swap(int[] nums, int a, int b){
+//		int temp = nums[a];
+//		nums[a]=nums[b];
+//		nums[b]= temp;
+//	}
+//	
+//	public void reverse(int[] nums, int start){
+//		int end= nums.length-1;
+//		while(start < end){
+//			swap(nums, start, end);
+//			start++;
+//			end--;
+//		}
+//	}
 
+	public void nextPermutation(int[] nums) {
+        if(nums.length == 0)
+            return;
+        int len = nums.length;
+        int i = len -1;
+        for(;i>=1;i--){
+            if(nums[i-1] < nums[i]){
+                i--;
+                break;
+            }
+        }
+        int j=i+1;
+        while(j<len-1){
+            if(nums[j]> nums[i] && nums[j+1] < nums[i]){
+                swap(nums, i, j);
+                break;
+            }
+            j++;
+        }
+        reverse(nums, i+1, len-1);
+    }
+    
+    public void swap(int[] nums, int i, int j){
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
+    }
+    
+    public void reverse(int[] nums, int i, int j){
+        while(i<j){
+            swap(nums, i, j);
+            i++;
+            j--;
+        }
+    }
+    
 	public static void main(String[] args) {
-		int[] nums = { 1,5,1 };
+//		int[] nums = { 1,5,1 };
+		int[] nums = {1,5,8,4,7,6,5,3,1};
 		NextPermutation s = new NextPermutation();
 		s.nextPermutation(nums);
 	}

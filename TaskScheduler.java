@@ -3,10 +3,13 @@ package algorithm_java;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
+
+//Facebook 
 
 public class TaskScheduler {
 	//solutionI, sort
@@ -33,15 +36,14 @@ public class TaskScheduler {
 	//solutionII
 	public static int leastInterval_sII(char[] tasks, int n){
 		Map<Character, Integer> map = new HashMap<>();
-	    for (int i = 0; i < tasks.length; i++) {
-	        map.put(tasks[i], map.getOrDefault(tasks[i], 0) + 1); // map key is TaskName, and value is number of times to be executed.
-	    }
+		for(char c: tasks)
+            map.put(c, map.getOrDefault(c, 0)+1);
 	    PriorityQueue<Map.Entry<Character, Integer>> q = new PriorityQueue<>( //frequency sort
 	            (a,b) -> a.getValue() != b.getValue() ? b.getValue() - a.getValue() : a.getKey() - b.getKey());
 	    q.addAll(map.entrySet());
 	    int count = 0;
 	    while (!q.isEmpty()) {
-	    	int k = n + 1;
+	    	int k = n + 1;//between two same tasks, there must be at least n different tasks or idle.
 	        List<Map.Entry> tempList = new ArrayList<>();
 	        while (k > 0 && !q.isEmpty()) {
 	            Map.Entry<Character, Integer> top = q.poll(); // most frequency task
@@ -52,7 +54,8 @@ public class TaskScheduler {
 	        }
 
 	        for (Map.Entry<Character, Integer> e : tempList) {
-	            if (e.getValue() > 0) q.add(e); // add valid tasks 
+	            if (e.getValue() > 0)
+	            	q.add(e); // add valid tasks 
 	        }
 
 	        if (q.isEmpty()) break;

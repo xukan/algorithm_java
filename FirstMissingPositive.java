@@ -10,7 +10,7 @@ public class FirstMissingPositive {
 	        return 1;  
 	    for(int i=0;i<A.length;i++){  
 	    	int cur = A[i];
-	        if(cur<=A.length && cur>0 && A[cur-1]!=cur){
+	        if(cur<=A.length && cur>0 && A[cur-1]!=cur){ //i.e input = {1,1}
 	            int temp = A[cur-1];  
 	            A[cur-1] = cur;  
 	            A[i] = temp;  
@@ -33,6 +33,7 @@ public class FirstMissingPositive {
 	public static void main(String[] args){
 //		int[] input = {-2,16,5,3,1,4};
 		int[] input = {-2,3,2,1};
+		int[] input1 = {1,1};
 		//int[] input = {3,11,9,8};
 		int res = firstMissingPositive(input);
 		System.out.println(res);

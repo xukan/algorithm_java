@@ -47,7 +47,9 @@ public class LongestIncreasingPathinaMatrix {
 //    }
 	
 	
- 
+	//DFS + memorization
+	//
+	static final int[][] dirs = {{-1, 0},{1, 0},{0,-1},{0,1}};
     public static int longestIncreasingPath(int[][] matrix) {
         if(matrix==null||matrix.length==0||matrix[0].length==0)
             return 0;
@@ -66,11 +68,9 @@ public class LongestIncreasingPathinaMatrix {
     public static int dfs(int[][] matrix, int i, int j, int[][] grid){
     	if(grid[i][j]!=0)
     		return grid[i][j];
-    	int[] dx={-1, 1, 0, 0};
-    	int[] dy={0,0, -1,1};
-    	for(int k=0;k<4;k++){
-    		int x=i+dx[k];
-    		int y=j+dy[k];
+    	for(int[] dir : dirs){
+    		int x=i+dir[0];
+    		int y=j+dir[1];
     		if(x>=0 && x<matrix.length && y>=0 && y<matrix[0].length && matrix[x][y]>matrix[i][j]){
     			int size = dfs(matrix, x, y, grid);
     			grid[i][j] = Math.max(grid[i][j], size);

@@ -38,6 +38,27 @@ public class BinaryTreePaths {
             bthelper(node.right, str+"->"+node.right.val, res);
         }  
     }
+    
+    //solutionII
+//    public List<String> binaryTreePaths(TreeNode root) {
+//        List<String> res = new ArrayList<String>();
+//        if(root == null)
+//            return res;
+//        helper(root, "", res);
+//        return res;
+//    }
+//    
+//    public void helper(TreeNode node, String path, List<String> res){
+//        if(node == null)
+//            return;
+//        if(node.left == null && node.right == null){
+//            res.add(path + node.val);
+//            return;
+//        }
+//        helper(node.left, path + node.val + "->", res);
+//        helper(node.right, path + node.val + "->", res);
+//    }
+    
 	
 	public static void main(String[] args) {
 		TreeNode root = new TreeNode(5);

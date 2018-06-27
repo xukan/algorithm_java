@@ -14,9 +14,11 @@ import java.util.Map;
  * 
  * */
 
+//similar question
+//Partition Equal Subset Sum
+//coin change II
 public class TargetSum {
 //Using subset sum solver.
-//reference:  http://126kr.com/article/496zmjbcw9x
 //	public static void main(String[] args) {
 //        System.out.println(new TargetSumProblem().findTargetSumWays(new int[] { 1, 1, 1, 1, 1 }, 3));
 //    }
@@ -47,120 +49,112 @@ public class TargetSum {
 //        return nw[s][n];
 //    }
 	
-	//https://discuss.leetcode.com/topic/76243/java-15-ms-c-3-ms-o-ns-iterative-dp-solution-using-subset-sum-with-explanation/3
-//	 public int findTargetSumWays(int[] nums, int S) {
-//	        int sum = 0;
-//	        for (int i = 0; i < nums.length; i++) {
-//	            sum += nums[i];
-//	        }
-//	        if(S > sum || (sum + S) % 2 == 1)   return 0;
-//	        return subsetSum(nums, (sum + S) / 2);
-//	    }
-//
-//	    private int subsetSum(int[] nums, int S){
-//	        int[] dp = new int[S + 1];
-//	        dp[0] = 1;
-//	        for (int i = 0; i < nums.length; i++) {
-//	            for (int j = S; j >= nums[i]; j--) {
-//	                dp[j] += dp[j - nums[i]];
-//	            }
-//	        }
-//	        return dp[S];
-//	    }
-	
-	public int findTargetSumWays(int[] nums, int s) {
-		//reference: 
-		//https://discuss.leetcode.com/topic/76264/short-java-dp-solution-with-explanation/10
-		/*
-		 * this is a classic knapsack problem in knapsack, we decide whether we choose this element or not
-		 * in this question, we decide whether we add this element or minus it
-		 * So start with a two dimensional array dp[i][j] which means the number of ways for first i-th element to reach a sum j
-		 * we can easily observe that dp[i][j] = dp[i-1][j+nums[i]] + dp[i-1][j-nums[i],
-		 * further observation is that each row is only effected by the last row, we can reduce a two dimensional array to two single arrays
-		 * dp[i] means the number of ways to reach a sum i
-		 * Another part which is quite confusing is return value, here we return dp[sum+S], why is that?
-		 * because dp's range starts from -sum-->0-->sum
-		 * so we need to add sum first, then the total starts from 0, then we add S
-		 * Actually most of Sum problems can be treated as knapsack problem, hope it helps
-		 * */
-        int sum = 0; 
-        for(int i: nums) sum+=i;
-        if(s>sum || s<-sum) return 0;
-        int[] dp = new int[2*sum+1];
-        dp[sum] = 1;
-        for(int i = 0; i<nums.length; i++){
-            int[] next = new int[2*sum+1];
-            for(int k = 0; k<2*sum+1; k++){
-                if(dp[k]!=0){
-                    next[k + nums[i]] += dp[k];
-                    next[k - nums[i]] += dp[k];
-                }
-            }
-            dp = next;
-        }
-        for(int i: dp)
-        	System.out.print(i+" ");
-        System.out.println();
-        return dp[sum+s];
+	//solution I, based on Expression Add Operators
+	//Optimization: The idea is If the sum of all elements left is smaller than absolute value of target, 
+	//there will be no answer following the current path. Thus we can return.
+	int result = 0;
+    public int findTargetSumWays(int[] nums, int S) {
+        if(nums == null || nums.length == 0) return result;
+        int n = nums.length;
+        int[] sums = new int[n];
+        sums[n - 1] = nums[n - 1];
+        for (int i = n - 2; i >= 0; i--)
+            sums[i] = sums[i + 1] + nums[i];
+        
+        helper(nums, sums, S, 0);
+        return result;
     }
-	
-	public int findTargetSumWays_recursion(int[] nums, int S) {
-		StringBuilder sb = new StringBuilder();
-		List<String> res = new ArrayList<String>();
-        for(int i: nums)
-        	sb.append(i).append("#");
-        String num = sb.toString();
-        helper(num,  "", 0, S, res);
-        //res.forEach(str->System.out.println(str));
-        return res.size();
-    }
-    
-    public void helper(String num, String cur, long curVal, int target, List<String> res){
-        if(num.length() == 0){
-            if(curVal == target)
-                res.add(cur);
+    public void helper(int[] nums, int[] sums, int target, int pos){
+        if(pos == nums.length){
+            if(target == 0) result++;
             return;
         }
-        int index = num.indexOf("#");
-        if(index == -1)
-            index = num.length();
-        long v1 = Long.valueOf("+"+num.substring(0, index));
-        long v2 = Long.valueOf("-"+num.substring(0, index));
-        helper(num.substring(index+1), cur+ "+" + v1, curVal + v1, target, res);
-        helper(num.substring(index+1), cur+ "-" + v1, curVal + v2, target, res);
+        
+        if (sums[pos] < Math.abs(target)) return;
+        
+        helper(nums, sums, target + nums[pos], pos + 1);
+        helper(nums, sums, target - nums[pos], pos + 1);
     }
-	
-    public int findTargetSumWays_mem(int[] nums, int S) {
-        if (nums == null || nums.length == 0){
+    
+    //solution II, subset sum
+    //https://discuss.leetcode.com/topic/76243/java-15-ms-c-3-ms-o-ns-iterative-dp-solution-using-subset-sum-with-explanation/3
+    /*
+     * we can compare this question with coin change II
+     * https://discuss.leetcode.com/topic/76243/java-15-ms-c-3-ms-o-ns-iterative-dp-solution-using-subset-sum-with-explanation/43?page=3
+     * Great observation, the difference is that if you update dp while:
+     * increasing i then the previous partial result dp[i - coin] is the result that has considered coin already
+     * decreasing i then the previous partial result dp[i - coin] is the result that has not considered coin yet
+     * * @return number of ways to make sum s using repeated coins
+		public static int coinrep(int[] coins, int s) {
+		    int[] dp = new int[s + 1]; 
+		    dp[0] = 1;          
+		    for (int coin : coins)      
+		        for (int i = coin; i <= s; i++)         
+		            dp[i] += dp[i - coin];                                  
+		    return dp[s];
+		}                                       
+		 * @return number of ways to make sum s using non-repeated coins
+		
+		public static int coinnonrep(int[] coins, int s) {
+		    int[] dp = new int[s + 1];
+		    dp[0] = 1;  
+		    for (int coin : coins)
+		        for (int i = s; i >= coin; i--)
+		            dp[i] += dp[i - coin];              
+		    return dp[s];                                                   
+		} 
+     * */
+    public int findTargetSumWays_subsetsum(int[] nums, int S) {
+        int sum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+        }
+        if(S > sum || (sum + S) % 2 == 1)   
+        	return 0;
+        return subsetSum(nums, (sum + S) / 2);
+    }
+
+    //http://algorithms.tutorialhorizon.com/dynamic-programming-subset-sum-problem/
+    //above link use 2d array dp solution to solve subset sum question
+    private int subsetSum(int[] nums, int s){
+    	int[] dp = new int[s + 1]; 
+        dp[0] = 1;
+        for (int n : nums)
+            for (int i = s; i >= n; i--)
+                dp[i] += dp[i - n]; 
+        return dp[s];
+    }
+    
+    
+    public int FindTargetSumWays(int[] nums, int S) {
+        if(nums == null || nums.length == 0)
             return 0;
-        }
-        return helper_mem(nums, 0, 0, S, new HashMap<>());
+        int sum = 0;
+        for(int num: nums)
+            sum += num;
+        if((sum+S)/2!=0 || sum < S || -sum> S)
+            return 0;
+        return helper(nums, (sum+S)/2);
     }
-    private int helper_mem(int[] nums, int index, int sum, int S, Map<String, Integer> map){
-        String encodeString = index + "->" + sum;
-        if (map.containsKey(encodeString)){
-            return map.get(encodeString);
-        }
-        if (index == nums.length){
-            if (sum == S){
-                return 1;
-            }else {
-                return 0;
-            }
-        }
-        int curNum = nums[index];
-        int minus = helper_mem(nums, index + 1, sum - curNum, S, map);
-        int add = helper_mem(nums, index + 1, sum + curNum, S, map);
-        map.put(encodeString, add + minus);
-        return add + minus;
+    
+    public int helper(int[] nums, int target){
+        int[] dp = new int[target+1];
+        dp[0] = 1;
+        for(int n: nums)
+            for(int i=target;i>=n;i--)
+                dp[i] += dp[i-n];
+        return dp[target];
     }
     
 	public static void main(String[] args) {
 		TargetSum s = new TargetSum();
 //		int[] nums = {1,0,0,0};
-		int[] nums = {1,0,0,0,1};
-		int res = s.findTargetSumWays_mem(nums, 2);
-//		int res = s.findTargetSumWays(nums, 3);
+//		int[] nums = {1,0,0,0,1};
+		int[] nums = {1,1,1,1,1};
+//		int[] nums = {1,2,7,9,981}; target = 1000000000
+		int res = s.findTargetSumWays(nums, 3);
+//		int res = s.findTargetSumWays_subsetsum(nums, 3);
+		int res1 = s.FindTargetSumWays(nums, 3);
 		System.out.println(res);
 	}
 }

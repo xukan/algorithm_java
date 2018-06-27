@@ -3,20 +3,29 @@ package algorithm_java;
 //Google 
 
 public class BinaryTreeLongestConsecutiveSequence {
-	private int maxLength = 0;
-	public int longestConsecutive_topdown(TreeNode root) {
-	    dfs(root, null, 0);
-	    return maxLength;
-	}
-
-	public void dfs(TreeNode p, TreeNode parent, int length) {
-	    if (p == null) return;
-	    length = (parent != null && p.val == parent.val + 1) ? length + 1 : 1;
-	    maxLength = Math.max(maxLength, length);
-	    dfs(p.left, p, length);
-	    dfs(p.right, p, length);
-	}
+	//top-down solution, tc: O(n)
+	int maxLen = 1;
+    public int longestConsecutive(TreeNode root) {
+        if(root == null)
+            return 0;
+        helper(root, null, 0);
+        return maxLen;
+    }
+    
+    public void helper(TreeNode node, TreeNode parent, int len){
+        if(node == null)
+            return;
+        if(parent != null && parent.val + 1 == node.val){
+            len +=1;
+            maxLen = Math.max(maxLen, len);
+        }else
+            len = 1;
+        helper(node.left, node, len);
+        helper(node.right, node, len);
+    }
 	
+    //bottom up solution
+    int maxLength = 0;
 	public int longestConsecutive_bottomup(TreeNode root) {
 	    helper(root);
 	    return maxLength;

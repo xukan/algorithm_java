@@ -11,6 +11,7 @@ package algorithm_java;
 //2.对‘0’的处理，题目没有说清楚， 如果首位是'0',那么最终结果是0；
 public class DecodeWays {
 	public int numDecodings(String s) {
+		//solutionI
 		//dp[0] means an empty string will have one way to decode, dp[1] means the way to decode a string of size 1. 
 		//I then check one digit and two digit combination and save the results along the way. In the end, dp[n] will be the end result.
 		if(s == null || s.length() == 0) {
@@ -33,19 +34,24 @@ public class DecodeWays {
         return dp[n];
     }
 	
+	//solution II
 	//O(1) space and O(n) time
+	//similar to climbing stairs
+	//solution II 的方法是solution I在空间上的优化
 	public int numDecodings_better(String s) {
 	    // empty string or leading zero means no way
 	    if (s.length() == 0 || s.charAt(0) == '0')
 	    	return 0;
 	    // cur and prev store ways of the last and the last of the last
+	    //对于第i位,只看第i-1(cur)和第i-2位(prev)
+	    //计算出第i位后,prev,cur向前移动,prev记录i-1位,cur记录第i位
 	    int cur = 1, prev = 1;
 	    for (int i = 1; i < s.length(); i++) {
 	        // zero voids ways of the last because zero cannot be used separately
 	        if (s.charAt(i) == '0')
 	        	cur = 0;
 	        // possible two-digit letter
-	        if (s.charAt(i-1) == '1' || s.charAt(i-1) == '2' && s.charAt(i) <= '6') {
+	        if (s.charAt(i-1) == '1' || (s.charAt(i-1) == '2' && s.charAt(i) <= '6')) {
 	            int tmp = cur;
 	        	cur = cur+prev;
 	            prev = tmp;
@@ -59,12 +65,13 @@ public class DecodeWays {
 	
 	public static void main(String[] args) {
 		DecodeWays s = new DecodeWays();
-		String str = "301";
+		String str = "15";
 		String str1="505";   // res =0
 		String str2 ="5021"; //  res=0
 		String str3 = "1108";
-		String str4 ="12108";//2
-		int res = s.numDecodings_better(str4);
+		String str4 ="121015";//4
+		String str5 ="123015";//0
+		int res = s.numDecodings_better(str);
 		System.out.println(res);
 	}
 }

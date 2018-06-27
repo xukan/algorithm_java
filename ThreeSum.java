@@ -6,36 +6,32 @@ import java.util.List;
 
 public class ThreeSum {
 	public List<List<Integer>> threeSum(int[] nums) {
-        List<List<Integer>> res = new ArrayList<List<Integer>>();
-        if(nums.length<3)
+        List<List<Integer>> res= new ArrayList<List<Integer>>();
+        if(nums.length == 0)
             return res;
         Arrays.sort(nums);
-        for(int i=0;i<nums.length;i++){
-            if(i>0 && nums[i] == nums[i-1])
+        for(int i=0;i<nums.length-2;i++){
+            if(i > 0 && nums[i] == nums[i-1])
                 continue;
-            helper(nums, nums[i], i, res);
+            helper(nums, nums[i], i+1, res);
         }
         return res;
     }
     
-    public void helper(int[] nums, int target, int start, List<List<Integer>> res){
-        int l = start+1, r = nums.length-1;
+    public void helper(int[] nums, int cur, int index, List<List<Integer>> res){
+        int l = index, r = nums.length-1;
         while(l<r){
-            List<Integer> list = new ArrayList<Integer>();
-            if(nums[l]+nums[r] + target ==0){
-                list.add(nums[l]);
-                list.add(nums[r]);
-                list.add(nums[start]);
-                res.add(new ArrayList<Integer>(list));
+            if(cur + nums[l] + nums[r] == 0){
+                res.add(Arrays.asList(cur, nums[l], nums[r]));
                 l++;
                 r--;
-                while(l<r && nums[l] == nums[l-1])
+                while(l< r && nums[l] == nums[l-1])
                     l++;
-                while(l<r && nums[r] == nums[r+1])
+                while(l< r && nums[r] == nums[r+1])
                     r--;
-            }else if(nums[l]+nums[r] + target <0)
+            }else if(cur + nums[l] + nums[r] < 0){
                 l++;
-            else
+            }else
                 r--;
         }
     }

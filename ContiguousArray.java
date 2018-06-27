@@ -3,6 +3,8 @@ package algorithm_java;
 import java.util.HashMap;
 import java.util.Map;
 
+//Facebook
+
 public class ContiguousArray {
 	public static int findMaxLength(int[] nums) {
         Map<Integer, Integer> map = new HashMap<Integer, Integer>();

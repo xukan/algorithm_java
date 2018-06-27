@@ -14,20 +14,21 @@ public class SumofLeftLeaves {
 	int sum = 0;
     public int sumOfLeftLeaves(TreeNode root) {
         if(root == null)
-            return 0;
+            return sum;
         helper(root, false);
         return sum;
     }
     
     public void helper(TreeNode node, boolean isLeft){
-        if(node.left == null && node.right == null && isLeft){
-            sum += node.val;
+        if(node == null)
+            return;
+        if(node.left == null && node.right == null ){
+            if(isLeft)
+                sum += node.val;
             return;
         }
-        if(node.left!=null)
-            helper(node.left, true);
-        if(node.right!=null)
-            helper(node.right, false);
+        helper(node.left, true);
+        helper(node.right, false);
     }
     
     public static void main(String[] args) {

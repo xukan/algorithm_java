@@ -1,5 +1,7 @@
 package algorithm_java;
 
+//Amazon
+
 public class ThirdMaximumNumber {
 	
 	//use three variables, O(n)
@@ -74,6 +76,7 @@ public class ThirdMaximumNumber {
 	}
     
     public static void main(String[] args) {
+//    	int[] nums = {1,2,-2147483648};//we need to use long 
 		int[] nums= {3,2,1};
 		ThirdMaximumNumber s = new ThirdMaximumNumber();
 		int res =s.thirdMax(nums);

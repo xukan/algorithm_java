@@ -29,83 +29,50 @@ public class MedianofTwoSortedArrays {
 
 	// solution2
 	// O(log(min(m,n)))
-	// i + j == m-i+n-j+1  ==> j = (m+n+1)/2-i, since 0<=i<=m, n>=m ensures j>0
-//	public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
-//		int m = nums1.length, n = nums2.length;
-//		if (m > n)
-//			return findMedianSortedArrays(nums2, nums1);
-//		int iMin = 0, iMax = m, halfLen = (m + n + 1) / 2;
-//        while (iMin <= iMax) {
-//            int i = (iMin + iMax) / 2;
-//            int j = halfLen - i;
-//            if (i < iMax && nums2[j-1] > nums1[i]){
-//                iMin = iMin + 1; // i is too small
-//            }else if (i > iMin && nums1[i-1] > nums2[j]) {
-//                iMax = iMax - 1; // i is too big
-//            }else { // i is perfect
-//                int maxLeft = 0;
-//                if (i == 0)
-//                	maxLeft = nums2[j-1];
-//                else if (j == 0)
-//                	maxLeft = nums1[i-1];
-//                else
-//                	maxLeft = Math.max(nums1[i-1], nums2[j-1]);
-//                if ( (m + n) % 2 == 1 )
-//                	return maxLeft;
-//                //if total length is even, then we need to find minRight and median = (maxLeft + minRight)/2;
-//                int minRight = 0;
-//                if (i == m)
-//                	minRight = nums2[j];
-//                else if (j == n)
-//                	minRight = nums1[i];
-//                else
-//                	minRight = Math.min(nums2[j], nums1[i]);
-//                return (maxLeft + minRight) / 2.0;
-//            }
-//        }
-//        return 0.0;
-//	}
-
-	
+	//https://discuss.leetcode.com/topic/16797/very-concise-o-log-min-m-n-iterative-solution-with-detailed-explanation?page=1
+	/*
+	 * A. Since C1 and C2 can be mutually determined from each other, we can just move one of them first, 
+	 * then calculate the other accordingly. However, it is much more practical to move C2 (the one on the shorter array) first. 
+	 * The reason is that on the shorter array, all positions are possible cut locations for median, but on the longer array, 
+	 * the positions that are too far left or right are simply impossible for a legitimate cut. For instance, [1], [2 3 4 5 6 7 8]. 
+	 * Clearly the cut between 2 and 3 is impossible, because the shorter array does not have that many elements to balance out 
+	 * the [3 4 5 6 7 8] part if you make the cut this way. Therefore, for the longer array to be used as the basis for the first cut, 
+	 * a range check must be performed. It would be just easier to do it on the shorter array, which requires no checks whatsoever. 
+	 * Also, moving only on the shorter array gives a run-time complexity of O(log(min(N1, N2)))
+	 * B. The only edge case is when a cut falls on the 0th(first) or the 2Nth(last) position. 
+	 * For instance, if C2 = 2N2, then R2 = A2[2*N2/2] = A2[N2], which exceeds the boundary of the array. 
+	 * To solve this problem, we can imagine that both A1 and A2 actually have two extra elements, 
+	 * INT_MAX at A[-1] and INT_MAX at A[N]. These additions don't change the result, but make the implementation easier: 
+	 * If any L falls out of the left boundary of the array, then L = INT_MIN, and if any R falls out of the right boundary, 
+	 * then R = INT_MAX.
+	 * */
 	public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        int len1 = nums1.length, len2 = nums2.length;
-        if(len1>len2)
-            return findMedianSortedArrays(nums2, nums1);
-        int iMin = 0, iMax = len1;
-        int halfLen = (len1+len2+1)/2;;
-        while(iMin <= iMax){
-            int i= (iMin + iMax)/2;
-            int j = halfLen - i;
-            if(i>iMin && nums1[i-1]>nums2[j])
-                iMax -=1;
-            else if(i<iMax && nums2[j-1]>nums1[i])
-                iMin +=1;
-            else{
-                int maxLeft =0;
-                if(i==0)
-                    maxLeft = nums2[j-1];
-                else if(j==0)
-                    maxLeft = nums1[i-1];
-                else
-                    maxLeft = Math.max(nums1[i-1], nums2[j-1]);
-                if((len1+len2)%2==1)
-                    return maxLeft;
-                int minRight = 0;
-                if(i==len1)
-                    minRight = nums2[j];
-                else if(j==len2)
-                    minRight = nums1[i];
-                else
-                    minRight = Math.min(nums1[i], nums2[j]);
-                return (maxLeft + minRight)/2.0;
-            }
+        int N1 = nums1.length, N2 = nums2.length;
+        if (N1 > N2) return findMedianSortedArrays(nums2, nums1);
+
+        int lo = 0, hi = 2 * N1;
+        while (lo <= hi) {
+            int C1 = (lo + hi) / 2;
+            int C2 = N1 + N2 - C1;
+
+            double L1 = (C1 == 0) ? Integer.MIN_VALUE : nums1[(C1-1)/2];
+            double R1 = (C1 == 2*N1) ? Integer.MAX_VALUE : nums1[C1/2];
+            double L2 = (C2 == 0) ? Integer.MIN_VALUE : nums2[(C2-1)/2];
+            double R2 = (C2 == 2*N2) ? Integer.MAX_VALUE : nums2[C2/2];
+
+            if (L1 > R2)
+            	hi = C1 - 1;
+            else if(L2 > R1)
+            	lo = C1 + 1;
+            else
+            	return (Math.max(L1, L2) + Math.min(R1, R2)) / 2;
         }
-        return 0.0;
+        return -1;
     }
 
 	public static void main(String[] args) {
-		int[] nums1 = { 3, 6, 7, 8, 9, 10 };
-		int[] nums2 = { 1, 2, 4, 5 };
+		int[] nums1 = { 1, 3, 5, 7, 8, 9, 10 };
+		int[] nums2 = { 1, 2, 4, 6 };
 //		int[] nums1 = { 1,3 };
 //		int[] nums2 = { 2 };
 		

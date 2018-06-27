@@ -67,7 +67,7 @@ public class LowestCommonAncestorofaBinaryTree {
 		 node2.left = node5;
 		 node2.right = node6;
 
-		 TreeNode res = lowestCommonAncestor(root, node8, node7);
+		 TreeNode res = lowestCommonAncestor(root, node8, node4);
 		 //TreeNode res = lowestCommonAncestor(root, node1, node4);
 		 System.out.println(res.val);
 	}

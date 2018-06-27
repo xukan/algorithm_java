@@ -164,47 +164,59 @@ public class CourseSchedule {
 	}
 
 	public int[] findOrder_new(int numCourses, int[][] prerequisites) {
-		int[] indegree = new int[numCourses];
-		HashMap<Integer, HashSet<Integer>> graph = new HashMap<>();
-		for (int[] link : prerequisites) {
-			if (!graph.containsKey(link[1]))
-				graph.put(link[1], new HashSet<Integer>());
-			if (!graph.containsKey(link[0]))
-				graph.put(link[0], new HashSet<Integer>());
-			graph.get(link[1]).add(link[0]);
-			indegree[link[0]]++;
-		}
-		LinkedList<Integer> queue = new LinkedList<>();
-		for (int i = 0; i < numCourses; i++)
-			if (indegree[i] == 0)
-				queue.offer(i);
-		List<Integer> path = new ArrayList<>();
-		while (!queue.isEmpty()) {
-			int from = queue.poll();
-			path.add(from);
-			for (int to : graph.get(from)) {
-				indegree[to]--;
-				if (indegree[to] == 0)
-					queue.offer(to);
-			}
-		}
-		return path.stream().mapToInt(i -> i).toArray();
+		int[] res = new int[numCourses];
+        Map<Integer, Set<Integer>> graph = new HashMap<>();
+        int[] indegree = new int[numCourses];
+        for(int[] course: prerequisites){
+            int from = course[1];
+            int to = course[0];
+            if(!graph.containsKey(from))
+                graph.put(from, new HashSet<Integer>());
+            if(graph.get(from).add(to)) //here, we filter duplicate edges
+                indegree[to]++;
+        }
+        Queue<Integer> queue = new LinkedList<>();
+        for(int i = 0;i<numCourses; i++){
+            if(indegree[i] == 0){
+                queue.offer(i);
+            }
+        }
+        int k = 0;
+        while(!queue.isEmpty()){
+            int node = queue.poll();
+            res[k++] = node;
+            if(!graph.containsKey(node))  //if this node does not have neighbors, continue
+                continue;
+            Set<Integer> neighbors = graph.get(node);
+            for(int neighbor: neighbors){
+                indegree[neighbor]--;
+                if(indegree[neighbor] == 0){
+                    queue.offer(neighbor);
+                }
+            }
+        }
+        if(k!=numCourses)
+            return new int[0];
+        return res;
 	}
 
 	public static void main(String[] args) {
-		int num = 4;
+//		int num = 4;
 		// 10, [[5,8],[3,5],[1,9],[4,5],[0,2],[1,9],[7,8],[4,9]]
 		// int[][] prerequisites = {{0,1},{3,1},{1,3},{3,2}};
-		// int[][] prerequisites =
-		// {{5,8},{3,5},{1,9},{4,5},{0,2},{1,9},{7,8},{4,9}};
-		int[][] prerequisites = { { 1, 0 }, { 2, 0 }, { 3, 1 }, { 3, 2 } };
+//		int num = 10;
+//		 int[][] prerequisites =
+//		 {{5,8},{3,5},{1,9},{4,5},{0,2},{1,9},{7,8},{4,9}};
+//		int[][] prerequisites = { { 1, 0 }, { 2, 0 }, { 3, 1 }, { 3, 2 } };
+		int num = 2;
+		int[][] prerequisites = {{1,0}};
 		CourseSchedule cs = new CourseSchedule();
-		boolean good = cs.CanFinish(num, prerequisites);
-		System.out.println(good);
-		// int[] res = cs.findOrder_new(num, prerequisites);
-		// int[] res = cs.findOrder(num, prerequisites);
-		// for(int i:res )
-		// System.out.print(i+" ");
+//		boolean good = cs.CanFinish(num, prerequisites);
+//		System.out.println(good);
+//		 int[] res = cs.findOrder_new(num, prerequisites);
+		 int[] res = cs.myfindOrder(num, prerequisites);
+		 for(int i:res )
+			 System.out.print(i+" ");
 
 	}
 }

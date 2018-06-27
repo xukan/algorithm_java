@@ -28,8 +28,9 @@ public class SubarraySumEqualsK {
 	
 	public static void main(String[] args) {
 		//int[] nums = {28,54,7,-70,22,65,-6};//k=100
-		int[] nums = {1,2,1,3};
-		int res = subarraySum(nums, 4);
+//		int[] nums = {1,2,1,3};  //k=4
+		int[] nums = {0,0,0};
+		int res = subarraySum(nums, 0);
 		System.out.println(res);
 	}
 }

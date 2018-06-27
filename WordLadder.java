@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 
 //BFS to find the shortest path
@@ -13,39 +14,33 @@ import java.util.Set;
 
 public class WordLadder {
 	public static int ladderLength(String beginWord, String endWord, List<String> wordList) {
-		if( beginWord.length()==0 || endWord.length()==0 || beginWord.length()!=endWord.length() || !wordList.contains(endWord))
-            return 0; 
-        Set<String> dict= new HashSet<String>(wordList);
-        LinkedList<String> queue = new LinkedList();
-        int count = 0;
+        if(beginWord.length() == 0 || endWord.length() ==0 || beginWord.length()!=endWord.length() || !wordList.contains(endWord))
+            return 0;
+        Set<String> wordDict = new HashSet<>(wordList);
+        Queue<String> queue = new LinkedList<>();
         queue.offer(beginWord);
-        int curnum = 1;
-        int nextnum = 0;
-        int level = 1;
+        int count = 1;
         while(!queue.isEmpty()){
-            String word = queue.poll();
-            curnum--;
-            
-            for(int i=0;i<word.length();i++){
-                char[] wordunit = word.toCharArray();
-                for(char j = 'a'; j <= 'z'; j++){
-                    wordunit[i] = j;
-                    String temp = new String(wordunit);  
-                    
-                    if(temp.equals(endWord))
-                        return level+1;
-                    if(dict.contains(temp)){
-                        queue.offer(temp);
-                        nextnum++;
-                        dict.remove(temp);
+            int size = queue.size();
+            for(int i=0;i<size;i++){
+                String str = queue.poll();
+                char[] array = str.toCharArray();
+                for(int j=0;j<str.length();j++){
+                    char origin = array[j];
+                    for(char c = 'a';c<='z';c++){
+                        array[j] = c;
+                        String word = new String(array);
+                        if(word.equals(endWord))
+                            return ++count;
+                        if(wordDict.contains(word)){
+                            wordDict.remove(word);
+                            queue.offer(word);
+                        }
                     }
+                    array[j] = origin;
                 }
             }
-            if(curnum==0){
-                level+=1;
-                curnum=nextnum;
-                nextnum=0;
-            }
+            count++;
         }
         return 0;
     }
@@ -60,7 +55,6 @@ public class WordLadder {
 		dict.add("log");
 		dict.add(end);
 		int res = ladderLength(start, end, dict);
-		
 		System.out.println(res);
 	} 
 }

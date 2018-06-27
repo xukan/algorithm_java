@@ -1,7 +1,7 @@
 package algorithm_java;
 
 //reference:  http://www.cnblogs.com/grandyang/p/5928987.html
-
+//根据木桶存水原理,蓄水量由最小高度决定,采用海平面上升法,PriorityQueue+BFS
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;

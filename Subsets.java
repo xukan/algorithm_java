@@ -28,6 +28,32 @@ public class Subsets {
 		}
 	}
 	
+	//given String s = "abc", find all subsets
+	//use bit manipulation
+	public List<String> strsubsets(String s) {
+		List<String> res = new ArrayList<String>();
+		if(s.length() == 0)
+			return res;
+		int len = s.length();
+		int bitset = 0;
+		for(int i=0;i<Math.pow(2, len);i++){
+			if(i == 0){
+				res.add("empty");
+			}else{
+				String str = "";
+				int n= i;
+				int sum = -1;
+				while(n>0){
+					sum += 1;
+					if(n%2!=0)	
+						str += (char)(sum + 'a');
+					n/=2;
+				}
+				res.add(str);
+			}
+		}
+		return res;
+	}
 	
 //	public List<List<Integer>> subsets(int[] nums) {
 //        List<List<Integer>> res = new ArrayList<List<Integer>>();
@@ -102,5 +128,9 @@ public class Subsets {
 				System.out.print(j+" ");
 			System.out.println();
     	}
+    	
+    	String input = "abc";
+    	List<String> res3 = s.strsubsets(input);
+    	res3.forEach(ss->System.out.print(ss+" "));
 	}
 }

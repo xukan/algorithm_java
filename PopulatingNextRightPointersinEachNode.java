@@ -37,14 +37,13 @@ public class PopulatingNextRightPointersinEachNode {
 	public static void connect(TreeLinkNode root) {
 		if(root == null)
             return;
-        if(root.right!=null){
-        	if(root.next == null)	
-                root.right.next = null;
-        	else
-                root.right.next = root.next.left;
-        }
-        if(root.left!=null)
-            root.left.next = root.right;
+        if(root.left == null && root.right == null)
+        	return;
+        root.left.next = root.right;
+		if(root.next == null)
+			root.right.next = null;
+        else
+        	root.right.next = root.next.left;
         connect(root.left);
         connect(root.right);
     }
@@ -56,10 +55,8 @@ public class PopulatingNextRightPointersinEachNode {
 	public static void connect1(TreeLinkNode root) {
         if (root == null) {
             return;
-        }
-        
-        TreeLinkNode leftEnd = root;
-        
+        }       
+        TreeLinkNode leftEnd = root;      
         // Bug 1: don't need " && leftEnd.left != null"
         while (leftEnd != null) {
             TreeLinkNode cur = leftEnd;
@@ -83,6 +80,28 @@ public class PopulatingNextRightPointersinEachNode {
         }
     }
 	
+	//solutionII for II, sc: O(1)
+	public static void connect_better(TreeLinkNode root) {
+	    TreeLinkNode dummyHead = new TreeLinkNode(0);
+	    TreeLinkNode pre = dummyHead;
+	    while (root != null) {
+		    if (root.left != null) {
+			    pre.next = root.left;
+			    pre = pre.next;
+		    }
+		    if (root.right != null) {
+			    pre.next = root.right;
+			    pre = pre.next;
+		    }
+		    root = root.next;
+		    if (root == null) {
+			    pre = dummyHead;
+			    root = dummyHead.next;
+			    dummyHead.next = null;
+		    }
+	    }
+	}
+	
 	public static void main(String[] args){
 		 TreeLinkNode root = new TreeLinkNode(1);
 		 TreeLinkNode node1 = new TreeLinkNode(2);
@@ -99,7 +118,7 @@ public class PopulatingNextRightPointersinEachNode {
 		 //node2.left = node5;
 		 node2.right = node6;
 
-		 connect1(root);
+		 connect_better(root);
 //		 for(Integer i : res)
 //			 System.out.print(i+" ");
 //		 System.out.println();

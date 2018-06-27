@@ -16,6 +16,8 @@ package algorithm_java;
  *   similar problem is: Maximum Depth of Binary Tree, Minimum Depth of Binary Tree
  * */
 
+//Bloomberg 
+
 public class BalancedBinaryTree {
 	public static boolean isBalanced(TreeNode root) {
 		if(root == null)

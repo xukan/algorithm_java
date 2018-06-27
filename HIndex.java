@@ -12,13 +12,24 @@ public class HIndex {
 	        int smaller = Math.min(citations[i], citations.length-i);
 	        result = Math.max(result, smaller);
 	    }
-	 
 	    /*
 	     * for (int i = 0; i < n; i++)
 				if (citations[i] >= n - i)
 					return n - i;
 	     * */
 	    return result;
+    }
+	
+	
+	public int hIndex_I(int[] citations) {
+        if(citations.length == 0)
+            return 0;
+        Arrays.sort(citations);
+        int len = citations.length;
+        int i=0;
+        while(i<len && i< citations[len-1-i])
+            i++;
+        return i;
     }
 	
 	//II Facebook

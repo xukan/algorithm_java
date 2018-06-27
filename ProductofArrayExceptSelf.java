@@ -20,18 +20,17 @@ public class ProductofArrayExceptSelf {
 	public static int[] productExceptSelf(int[] nums) {
 		if(nums.length == 0)
             return new int[0];
+		int[] res = new int[nums.length];
         int len = nums.length;
-        int[] res = new int[len];
-        res[0] = 1;
-
-        for(int i=1;i<len;i++){
-            res[i] = nums[i-1]*res[i-1];
+        int cur = 1;       
+        for(int i=0;i<len;i++){
+            res[i] = cur;
+            cur *= nums[i];
         }
-        int product = nums[len-1];
-        for(int i=len-2;i>=0;i--){
-            res[i] *= product;
-            //here, product is the product of numbers [i+1, len-1]
-            product *= nums[i];
+        cur = 1;
+        for(int i=len-1;i>=0;i--){
+            res[i]*=cur;
+            cur*=nums[i];
         }
         return res;
 	}

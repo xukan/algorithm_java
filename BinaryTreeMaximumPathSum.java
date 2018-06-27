@@ -5,6 +5,7 @@ package algorithm_java;
 //http://www.geeksforgeeks.org/find-maximum-path-sum-in-a-binary-tree/
 
 /*
+ * O(N), bottom-up solution
  * For each node there can be four ways that the max path goes through the node:
  * 1. Node only
  * 2. Max path through Left Child + Node
@@ -13,44 +14,25 @@ package algorithm_java;
  * */
 
 public class BinaryTreeMaximumPathSum {
-//	public static int maxPathSum(TreeNode root) {
-//        if(root == null)
-//            return 0;
-//        int[] max = new int[1];
-//        max[0] = Integer.MIN_VALUE;
-//        helper(root, max);
-//        return max[0];
-//    }
-//    
-//    public static int helper(TreeNode node, int[] max){
-//        if(node == null)
-//            return 0;
-//        // recursively get sum of left and right path
-//        int left = helper(node.left, max);
-//        int right = helper(node.right, max);
-//        int max_single = Math.max( Math.max(left, right)+ node.val, node.val);
-//        //update maximum here
-//        max[0] = Math.max(max[0], Math.max(left+node.val+right, max_single));
-//        // return sum of largest path of current node
-//        return max_single;
-//    }
-	
-	public int maxPathSum(TreeNode root) {
-        if(root == null)
-            return 0;
-        return helper(root);
+	int max = Integer.MIN_VALUE;
+    public int maxPathSum(TreeNode root) {
+        helper(root);
+        return max;
     }
-    int max = Integer.MIN_VALUE;
+    
     public int helper(TreeNode node){
         if(node == null)
             return 0;
         int l = helper(node.left);
         int r = helper(node.right);
-        int max_single = Math.max(node.val, Math.max(node.val+l, node.val+r));
-        max = Math.max(max, Math.max(node.val+l+r, max_single));
-        return max_single;
+        int left = l + node.val;
+        int right = r + node.val;
+        int maxSingle = Math.max(node.val, Math.max(left, right));
+        int total = l + r + node.val;
+        max = Math.max(max,  Math.max(total, maxSingle));
+        return maxSingle;
     }
-    
+
     public static void main(String[] args) {
     	BinaryTreeMaximumPathSum s = new BinaryTreeMaximumPathSum();
     	TreeNode root = new TreeNode(1);

@@ -58,6 +58,78 @@ public class TheSkylineProblem {
         return result;
     }
 	
+	//solutionII, merge sort
+	public List<int[]> getSkyline_ms(int[][] buildings) {
+		if (buildings.length == 0)
+			return new ArrayList<int[]>();
+		return getSkyline(buildings, 0, buildings.length - 1);
+	}
+
+	private List<int[]> getSkyline(int[][] buildings, int left, int right) {
+		if (left < right) {
+			int mid = left + ( right - left) / 2;
+			List<int[]> fromLeft = getSkyline(buildings, left, mid);
+			List<int[]> fromRight = getSkyline(buildings, mid + 1, right);
+			return merge(fromLeft, fromRight);
+		} else {
+			int[] building = buildings[left];
+			List<int[]> res = new ArrayList<>();
+			res.add(new int[] { building[0], building[2] });
+			res.add(new int[] { building[1], 0 });
+			return res;
+		}
+	}
+
+	private List<int[]> merge(List<int[]> fromLeft, List<int[]> fromRight) {
+		List<int[]> res = new ArrayList<>();
+		int left = 0;
+		int leftSize = fromLeft.size();
+		int right = 0;
+		int rightSize = fromRight.size();
+
+		int lastRight =  0;
+		int lastLeft = 0;
+		int currPeek = -1;
+		
+		while (left < leftSize && right < rightSize) {
+			int[] currLeft = fromLeft.get(left);
+			int[] currRight = fromRight.get(right);
+
+			if (currLeft[0] < currRight[0]) {
+				int newPeek = Math.max(lastRight, currLeft[1]);
+				if(newPeek != currPeek){
+					res.add(new int[]{currLeft[0], newPeek});
+					currPeek = newPeek;
+				}
+				lastLeft = currLeft[1];
+				left++;
+			}else if(currLeft[0] > currRight[0]){
+				int newPeek = Math.max(lastLeft, currRight[1]);
+				if(newPeek != currPeek){
+					res.add(new int[]{currRight[0], newPeek});
+					currPeek = newPeek;
+				}
+				lastRight = currRight[1];
+				right++;
+			}else{
+				int newPeek = Math.max(currRight[1], currLeft[1]);
+				if(newPeek != currPeek){
+					res.add(new int[]{currLeft[0], newPeek});
+					currPeek = newPeek;
+				}
+				lastRight = currRight[1];
+				lastLeft = currLeft[1];
+				left++;
+				right++;
+			}
+		}
+		while (left < leftSize)
+			res.add(fromLeft.get(left++));
+		while (right < rightSize)
+			res.add(fromRight.get(right++));
+		return res;
+	}
+	
 	public static void main(String[] args) {
 		int[][] buildings = {{2, 9, 10}, {3,7,15}, {5, 12, 12}, {15, 20, 10}, {19, 24,8}};
 		List<int[]> res = getSkyline(buildings);

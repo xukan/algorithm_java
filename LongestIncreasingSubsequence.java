@@ -59,16 +59,19 @@ public class LongestIncreasingSubsequence {
 		return list.size();
 	}
 	
-	public int lengthOfLIS(int[] nums) {
+	public static int lengthOfLIS(int[] nums) {
         List<Integer> dp = new ArrayList<Integer>();
         for (int i = 0; i < nums.length; ++i) {
             int left = 0, right = dp.size();
             while (left < right) {
                 int mid = left + (right - left) / 2;
-                if (dp.get(mid) < nums[i]) left = mid + 1;
-                else right = mid;
+                if (dp.get(mid) < nums[i])
+                	left = mid + 1;
+                else
+                	right = mid;
             }
-            if (right >= dp.size()) dp.add(nums[i]);
+            if (right >= dp.size())
+            	dp.add(nums[i]);
             else
             	dp.set(right, nums[i]);
         }
@@ -80,7 +83,8 @@ public class LongestIncreasingSubsequence {
 		// int[] input = {11,12,13,14,15,6,7,8,101,18};
 		// int[] input ={3,5,6,2,5,4,19,5,6,7,12};
 		int[] input = {4,2,4,5,3,7};
-		int res = longestIncreasingSubsequence_bs(input);
+//		int res = longestIncreasingSubsequence_bs(input);
+		int res = lengthOfLIS(input);
 		System.out.println(res);
 	}
 }

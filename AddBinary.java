@@ -4,22 +4,17 @@ package algorithm_java;
 
 public class AddBinary {
 	public static String addBinary(String a, String b) {
-        int len1 = a.length();
-        int len2 = b.length();
+        int i=a.length()-1, j = b.length()-1;
         StringBuilder sb = new StringBuilder();
-        int i=len1-1, j=len2-1;
         int carry = 0;
-        while(i>=0 || j>=0){
-            int num1=0, num2=0;
-            if(i>=0)
-                num1 = a.charAt(i--)-'0';
-            if(j>=0)
-                num2 = b.charAt(j--)-'0';
-            int remain = (num1+num2+carry)%2;
-            carry = (num1+num2+carry)/2;
+        while(i>=0|| j>=0){
+            int v1 = i==-1? 0 : a.charAt(i--) - '0';
+            int v2 = j==-1? 0 : b.charAt(j--) - '0';
+            int remain = (v1 + v2 + carry)%2;
+            carry = (v1 + v2 + carry)/2;
             sb.insert(0, remain);
         }
-        if(carry>0)
+        if(carry == 1)
             sb.insert(0, carry);
         return sb.toString();
     }

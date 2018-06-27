@@ -11,6 +11,10 @@ package algorithm_java;
  * 3.node only has right subtree- return the right subtree
  * 4.node has both left and right - find the minimum value in the right subtree, set that value to the currently found node, 
  *    then recursively delete the minimum value in the right subtree
+ *    
+ *    The worst case time complexity of delete operation is O(h) where h is height of Binary Search Tree.
+ *     In worst case, we may have to travel from root to the deepest leaf node. 
+ *     The height of a skewed tree may become n and the time complexity of delete operation may become O(n)
  * */
 
 public class DeleteNodeinaBST {
@@ -107,6 +111,32 @@ public class DeleteNodeinaBST {
         return root;
     }
 	
+    //recursion
+    public TreeNode deleteNode_recursion(TreeNode root, int key) {
+        if (root == null)
+        	return null;
+        if (root.val > key)
+        	root.left = deleteNode_recursion(root.left, key);
+        else if (root.val < key) 
+        	root.right = deleteNode_recursion(root.right, key);
+        else { // found node to be deleted
+            if (root.left == null) 
+            	return root.right;
+            else if (root.right == null) 
+            	return root.left;
+            // node with two children, replace with the inOrder successor(minVal) in the right subtree
+            root.val = getMin(root.right);
+            root.right = deleteNode_recursion(root.right, root.val);
+        }
+        return root;
+    }
+    
+    public int getMin(TreeNode root) {
+        while (root.left != null)
+        	root = root.left;
+        return root.val;
+    }
+    
 	public void inorder(TreeNode cur){
 		if(cur.left!=null)
 			inorder(cur.left);
@@ -189,11 +219,12 @@ public class DeleteNodeinaBST {
 		TreeNode node1 = new TreeNode(6);
 		TreeNode node2 = new TreeNode(12);
 		TreeNode node3 = new TreeNode(3);
-		TreeNode node4 = new TreeNode(8);
+		TreeNode node4 = new TreeNode(9);
 		TreeNode node5 = new TreeNode(18);
 		TreeNode node6 = new TreeNode(1);
 		TreeNode node7 = new TreeNode(5);
 		TreeNode node8 = new TreeNode(7);
+		TreeNode node9 = new TreeNode(8);
 		root.left = node1;
 		root.right = node2;
 		node1.left = node3;
@@ -202,8 +233,9 @@ public class DeleteNodeinaBST {
 		node3.left =node6;
 		node3.right=node7;
 		node4.left = node8;
-		
-		TreeNode node= s.deleteNode(root,6 );
+		node8.right = node9;
+//		TreeNode node= s.deleteNode(root,6 );
+		TreeNode node= s.deleteNode_recursion(root, 6);
 		s.inorder(node);
 	}
 }

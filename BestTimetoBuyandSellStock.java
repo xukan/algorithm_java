@@ -21,6 +21,22 @@ public class BestTimetoBuyandSellStock {
         return profit;
 	}
 	
+	//I, solutionII, use index1 to record the index of minimum price
+	public int maxProfit(int[] prices) {
+        if(prices.length<=1)
+            return 0;
+        int index1=0;
+        int max = 0;
+        for(int i=1;i<prices.length;i++){
+            if(prices[i] < prices[index1])
+                index1 = i;
+            else
+                max = Math.max(max, prices[i] - prices[index1]);
+        }
+        return max;
+    }
+	
+	
 	public int maxProfitII(int[] prices){
 		//交易次数不限，求最大利润
 		if(prices == null || prices.length == 0){  

@@ -65,32 +65,39 @@ public class LetterCombinationsofaPhoneNumber {
 //		}
 //		return res;
 //    }
-	
-	
-	public static List<String> letterCombinations(String digits) {
+	private static final String[] keyboard = {"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+    
+    public List<String> letterCombinations(String digits) {
         List<String> res = new ArrayList<String>();
-        String[] phone = {"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
-        helper(0,digits, new StringBuilder(), phone, res);
+        if(digits == null || digits.length() == 0)
+            return res;
+        helper(digits, 0, "", res);
         return res;
     }
     
-    public static void helper(int index, String digits, StringBuilder sb, String[] phone, List<String> res){
-        if(sb.length() == digits.length()){
-            res.add(sb.toString());
+    public void helper(String digits, int index, String cur, List<String> res){
+        if(index == digits.length()){
+            res.add(cur);
             return;
         }
-        String str = phone[digits.charAt(index)-'0'];
-        for(int j=0;j<str.length();j++){
-            sb.append( str.charAt(j));
-            helper(index+1, digits, sb, phone, res);
-            sb.deleteCharAt(sb.length()-1);
+        char c = digits.charAt(index);
+        //corner case, string contains "*" || "#"
+        if(c == '*' || c == '#'){
+            helper(digits, index+1, cur, res);
+            return;
+        }
+        String str = keyboard[c-'0'];
+        for(int i=0;i<str.length();i++){
+            char c1 = str.charAt(i);
+            helper(digits, index+1, cur+c1, res);
         }
     }
 	
 	public static void main(String[] args) {
-		String input = "23";
-		List<String> res = letterCombinations(input);
-		for(String s: res)
-			System.out.print(s + " ");
+		LetterCombinationsofaPhoneNumber s = new LetterCombinationsofaPhoneNumber();
+		String input = "2*3"; //note input string may contain "#" || "*"
+		List<String> res = s.letterCombinations(input);
+		for(String str: res)
+			System.out.print(str + " ");
 	}
 }

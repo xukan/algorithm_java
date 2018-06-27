@@ -3,8 +3,11 @@ package algorithm_java;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 //Google Uber Facebook Amazon Yahoo Bloomberg Pocket Gems
 
@@ -63,7 +66,7 @@ public class WordBreak {
         map.put(s , res);
         return res;
     }
-	
+    
 	public static void main(String[] args) {
 		//word break I
 //		String str1 = "leetcode";

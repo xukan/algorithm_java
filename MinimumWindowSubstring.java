@@ -51,6 +51,41 @@ public class MinimumWindowSubstring {
         return s.substring(minStart, minStart+minLen);
     }
 	
+	//solutionII is very similar to solutionI
+	public String minWindow_similar(String s, String t) {
+        if(s.length() == 0 || t.length() == 0 || s.length() < t.length())
+            return "";
+        Map<Character, Integer> map = new HashMap<>();
+        for(char c: t.toCharArray())
+            map.put(c, map.getOrDefault(c, 0)+1);
+        int minLen = Integer.MAX_VALUE;
+        int count = t.length();
+        int minStart = 0, i = 0;
+        int j=0;
+        for(;j<s.length();j++){
+            char c = s.charAt(j);
+            if(map.containsKey(c)){
+                map.put(c, map.get(c)-1);
+                if(map.get(c)>=0)
+                    count--;
+                while(count== 0){
+                    if(j-i +1<minLen ){
+                        minLen = j-i+1;
+                        minStart = i;
+                    }
+                    char c1 = s.charAt(i);
+                    if(map.containsKey(c1)){
+                        map.put(c1, map.get(c1)+1);
+                        if(map.get(c1)>0)
+                            count++;
+                    }
+                    i++;
+                }
+            }
+        }
+        return minLen == Integer.MAX_VALUE?"":s.substring(minStart, minStart+minLen);
+    }
+	
 	public static void main(String[] args) {
 		String s = "a";
 		String t	=	"b";

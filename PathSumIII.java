@@ -15,81 +15,77 @@ import java.util.Map;
  * */
 
 public class PathSumIII {
-	public int pathSum(TreeNode root, int sum) {
-        Map<Integer, Integer> map = new HashMap<>();
-        map.put(0, 1);  //Default sum = 0 has one count
-//        return backtrack(root, root.val, sum, map); 
-        return backtrack(root, 0, sum, map); 
-    }
-    //BackTrack one pass
-    public int backtrack(TreeNode root, int sum, int target, Map<Integer, Integer> map){
-//        if(root == null)
+	// key : the prefix sum, value : how many ways get to this prefix sum
+//	public int pathSum(TreeNode root, int sum) {
+//        HashMap<Integer, Integer> preSum = new HashMap();
+//        preSum.put(0,1);
+//        return helper(root, 0, sum, preSum);
+//    }
+//    
+//    public int helper(TreeNode root, int currSum, int target, HashMap<Integer, Integer> preSum) {
+//        if (root == null) {
 //            return 0;
-    	if(root.left == null && root.right==null){
-    		sum += root.val;
-            if(map.getOrDefault(sum-target, 0)!=0 )
-            	return 1;
-            else
-            	return 0;
-		}
-        sum += root.val;
-        int res = map.getOrDefault(sum - target, 0);    //See if there is a subarray sum equals to target
-        map.put(sum, map.getOrDefault(sum, 0)+1);
-        //Extend to left and right child
-        int l=0, r=0;
-        if(root.left != null)
-        	l = backtrack(root.left, sum, target, map);
-        if(root.right != null)
-        	r = backtrack(root.right, sum, target, map);
-        res += l + r;
-        map.put(sum, map.get(sum)-1);   //Remove the current node so it wont affect other path
-        return res;
-    }
+//        }
+//        
+//        currSum += root.val;
+//        int res = preSum.getOrDefault(currSum - target, 0);
+//        
+//        preSum.put(currSum, preSum.getOrDefault(currSum, 0) + 1);
+//        
+//        int l = helper(root.left, currSum, target, preSum);
+//        int r = helper(root.right, currSum, target, preSum);
+//        res = res + l + r;
+//        preSum.put(currSum, preSum.get(currSum) - 1);
+//        return res;
+//    }
     
-    
-    public int maxPathSum(TreeNode root) {
+	public int pathSum(TreeNode root, int sum) {
         if(root == null)
             return 0;
-        return maxhelper(root);
-    }
-    int max = 0;
-    public int maxhelper(TreeNode node){
-        if(node == null)
-            return 0;
-        int l = maxhelper(node.left);
-        int r = maxhelper(node.right);
-        max = Math.max(node.val, Math.max(l, r));
-        max = Math.max(max, Math.max(node.val+l, node.val+r));
-        max = Math.max(max, node.val+l+r);
-        return Math.max(node.val+l, node.val+r);
+        Map<Integer, Integer> preSum = new HashMap<>();
+        preSum.put(0,1);
+        int res = helper(root, 0, sum, preSum);
+        return sum == 0?res-1: res;
     }
     
+    public int helper(TreeNode node, int curSum, int target, Map<Integer, Integer> preSum){
+        if(node == null)
+            return 0;
+        curSum += node.val;
+        int res = preSum.getOrDefault(curSum - target, 0);  //this line must be put above the next line
+        preSum.put(curSum, preSum.getOrDefault(curSum, 0)+1);
+        int l = helper(node.left, curSum, target, preSum);
+        int r = helper(node.right, curSum, target, preSum);
+        preSum.put(curSum, preSum.get(curSum) - 1);
+        return res + l + r;
+    }
+	
     public static void main(String[] args) {
     	PathSumIII s = new PathSumIII();
     	
-    	TreeNode root = new TreeNode(10);
-		TreeNode node1 = new TreeNode(5);
-		TreeNode node2 = new TreeNode(-3);
-		TreeNode node3 = new TreeNode(3);
-		TreeNode node4 = new TreeNode(2);
-		TreeNode node5 = new TreeNode(11);
-		TreeNode node6 = new TreeNode(3);
-		TreeNode node7 = new TreeNode(-2);
-		TreeNode node8 = new TreeNode(1);
+//    	TreeNode root = new TreeNode(10);
+//		TreeNode node1 = new TreeNode(5);
+//		TreeNode node2 = new TreeNode(-3);
+//		TreeNode node3 = new TreeNode(3);
+//		TreeNode node4 = new TreeNode(2);
+//		TreeNode node5 = new TreeNode(11);
+//		TreeNode node6 = new TreeNode(3);
+//		TreeNode node7 = new TreeNode(-2);
+//		TreeNode node8 = new TreeNode(1);
+//		root.left=node1;
+//		root.right = node2;
+//		node1.left = node3;
+//		node1.right = node4;
+//		node2.right = node5;
+//		node3.left = node6;
+//		node3.right = node7;
+//		node4.right = node8;
+		
+    	TreeNode root = new TreeNode(1);
+		TreeNode node1 = new TreeNode(2);
+    	
 		root.left=node1;
-		root.right = node2;
-		node1.left = node3;
-		node1.right = node4;
-		node2.right = node5;
-		node3.left = node6;
-		node3.right = node7;
-		node4.right = node8;
-		
-		TreeNode root = new TreeNode(10);
-		TreeNode node1 = new TreeNode(5);
-		TreeNode node2 = new TreeNode(-3);
-		
-		int count = s.pathSum(root, 8);
+		int count = s.pathSum(root, 0);
 		System.out.println(count);
 	}
 }

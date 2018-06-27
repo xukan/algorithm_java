@@ -44,8 +44,8 @@ public class ValidPalindrome {
     }
 	
     //an easier solution
-    public boolean isPalindrome_easy(String str) {
-        String s = str.toLowerCase();
+    public static boolean isPalindrome_easy(String str) {
+        String s = str.toLowerCase().trim();
         int l=0, r=s.length()-1;
         while(l<r){
             while(l<r && !Character.isDigit(s.charAt(l)) && !Character.isLetter(s.charAt(l)))
@@ -63,7 +63,9 @@ public class ValidPalindrome {
     
 	public static void main(String[] args){
 		String input = "0aA,.";
-		boolean res = isPalindrome(input);
+		String input1 = "0P";
+		String input2 = " apG0i4maAs::sA0m4i0Gp0";
+		boolean res = isPalindrome_easy(input2);
 		System.out.println(res);
 	}
 }

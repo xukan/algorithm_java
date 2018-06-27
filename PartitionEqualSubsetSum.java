@@ -30,9 +30,9 @@ public class PartitionEqualSubsetSum {
 	    for (int i = 1; i <= n; i++) {
 	        dp[i][0] = true;
 	    }
-	    for (int j = 1; j <= sum/2; j++) {
-	        dp[0][j] = false;
-	    }
+//	    for (int j = 1; j <= sum/2; j++) {
+//	        dp[0][j] = false;
+//	    }
 	    
 	    for (int i = 1; i < n+1; i++) {
 	        for (int j = 1; j <= sum/2; j++) {

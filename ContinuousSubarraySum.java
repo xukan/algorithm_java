@@ -16,22 +16,22 @@ import java.util.HashMap;
 //similar question
 //Maximum Size Subarray Sum Equals k
 
-//Time complexity : O(n). Only one traversal of the array numsnums is done.
-//Space complexity : O(min(n,k)). The HashMap can contain upto min(n,k different pairings.
+//Time complexity : O(n). Only one traversal of the array nums is done.
+//Space complexity : O(min(n,k)). The HashMap can contain upto min(n,k) different pairings.
 
 public class ContinuousSubarraySum {
 	public static boolean checkSubarraySum(int[] nums, int k) {
 		int sum = 0;
-        HashMap < Integer, Integer > map = new HashMap < > ();
+        HashMap<Integer, Integer> map = new HashMap<>();
         map.put(0, -1);
-        for (int i = 0; i < nums.length; i++) {
+        for (int i = 0; i < nums.length; i++){
             sum += nums[i];
             if (k != 0)
                 sum = sum % k;
             if (map.containsKey(sum)) {
                 if (i - map.get(sum) > 1)
                     return true;
-            } else
+            }else
                 map.put(sum, i);
         }
         return false;
@@ -39,7 +39,8 @@ public class ContinuousSubarraySum {
 	
 	public static void main(String[] args) {
 //		int[] nums = {23, 2, 4, 6, 7};
-		int[] nums= {0,1, 0}; // k=0, to test sentence:  map.put(0,-1);
+//		int[] nums= {0,1, 0}; // k=0, to test sentence:  map.put(0,-1);
+		int[] nums= {0, 0};
 		boolean res = checkSubarraySum(nums, 0);
 		System.out.println(res);
 	}

@@ -13,24 +13,31 @@ package algorithm_java;
 public class PopulatingNextRightPointersinEachNodeII {
 	//tc: O(n)( O(V+E))
 	public static void connect(TreeLinkNode root) {
-	    TreeLinkNode temp = new TreeLinkNode(0);
-	    while (root != null) {
-	        TreeLinkNode cur = temp;
-	        while (root != null) {
-	            if (root.left != null) {
-	                cur.next = root.left;
-	                cur = cur.next;
-	            }
-	            if (root.right != null) {
-	                cur.next = root.right;
-	                cur = cur.next;
-	            }
-	            root = root.next;
-	        }
-	        root = temp.next;
-	        temp.next = null;
-	    }
-	}
+        TreeLinkNode dummy = new TreeLinkNode(0);
+        TreeLinkNode prev = dummy;
+        while(root!=null){
+            if(root.left != null){
+                prev.next = root.left;
+                prev = prev.next;
+            }
+            if(root.right!=null){
+                prev.next = root.right;
+                prev = prev.next;
+            }
+//            root = root.next;
+//            if(root == null){
+//                prev = dummy;
+//                root = dummy.next;
+//                dummy.next = null;
+//            }
+            if(root.next==null){
+                prev = dummy;
+                root = dummy.next;
+                dummy.next = null;
+            }else
+                root = root.next;
+        }
+    }
 	
 	public static void main(String[] args){
 		 TreeLinkNode root = new TreeLinkNode(1);

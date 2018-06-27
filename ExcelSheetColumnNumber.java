@@ -39,25 +39,24 @@ public class ExcelSheetColumnNumber {
     	28 -> AB 
 	 * */
 	//Microsoft Facebook Zenefits
+	//可以看做转化为26进制数
 	//注意这道题和2进制，16进制的区别是0不在考虑范围内,所以52 = "AZ"， 702="ZZ", 
-	//每次遇到0,需要对应的是"Z",并把n-1
+	//数字26，26/26 == 1余数为0,
+	//每次遇到整除的情况,remain = 0, 需要对应的是"Z",并把n-1
 	public static String convertToTitle(int n) {
-		int remain=0;
+        if(n==0)
+            return "";
         StringBuilder sb = new StringBuilder();
-        boolean bar = false;
-        while(n>=26){
-            remain = n%26;
-            n = n/26;
+        while(n>0){
+            int remain = n%26;
             if(remain!=0)
-                sb.append((char)(remain + 'A'-1));
+                sb.append((char)(remain+'A'-1));
             else{
-                sb.append('Z');
-                bar = true;
+                sb.append("Z");
                 n-=1;
             }
+            n/=26;
         }
-        if(n!=0)
-            sb.append((char)(n + 'A'-1 ));
         return sb.reverse().toString();
     }
 	

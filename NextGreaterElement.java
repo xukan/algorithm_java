@@ -31,8 +31,7 @@ public class NextGreaterElement {
                 res[n++]=-1;
         }
         return res;
-    }
-	
+	}
 	//II Google
 	//my solution 
 	public static int[] nextGreaterElementsII(int[] nums) {

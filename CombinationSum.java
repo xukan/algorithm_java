@@ -89,6 +89,7 @@ public class CombinationSum {
 	public static int combinationSum4(int[] nums, int target) {
 		int[] dp= new int[target+1];
         dp[0] = 1;
+        //Note in this problem, each element from the input array can be used multiple times
         for(int i = 1; i <= target;i++){
             for(int num:nums){
                 if(i >= num)
@@ -124,7 +125,8 @@ public class CombinationSum {
 //    	}
     	
     	int[] nums ={4,2,1};
-    	int total = combinationSum4(nums, 32);
+//    	int total = combinationSum4(nums, 32);
+    	int total = combinationSum4(nums, 5);
     	System.out.println(total);
 	}
 }

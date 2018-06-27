@@ -43,15 +43,14 @@ public class OneEditDistance {
 	    if(i<m||j<n){ //example s="a", b = "";
 	        count++;
 	    }
-	    if(count==1)
-	        return true;
-	    return false;
+	    return count==1;
     }
-
 	
 	public static void main(String[] args) {
-		String s="ac";
-		String t="b";
+//		String s="ab";
+//		String t="ba";
+		String s="a";
+		String t="";
 		boolean res = isOneEditDistance(s, t);
 		System.out.println(res);
 	}

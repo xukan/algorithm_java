@@ -49,13 +49,31 @@ public class RemoveDuplicatesfromSortedArray {
     }
 	
 	
+	public int removeDuplicates(int[] nums) {
+        if(nums.length <= 2)
+            return nums.length;
+        int i=1;
+        for(int j=2;j<nums.length;j++){
+            if(nums[j] == nums[i] && nums[j] == nums[i-1])
+                continue;
+            if(nums[j] != nums[i]){
+                i++;
+                nums[i] = nums[j];
+            }
+        }
+        return i+1;
+    }
+	
 	public static void main(String[] args) {
 		RemoveDuplicatesfromSortedArray solution = new RemoveDuplicatesfromSortedArray();
 		//int[] input = { 1, 1, 1, 2, 4, 4, 5, 7};
 		int[] input = { 1,1,1,2,2,5,7 };
 		//int len = solution.removeDuplicatesI(input);
 		//int[] input = { 1, 2, 2};
-		int len = solution.removeDuplicatesII(input);
-		System.out.println( len );
+//		int len = solution.removeDuplicatesII(input);
+		
+		int[] input1 = {1,2,2};
+		int len1 = solution.removeDuplicates(input1);
+		System.out.println( len1 );
 	}
 }

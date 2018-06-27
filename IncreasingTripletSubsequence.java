@@ -23,7 +23,8 @@ public class IncreasingTripletSubsequence {
     }
 	
 	public static void main(String[] args) {
-		int[] nums= {2,1,7,5,10};
+//		int[] nums= {2,1,7,5,10};
+		int[] nums= {0,5,2,3,1};
 		boolean res = increasingTriplet(nums);
 		System.out.println(res);
 	}
