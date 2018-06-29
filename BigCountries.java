@@ -20,13 +20,7 @@ public class BigCountries {
 	
 	// move all zeros to end of array, does not keep the non-zero elements order  
 	public static void moveZeroRight(int[] A) {  
-	    for(int i=0, j=A.length-1; i<j; i++) {  
-	        if(A[i] == 0) {  
-	            while(i<j && A[j] == 0) 
-	            	j--;  
-	            swap(A, i, j);  
-	        }
-	    }
+	    
 	    for(int n: A)
 	    	System.out.print(n + " ");
 	}  
