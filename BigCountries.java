@@ -167,3 +167,290 @@ public class Final6 {
 	}
 }
 /**************************Final6.java********************/
+
+
+/********************Final2.java************************/
+
+package edu.northeastern.cs_5004;
+
+import java.util.AbstractQueue;
+import java.util.ArrayDeque;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Queue;
+
+/**
+ * Implement a Java FixedSizeQueue<T> that is a fixed size 
+ * java.util.Queue<T> whose capacity is specified at creation. 
+ * A default constructor creates a queue of capacity 16. 
+ * 
+ * Use the java.util.AbstractQueue<T> as a base class, and
+ * implement the abstract methods for this class.  Use an
+ * instance of java.util.ArrayDeque<T> internally for the
+ * actual storage. Use the size parameter when creating the
+ * ArrayDeque<T>.
+ * 
+ * If add(T) or addAll(T) attempt to add more items than the 
+ * capacity, they should should throw IllegalStateException. 
+ * If offer() attempts to add more items than the capacity, 
+ * it should return false. Some of this behavior is inherited
+ * from AbstractQueue<T>.
+ */
+public class Final2 {
+	/**
+	 * This class implements a queue whose capacity is fixed
+	 * when an instance is created. The queue can hold no more
+	 * elements than the specified capacity.
+	 *
+	 */
+	static class FixedSizeQueue<T> extends AbstractQueue<T> implements java.util.Queue<T> {
+		private int size=16;
+		ArrayDeque<T> queue;
+		
+		FixedSizeQueue(){
+			queue = new ArrayDeque<T>(size);
+		}
+		
+		FixedSizeQueue(int cap){
+			size = cap;
+			queue = new ArrayDeque<T>(size);
+		}
+		
+		@Override
+		public boolean offer(T e) {
+			// TODO Auto-generated method stub
+			if(queue.size() >= size)
+				return false;
+			return queue.offer(e);
+		}
+
+		@Override
+		public T poll() {
+			// TODO Auto-generated method stub
+			if(queue.size() == 0)
+				return null;
+			return queue.poll();
+		}
+
+		@Override
+		public T peek() {
+			// TODO Auto-generated method stub
+			if(queue.size() == 0)
+				return null;
+			return queue.peek();
+		}
+
+		@Override
+		public Iterator<T> iterator() {
+			// TODO Auto-generated method stub
+			return new QueueIterator();
+		}
+
+		@Override
+		public int size() {
+			// TODO Auto-generated method stub
+			return queue.size();
+		}
+		
+		/**
+		 * This class implements an iterator for a queue.
+		 */
+		class QueueIterator implements Iterator<T> {
+			/** The current queue index */
+			int queueIndex = 0;
+			
+			/** The current queue iterator */
+			Iterator<T> queueItr = queue.iterator();
+			
+			/**
+			 * Returns true if another element is available.
+			 * 
+			 * @return true if another element is available
+			 */
+			public boolean hasNext() {
+					if (queueItr.hasNext()) {
+						return true;
+					}
+				return false;
+			}
+			
+			/**
+			 * Returns the next element available or null if no more elements.
+			 * 
+			 * @return next element available or null if no elements available 
+			 */
+			public T next() {
+				return (hasNext() ? queueItr.next() : null);
+			}	
+		}
+
+		@Override
+		public boolean isEmpty() {
+			// TODO Auto-generated method stub
+			return queue.isEmpty();
+		}
+
+		@Override
+		public boolean contains(Object o) {
+			// TODO Auto-generated method stub
+			return queue.contains(o);
+		}
+
+		@Override
+		public Object[] toArray() {
+			// TODO Auto-generated method stub
+			return queue.toArray();
+		}
+
+		@Override
+		public <T> T[] toArray(T[] a) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public boolean remove(Object o) {
+			// TODO Auto-generated method stub
+			return queue.remove(o);
+		}
+
+		@Override
+		public boolean containsAll(Collection<?> c) {
+			// TODO Auto-generated method stub
+			return queue.contains(c);
+		}
+
+		@Override
+		public boolean addAll(Collection<? extends T> c) {
+			// TODO Auto-generated method stub
+			if(queue.size() + c.size() > size){
+				throw new IllegalStateException();
+			}
+			return queue.addAll(c);
+		}
+
+		@Override
+		public boolean removeAll(Collection<?> c) {
+			// TODO Auto-generated method stub
+			return queue.removeAll(c);
+		}
+
+		@Override
+		public boolean retainAll(Collection<?> c) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public void clear() {
+			// TODO Auto-generated method stub
+			queue.clear();
+		}
+
+		@Override
+		public boolean add(T e) {
+			// TODO Auto-generated method stub
+			if(queue.size() + 1 > size){
+				throw new IllegalStateException();
+			}
+			return queue.add(e);
+		}
+
+		@Override
+		public T remove() {
+			// TODO Auto-generated method stub
+			return queue.remove();
+		}
+
+		@Override
+		public T element() {
+			// TODO Auto-generated method stub
+			return queue.element();
+		}
+	}
+	
+	/**
+	 * This program uses tests the fixed capacity limit of 
+	 * a FixedSizeQueue<T>.
+	 * 
+	 * @param args none
+	 */
+	static public void main(String[] args) {
+		
+		System.out.println("Start problem 2 (Java)");
+
+		System.out.println();
+		System.out.println("case 1: size 0 queue");
+		Queue<String> testQueue1 = new FixedSizeQueue<>(0);
+
+		System.out.println("Adding item to queue");
+		try {
+			testQueue1.add("case1");
+			System.out.println("Unexpected return from add()");
+		} catch (IllegalStateException e) {
+			System.out.println("Caught expected IllegalStateException");
+		}
+
+		System.out.println();
+		System.out.println("case 2: size 1 queue");
+		Queue<String> testQueue2 = new FixedSizeQueue<>(1);
+
+		// add first item
+		System.out.println("Adding item to queue");
+		try {
+			testQueue2.add("case2");
+			System.out.println("Returned from add()");
+		} catch (IllegalStateException e) {
+			System.out.println("Caught unexpected IllegalStateException");
+		}
+		// add second item
+		System.out.println("Adding item to queue");
+		try {
+			testQueue2.add("case2");
+			System.out.println("Unexpected return from add()");
+		} catch (IllegalStateException e) {
+			System.out.println("Caught expected IllegalStateException");
+		}
+
+		System.out.println();
+		System.out.println("case 3: size 3 queue");
+		Queue<String> testQueue3 = new FixedSizeQueue<>(3);
+
+		// add first item
+		System.out.println("Adding item to queue");
+		try {
+			testQueue3.add("case3");
+			System.out.println("Returned from add()");
+		} catch (IllegalStateException e) {
+			System.out.println("Caught unexpected IllegalStateException");
+		}
+		// add second item
+		System.out.println("Adding item to queue");
+		try {
+			testQueue3.add("case3");
+			System.out.println("Returned from add()");
+		} catch (IllegalStateException e) {
+			System.out.println("Caught unexpected IllegalStateException");
+		}
+		// add third item
+		System.out.println("Adding item to queue");
+		try {
+			testQueue3.add("case3");
+			System.out.println("Returned from add()");
+		} catch (IllegalStateException e) {
+			System.out.println("Caught unexpected IllegalStateException");
+		}
+		// add fourth item
+		System.out.println("Adding item to queue");
+		try {
+			testQueue3.add("case3");
+			System.out.println("Unexpected return from add()");
+		} catch (IllegalStateException e) {
+			System.out.println("Caught expected IllegalStateException");
+		}
+
+		System.out.println();
+		System.out.println("End problem 2 (Java)");
+	}
+}
+/********************Final2.java************************/
