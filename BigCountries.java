@@ -149,7 +149,7 @@ public class Final6 {
 			sep = ", ";
 		}
 		System.out.printf("]\n");
-
+		
 		// test varargs version with no collections
 		System.out.println("\nTesting varargs version with no collections");
 		mi = new MultiIterable<Integer>();
@@ -172,6 +172,7 @@ public class Final6 {
 
 	}
 }
+
 /**************************Final6.java********************/
 
 
