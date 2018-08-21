@@ -21,7 +21,7 @@ rank[i] == rank[i - 1]，两个排名一样，第二个就给一块就行了, d[
 rank[i] < rank[i - 1]，比上一个排名低，应该少给一块，但是若上一个已经只给一块了，就得往前推一个一个多给。
 推到什么时候为止呢？若排名比下一个高，糖还一样多，就得再给；直到这个关系打破（排名一样或比下一个还低，或是糖已经满足关系）就不用再往前推了。
 * */
-//hey, this is test1
+//hey, this is test1 11
 public class Candy {
 	public static int candy(int[] ratings) {  
 	    if(ratings==null || ratings.length==0){  
